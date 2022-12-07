@@ -1034,7 +1034,7 @@ class Internet:
             self.driver.switch_to.default_content() 
             sg.popup_error(f'Ixi deu um erro ae O_O \nse pa você ta no caminho errado ou \nnão é o poste',keep_on_top=True)
 
-    def cabo_precon(self,id_sicon,num_pri,num_ori,num_sec,cabo,sob_demanda=False,cabo_rs=False):
+    def cabo_precon(self,id_sicon,num_pri,num_ori,num_sec,cabo,sob_demanda=False,cabo_rs=False,projeto=True):
         wdw = WebDriverWait(self.driver, 30)
         self.iframe('iframe-content-wrapper')
         try:    
@@ -1056,9 +1056,14 @@ class Internet:
             '''
             #Lote
             self.esperar_txt_ID('lot','BT')
-            #ID SICOM
-            self.esperar_txt_ID('idSicom',id_sicon)
-            self.esperar_xpath('/html/body/div[*]/div[*]/form/div/div[2]/table[2]/tbody/tr[1]/td[3]/div[2]/div/ul/li/a')
+            if projeto:
+                #ID SICOM
+                self.esperar_txt_ID('idSicom',id_sicon)
+                self.esperar_xpath('/html/body/div[*]/div[*]/form/div/div[2]/table[2]/tbody/tr[1]/td[3]/div[2]/div/ul/li/a')
+            else:
+                #Nome de projeto 
+                self.esperar_txt_ID('project',id_sicon)
+                self.esperar_xpath('//*[@id="project_div"]/ul/li/a')
             #Destinção
             self.esperar_selecionar_value('destinationId','1000385')
             #pop up

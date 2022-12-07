@@ -271,7 +271,7 @@ class app:
                 sg.theme('reddit') 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Checkbox('>= 41 hp',key=('maior')),sg.Button('Spliter',size=(8,1))],
-                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='id-sicom'),sg.Checkbox('Proj', enable_events=False, key='projeto')], 
+                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(18,1),key='id-sicom')], 
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
@@ -435,7 +435,7 @@ class app:
                             [sg.Button('Voltar',size=(5,1)),sg.Text('Cabo Precom',justification=('c'),size=(13,1)),sg.Stretch(),sg.Button('Cabo',size=(7,1))],
                             [sg.Text('ID Sicom \t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='ID Sicom')],
                             [sg.Text('Primario/Nó \t'),sg.Text(size=(0,1)),sg.Input(size=(6,1),key='num_pri'),sg.Stretch(),sg.Input(size=(6,1),key='num_ori')],
-                            [sg.Text('Cabo secundário\t'),sg.Text(size=(0,1)),sg.Input(size=(6,1),key='num_sec'),sg.Stretch(),sg.Checkbox('Sob', enable_events=False, key='Sob')],
+                            [sg.Text('Cabo secundário\t'),sg.Text(size=(0,1)),sg.Input(size=(6,1),key='num_sec'),sg.Stretch(),sg.Checkbox('Proj', enable_events=False, key='projeto')],
                             [sg.Text('Comprimento\t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='Comprimento')],  
             ]
             
@@ -452,8 +452,8 @@ class app:
                     programa   
 
                 if event == 'Cabo':
-                    if values['Sob']:
-                        sg.popup_error('um dia um arrumo isso', keep_on_top=True)
+                    if values['projeto']:
+                        navegador.cabo_precon(values['ID Sicom'],values['num_pri'],values['num_ori'],values['num_sec'],values['Comprimento'],False,True,False)
                     else:
                         navegador.cabo_precon(values['ID Sicom'],values['num_pri'],values['num_ori'],values['num_sec'],values['Comprimento'],False,True)
 
