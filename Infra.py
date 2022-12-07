@@ -132,7 +132,7 @@ class app:
             sg.theme('Reddit')
             self.layout_login = [
                 [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
-                [sg.Text('Nome:\t'),sg.Input(size=(15,1),key='nome')], 
+                [sg.Text('TR:\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
                 [sg.Text('E-mail:\t'),sg.Input(size=(15,1),key='email')],
@@ -888,7 +888,7 @@ if __name__ == '__main__':
             sg.theme('Reddit')
             layout_login = [
                 [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
-                [sg.Text('Nome:*\t'),sg.Input(size=(15,1),key='nome')], 
+                [sg.Text('TR:*\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:*\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
                 [sg.Text('E-mail*:\t'),sg.Input(size=(15,1),key='email')],
@@ -909,7 +909,7 @@ if __name__ == '__main__':
                     programa 
 
                 if event == 'Ok':
-                    if values['nome'] or values['senha'] == None:
+                    if values['nome'] and values['email']:
                         dados = {
                             "login": values['nome'],
                             "senha": values['senha'],
@@ -919,50 +919,53 @@ if __name__ == '__main__':
                         with open("credenciais.json", 'w') as file:
                             json.dump(dados, file, indent=4)
                     else:
-                        window.close()
+                        sg.popup_error('Preenche corretamente Tr e Email\nExemplo:\ntr125864\nblablabla@telemont.com.br', keep_on_top=True)
                         
                     window.close()
             
                 window.close()
+        try:
+            url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/Mind%20Tux"
+            options = Options()
+            options.headless = True
+            driver = Firefox(options=options)
+            driver.implicitly_wait(.5)
+            wdw = WebDriverWait(driver, 30)
+            driver.get(url)
+            time.sleep(1)  
+            on = driver.find_element(By.XPATH,'//*[@id="LC1"]').text
+            formulario = 'https://forms.gle/gQzJ6Th817BGSZyY9'
+            time.sleep(1)
+            driver.get(formulario)
+            #preencher email
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea')))
+            driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+            driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(info)
+            #preencher tr
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea')))
+            driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+            driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(tr)
+            #preencher Ip-local
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea')))
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(ip_local)
+            #preencher Ip-publico
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea')))
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(ip_publico)
+            #preencher versao
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea')))
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+            driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(versao)
 
-        url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/Mind%20Tux"
-        options = Options()
-        options.headless = True
-        driver = Firefox(options=options)
-        driver.implicitly_wait(.5)
-        wdw = WebDriverWait(driver, 30)
-        driver.get(url)
-        time.sleep(1)  
-        on = driver.find_element(By.XPATH,'//*[@id="LC1"]').text
-        formulario = 'https://forms.gle/gQzJ6Th817BGSZyY9'
-        time.sleep(1)
-        driver.get(formulario)
-        #preencher email
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea')))
-        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
-        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(info)
-        #preencher tr
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea')))
-        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
-        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(tr)
-        #preencher Ip-local
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea')))
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(ip_local)
-        #preencher Ip-publico
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea')))
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[4]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(ip_publico)
-        #preencher versao
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea')))
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
-        driver.find_element(By.XPATH,'/html/body/div/div[*]/form/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(versao)
-
-        #sim
-        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span')))
-        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span').click()    
-        time.sleep(2)
-        driver.close() 
+            #sim
+            wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span')))
+            driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span').click()    
+            time.sleep(2)
+            driver.close()
+        except:
+            driver.close()
+            
         try:
             if on == 'on':
                 app()
