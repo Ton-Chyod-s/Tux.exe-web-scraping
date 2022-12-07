@@ -31,7 +31,7 @@ class app:
             [sg.Text('Cabo',size=(13,1),justification = 'l'),sg.Input(size=(7,1)),sg.Button('Ok',size=(5,1))]
             ]
 
-            window = sg.Window('NetWin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
+            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
 
             while True:
                 event,values = window.read()
@@ -131,7 +131,7 @@ class app:
         def nome_utilizador():
             sg.theme('Reddit')
             self.layout_login = [
-                [sg.Text('Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('Nome:\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
@@ -238,7 +238,7 @@ class app:
                         [sg.Text('Número'),sg.Text(size=(1,1)),sg.Input(size=(5,1),key='numero'),sg.Checkbox('Ceos P', enable_events=False, key='ceos_p')]  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -275,7 +275,7 @@ class app:
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -313,7 +313,7 @@ class app:
                         
                         ] 
                 
-                janela_cdoe_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -372,7 +372,7 @@ class app:
                         [sg.Button('Sair',size=(5,1)),sg.Button('Spliter',size=(5,1)),sg.Text('Num-Est',justification='c'),sg.Input(key='num',size=(4,1))]
                         ] 
                 
-                janela_cdoe_comun = sg.Window('NetWin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_comun = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_comun.read()
@@ -415,7 +415,7 @@ class app:
                             [sg.Button('Sair',size=(5,1)),sg.Button('Cabo',size=(11,1)),sg.Button('None',size=(11,1))]  
             ]
             
-            cabo_comun = sg.Window('NetWin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            cabo_comun = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_comun.read()
@@ -439,7 +439,7 @@ class app:
                             [sg.Text('Comprimento\t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='Comprimento')],  
             ]
             
-            window = sg.Window('NetWin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = window.read()
@@ -467,7 +467,7 @@ class app:
                             [sg.Checkbox('S2-1', enable_events=False, key='S2-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -517,7 +517,7 @@ class app:
                             [sg.Checkbox('S16-1', enable_events=False, key='S16-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -568,7 +568,7 @@ class app:
                             
             ]
             
-            as_built = sg.Window('NetWin', icon='tux-natal.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
+            as_built = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = as_built.read()
@@ -611,7 +611,7 @@ class app:
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Button('Tipo 2',size=(6,1))]  
             ]
             
-            poste = sg.Window('NetWin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
+            poste = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = poste.read()
@@ -655,7 +655,7 @@ class app:
             [sg.Button('Inicio',size=(13,1))]
             ]
 
-            window = sg.Window('NetWin', icon='tux-natal.ico',layout=layout,finalize = True, keep_on_top=True)
+            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout,finalize = True, keep_on_top=True)
 
             while True:
                 event,values = window.read()
@@ -684,7 +684,7 @@ class app:
                             [sg.Checkbox('12',key='12'),sg.Checkbox('36',key='36'),sg.Checkbox('72',key='72'),sg.Checkbox('144',key='144')],           
                             ]
             
-            window = sg.Window('NetWin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = window.read()
@@ -734,7 +734,7 @@ class app:
                             [sg.Checkbox('64 hp', enable_events=False, key='64'),sg.Checkbox('Splitada', enable_events=False, key='splitada')]   
             ]
             
-            cabo_precon = sg.Window('NetWin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -887,7 +887,7 @@ if __name__ == '__main__':
         except:
             sg.theme('Reddit')
             layout_login = [
-                [sg.Text('Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('Nome:*\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:*\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
