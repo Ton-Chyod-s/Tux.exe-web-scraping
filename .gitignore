@@ -17210,3 +17210,4 @@ infra/share/jupyter/kernels/python3/logo-64x64.png
 infra/share/man/man1/ipython.1
 Infra.spec
 geckodriver.log
+__pycache__/algoritimo.cpython-310.pyc
