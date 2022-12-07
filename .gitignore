@@ -1,2 +1,8 @@
 
 *.ico
+chromedriver.exe
+credenciais.json
+geckodriver.exe
+IEDriverServer.exe
+msedgedriver.exe
+operadriver.exe
