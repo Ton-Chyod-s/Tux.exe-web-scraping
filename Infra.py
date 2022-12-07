@@ -896,7 +896,7 @@ if __name__ == '__main__':
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
