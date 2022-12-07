@@ -271,7 +271,7 @@ class app:
                 sg.theme('reddit') 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Checkbox('>= 41 hp',key=('maior')),sg.Button('Spliter',size=(8,1))],
-                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(18,1),key='id-sicom')], 
+                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='id-sicom'),sg.Checkbox('Proj', enable_events=False, key='projeto')], 
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
