@@ -1,2 +1,2 @@
 # Tux.exe
-On
+off
