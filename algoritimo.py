@@ -1614,7 +1614,7 @@ class Internet:
             xpath_linha = f'.//*[@id="results"]/tbody/tr[{olho}]'
             xpath_olho = f'.//*[@id="results"]/tbody/tr[{olho}]/td[10]/i'
             try:
-                time.sleep(1)
+                time.sleep(1.5)
                 self.driver.find_element(By.XPATH,xpath_olho).click()
             except:
                 print('Não encontrei a linha para colocar spliter:)')
@@ -2200,6 +2200,7 @@ class Internet:
                             self.esperar_clicar_ID('attributesConfirmButton')
                             print(f'{xpath_mancha}\n,Conectividade feita')
                             sair()
+
                     else:
                         sair()
 
@@ -3303,6 +3304,63 @@ class Internet:
         # Retorna para a janela principal (fora do iframe)
         self.driver.switch_to.default_content()
 
+    def abastecimento_completa_cdoi(self,iframe=True):
+        self.driver.implicitly_wait(.05)
+        wdw = WebDriverWait(self.driver, 30)
+        
+        if iframe:
+            # Esperando até seja visivel as Iframe da pagina
+            wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+            wdw.until(frame_to_be_available_and_switch_to_it(('id','elementSearchFrame')))
+        else:
+            pass   
+        
+        def sair():
+            # Retorna para a janela principal (fora do iframe)
+            self.driver.switch_to.default_content()
+            wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+            time.sleep(0.5)
+            #fechar
+            self.esperar_xpath('.//span[@class="ui-icon ui-icon-closethick"]')
+            wdw.until(frame_to_be_available_and_switch_to_it(('id','elementSearchFrame'))) 
+            
+        for mancha in range(1,60):
+            time.sleep(.05)
+            xpath_linha = f'.//*[@id="results"]/tbody/tr[{mancha}]'
+            xpath_capacidade = '/td[4]'
+            time.sleep(1)
+            xpath_mancha = f'.//*[@id="results"]/tbody/tr[{mancha}]/td[12]/i'
+            try:
+                capacidade = self.driver.find_element(By.XPATH,xpath_linha + xpath_capacidade ).text
+                time.sleep(1)
+                self.driver.find_element(By.XPATH,xpath_mancha).click()
+            except:
+                print('Não encontrei a linha para fazer a conectividade :)')
+                # Retorna para a janela principal (fora do iframe)
+                self.driver.switch_to.default_content()
+                break
+            time.sleep(1)
+            #espera até o elemento esteja presente na DOM
+            if self.driver.find_element(By.XPATH,xpath_linha):
+                self.driver.switch_to.default_content()
+                #Esperando até seja visivel as Iframe da pagina
+                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                if capacidade == '64':
+                    try:
+                        if self.driver.find_element(By.XPATH,'//*[@id="externalArea"]'):
+                            #Esperando até seja visivel as Iframe da pagina
+                            wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+                    except:
+                        break
+                    time.sleep(1)
+                    self.driver.find_element(By.ID,'influenceAreaButton').click()
+                    wdw.until(frame_to_be_available_and_switch_to_it(('xpath','//*[@id="influenceArea_item:79542880"]/td[1]/a')))
+                    self.driver.find_element(By.ID,'//*[@id="influenceArea_item:79542880"]/td[1]/a').click()
+
+                else:    
+                    sair()
+            else:
+                sair()
 
 if __name__ == "__main__": 
     #navegador = Internet()
