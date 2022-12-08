@@ -48,9 +48,9 @@ class app:
         def teste_metodos():
             sg.theme('Reddit')
             self.layout_login = [
-                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(10,1)),sg.Stretch(), sg.Text('Id Sicon:\t'),sg.Input(size=(15,1),key='id_sicon')], 
+                [sg.Button('Voltar',size=(5,1)),sg.Button('Operação',size=(9,1)),sg.Checkbox('Proj/Id Sicon'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
-                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Ativar',size=(7,1))]
+                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('CDOI',size=(7,1))]
                 ]
             
             window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -71,14 +71,11 @@ class app:
                 if event == 'Conectividade':
                     navegador.Conectividade_completa()
                 
-                if event == 'Ativar':
-                    navegador.operacoes_mud_est(values['id_sicon'])
-                    time.sleep(1.5)
-                    navegador.Spliter_completa()
-                    time.sleep(0.3)
-                    navegador.Conectividade_completa()    
-                    time.sleep(0.3)
-                    navegador.atribuir_endereco()
+                if event == 'CDOI':
+                    if values['Proj/Id Sicon']:
+                        navegador.abastecimento_completa_cdoi(False)
+                    else:
+                        navegador.abastecimento_completa_cdoi()
                     
                 if event == 'Operações':
                     navegador.operacoes_mud_est(values['id_sicon'])
@@ -965,7 +962,7 @@ if __name__ == '__main__':
             driver.close()
         except:
             driver.close()
-            
+
         try:
             if on == 'on':
                 app()

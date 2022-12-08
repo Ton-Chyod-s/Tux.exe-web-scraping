@@ -2890,7 +2890,7 @@ class Internet:
             else:
                 sair()        
     
-    def operacoes_mud_est(self,id_sicon):
+    def operacoes_mud_est(self,id_sicon,projeto=True):
         wdw = WebDriverWait(self.driver, 60)
         self.driver.implicitly_wait(.05)
         self.esperar_xpath('//*[@id="operational-module-osp"]')
@@ -2899,7 +2899,7 @@ class Internet:
         self.iframe('elementSearchFrame')
         wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
         operacao = self.driver.find_element(By.XPATH,'//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]').text
-        if operacao:
+        if operacao and projeto:
             #operações
             wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
             Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
@@ -2909,7 +2909,16 @@ class Internet:
             #pesquisar
             self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
         else:
-            pass
+            #operações
+            wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
+            Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
+            time.sleep(1)
+            #projeto
+            self.esperar_clicar_xpath('//*[@id="codigoProj"]')
+            self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
+            #pesquisar
+            self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
+
         
         # Retorna para a janela principal (fora do iframe)
         self.driver.switch_to.default_content()
@@ -3353,7 +3362,7 @@ class Internet:
                     except:
                         break
                     time.sleep(1)
-                    self.driver.find_element(By.ID,'influenceAreaButton').click()
+                    self.driver.find_element(By.XPATH,'//*[@id="influenceAreaButton"]').click()
                     wdw.until(frame_to_be_available_and_switch_to_it(('xpath','//*[@id="influenceArea_item:79542880"]/td[1]/a')))
                     self.driver.find_element(By.ID,'//*[@id="influenceArea_item:79542880"]/td[1]/a').click()
 
