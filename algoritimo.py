@@ -20,6 +20,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 sg.popup_notify(f'Carregando biblioteca...')
 
+#sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
+
 esperar = time.sleep(.05)
 esperar1 = time.sleep(1)
 esperar2 = time.sleep(2)
@@ -129,9 +131,7 @@ class Internet:
         wdw.until(element_to_be_clickable(('xpath', elemento)))    
         time.sleep(.15)
         self.driver.find_element(By.XPATH,elemento).send_keys(txt)
-    #except:
-        #sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
-        
+    
     def esperar_selecionar_index(self,elemento,num):
         wdw = WebDriverWait(self.driver, 60)
         wdw.until(element_to_be_clickable(('id', elemento)))
@@ -2250,135 +2250,142 @@ class Internet:
                         cdoe_sap = self.driver.find_element(By.ID,'elem_num_sap').get_attribute('value')
                         sair()
                         if cdoe_sap == '331688': #10 tap intermediaria corning
-                            try:  
+                            try:
+                                try:  
+                                    try:
+                                        self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    except:
+                                        print('não consegui clicar')  
+                                    self.driver.switch_to.default_content() 
+                                    # Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))    
+                                    #cenario
+                                    time.sleep(0.5)
+                                    self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                    time.sleep(1.5)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida 
+                                    self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:8
+                                    #porta entrada
+                                    self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_3main_final',8)
+                                    #porta inicial
+                                    self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_4main_final',8)
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                    #confirmar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    print(f'{xpath_mancha}\n,fim de cabo')
+                                    sair()
+                                except:
+                                    #cenario
+                                    time.sleep(0.5)
+                                    self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                    time.sleep(1.5)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida 
+                                    self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:8
+                                    #porta entrada
+                                    self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_3main_final',8)
+                                    #porta inicial
+                                    self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_4main_final',8)
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                    #confirmar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    print(f'{xpath_mancha}\n,fim de cabo')
+                                    sair()
+                            except:
+                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
+                            
+                        else:
+                            try:
                                 try:
                                     self.driver.find_element(By.XPATH,xpath_mancha).click()
                                 except:
-                                    print('não consegui clicar')  
-                                self.driver.switch_to.default_content() 
-                                # Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))    
-                                #cenario
-                                time.sleep(0.5)
-                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                                time.sleep(1.5)
-                                #cabo
-                                self.esperar_selecionar_index('cable_inout_1main',1)
-                                #fibra
-                                self.esperar_selecionar_value('fiber_inout_1main','1')
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida 
-                                self.esperar_selecionar_index('splitter_port_out_2main',2)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:8
-                                #porta entrada
-                                self.esperar_selecionar_index('splitter_port_in_3main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_3main',1)
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_3main_final',8)
-                                #porta inicial
-                                self.esperar_selecionar_index('pdoport_inout_4main',1)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_4main_final',8)
-                                #ligar
-                                self.esperar_clicar_ID('connectButton')
-                                #tipo ligador
-                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                                #tipo ligador
-                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                                #confirmar
-                                self.esperar_clicar_ID('attributesConfirmButton')
+                                    print('não consegui clicar') 
+                                # Retorna para a janela principal (fora do iframe)
+                                self.driver.switch_to.default_content()
+                                self.iframe('iframe-content-wrapper')
+                                self.iframe('externalFrame')
+                                try:
+                                    #cenario
+                                    time.sleep(0.5)
+                                    self.esperar_selecionar_value('cbScenario','pdo_splitter') #Fibra óptica 1:1 Splitter n:n Porta CDO
+                                    time.sleep(2)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    time.sleep(.5)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1/8
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                
+                                    #porta final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',1)
+                                
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','8')
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    sair()
+                                except:
+                                    print('não consegui clicar')
+                                    sair()
                                 print(f'{xpath_mancha}\n,fim de cabo')
-                                sair()
-                            except:
-                                #cenario
-                                time.sleep(0.5)
-                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                                time.sleep(1.5)
-                                #cabo
-                                self.esperar_selecionar_index('cable_inout_1main',1)
-                                #fibra
-                                self.esperar_selecionar_value('fiber_inout_1main','1')
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida 
-                                self.esperar_selecionar_index('splitter_port_out_2main',2)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:8
-                                #porta entrada
-                                self.esperar_selecionar_index('splitter_port_in_3main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_3main',1)
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_3main_final',8)
-                                #porta inicial
-                                self.esperar_selecionar_index('pdoport_inout_4main',1)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_4main_final',8)
-                                #ligar
-                                self.esperar_clicar_ID('connectButton')
-                                #tipo ligador
-                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                                #tipo ligador
-                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                                #confirmar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                print(f'{xpath_mancha}\n,fim de cabo')
-                                sair()
-                        else:
-                            try:
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                            except:
-                                print('não consegui clicar') 
-                            # Retorna para a janela principal (fora do iframe)
-                            self.driver.switch_to.default_content()
-                            self.iframe('iframe-content-wrapper')
-                            self.iframe('externalFrame')
-                            try:
-                                #cenario
-                                time.sleep(0.5)
-                                self.esperar_selecionar_value('cbScenario','pdo_splitter') #Fibra óptica 1:1 Splitter n:n Porta CDO
-                                time.sleep(2)
-                                #cabo
-                                self.esperar_selecionar_index('cable_inout_1main',1)
-                                #fibra
-                                self.esperar_selecionar_value('fiber_inout_1main','1')
-                                time.sleep(.5)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1/8
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)
-                               
-                                #porta final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',1)
-                            
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','8')
-                                #ligar
-                                self.esperar_clicar_ID('connectButton')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                sair()
-                            except:
-                                print('não consegui clicar')
-                                sair()
 
-                            print(f'{xpath_mancha}\n,fim de cabo')
-                        
+                            except:
+                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
+
                     elif spliter == 'S2_1':
                         try:
                             #cenario
@@ -2881,10 +2888,12 @@ class Internet:
 
                             except Exception as e:
                                 print(e)
+                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
                                 sair()
                                 
                     except Exception as e:
                         print(e)
+                        sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
                         sair()
                 else:
                     sair()
@@ -2894,32 +2903,62 @@ class Internet:
     def operacoes_mud_est(self,id_sicon,projeto=True):
         wdw = WebDriverWait(self.driver, 60)
         self.driver.implicitly_wait(.05)
-        self.esperar_xpath('//*[@id="operational-module-osp"]')
-        self.esperar_xpath('//*[@id="operation-module-link-osp-2-0"]')
-        self.iframe('iframe-content-wrapper')
-        self.iframe('elementSearchFrame')
-        wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
-        operacao = self.driver.find_element(By.XPATH,'//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]').text
-        if operacao and projeto:
-            #operações
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
-            Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
-            time.sleep(1)
-            #id sicon
-            self.esperar_xpath_txt('//*[@id="idsicom"]',id_sicon)
-            #pesquisar
-            self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
-        else:
-            #operações
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
-            Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
-            time.sleep(1)
-            #projeto
-            self.esperar_clicar_xpath('//*[@id="codigoProj"]')
-            self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
-            #pesquisar
-            self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
-
+        try:
+            self.esperar_xpath('//*[@id="operational-module-osp"]')
+            self.esperar_xpath('//*[@id="operation-module-link-osp-2-0"]')
+            self.iframe('iframe-content-wrapper')
+            self.iframe('elementSearchFrame')
+            wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
+            operacao = self.driver.find_element(By.XPATH,'//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]').text
+            if operacao and projeto:
+                #operações
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
+                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
+                time.sleep(1)
+                #id sicon
+                self.esperar_xpath_txt('//*[@id="idsicom"]',id_sicon)
+                #pesquisar
+                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
+            else:
+                sg.popup_error('Ainda não faro')
+                '''
+                #operações
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
+                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
+                time.sleep(1)
+                #projeto
+                self.esperar_clicar_xpath('//*[@id="codigoProj"]')
+                self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
+                #pesquisar
+                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
+                '''
+        except:
+            self.iframe('iframe-content-wrapper')
+            self.iframe('elementSearchFrame')
+            wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
+            operacao = self.driver.find_element(By.XPATH,'//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]').text
+            if operacao and projeto:
+                #operações
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
+                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
+                time.sleep(1)
+                #id sicon
+                self.esperar_xpath_txt('//*[@id="idsicom"]',id_sicon)
+                #pesquisar
+                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
+            else:
+                sg.popup_error('Ainda não faro')
+                '''
+                #operações
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
+                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
+                time.sleep(1)
+                #projeto
+                self.esperar_clicar_xpath('//*[@id="codigoProj"]')
+                self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
+                #pesquisar
+                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
+                '''
         
         # Retorna para a janela principal (fora do iframe)
         self.driver.switch_to.default_content()

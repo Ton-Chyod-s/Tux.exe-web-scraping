@@ -440,6 +440,8 @@ class app:
             
             window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
+            sg.popup_notify(f'Carregando...')
+
             while True:
                 event,values = window.read()
                 if event in (None, 'Sair'):
