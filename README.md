@@ -1,2 +1,0 @@
-# Tux.exe
-off

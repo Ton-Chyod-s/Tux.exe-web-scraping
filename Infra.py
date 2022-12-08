@@ -935,6 +935,7 @@ if __name__ == '__main__':
             driver.get(url)
             time.sleep(1)  
             on = driver.find_element(By.XPATH,'//*[@id="LC1"]').text
+            frase = driver.find_element(By.XPATH,'//*[@id="LC2"]').text
             formulario = 'https://forms.gle/gQzJ6Th817BGSZyY9'
             time.sleep(1)
             driver.get(formulario)
@@ -973,7 +974,7 @@ if __name__ == '__main__':
                 
             else:
                 sg.theme('Reddit')
-                sg.popup_error('Seviço desativado,\nfoi mal ;/', keep_on_top=True)
+                sg.popup_error(frase, keep_on_top=True)
                 driver.close()
         except:
             pass
