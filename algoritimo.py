@@ -18,6 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from selenium.webdriver.support import expected_conditions as EC
 
+sg.popup_notify(f'Carregando biblioteca...')
 
 esperar = time.sleep(.05)
 esperar1 = time.sleep(1)

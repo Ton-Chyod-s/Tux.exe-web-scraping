@@ -4,6 +4,8 @@ from tqdm import tqdm
 import requests
 import socket
 
+sg.popup_notify(f'Carregando...')
+
 versao = '2.1.3'
 navegador = Internet()
 
@@ -48,7 +50,7 @@ class app:
         def teste_metodos():
             sg.theme('Reddit')
             self.layout_login = [
-                [sg.Button('Voltar',size=(5,1)),sg.Button('Operação',size=(9,1)),sg.Checkbox('Proj/Id Sicon'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
+                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
                 [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('CDOI',size=(7,1))]
                 ]
@@ -72,14 +74,14 @@ class app:
                     navegador.Conectividade_completa()
                 
                 if event == 'CDOI':
-                    if values['Proj/Id Sicon']:
-                        navegador.abastecimento_completa_cdoi(False)
-                    else:
-                        navegador.abastecimento_completa_cdoi()
+                    navegador.abastecimento_completa_cdoi()
                     
                 if event == 'Operações':
-                    navegador.operacoes_mud_est(values['id_sicon'])
-                    
+                    if values['Proj/Id Sicon']:
+                        navegador.operacoes_mud_est(values['id_sicon'],False)
+                    else:
+                        navegador.operacoes_mud_est(values['id_sicon'])
+
                 if event == 'Endereço':
                     navegador.atribuir_endereco()
                     
