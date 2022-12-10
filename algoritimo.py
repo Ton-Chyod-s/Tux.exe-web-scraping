@@ -2778,11 +2778,13 @@ class Internet:
                                 self.esperar_selecionar_index('splitter_port_out_2main',1)   
                                 #porta saida final
                                 self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',17)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','24')
+                                try:
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',17)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','24')
+                                except:
+                                    sair()
                                 time.sleep(1.5)
                                 #ligar
                                 self.esperar_clicar_xpath('//*[@id="connectButton"]')
@@ -2820,11 +2822,13 @@ class Internet:
                                 self.esperar_selecionar_index('splitter_port_out_2main',1)   
                                 #porta saida final
                                 self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',25)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','32')
+                                try:
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',25)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','32')
+                                except:
+                                    sair()
                                 time.sleep(1.5)
                                 #ligar
                                 self.esperar_clicar_xpath('//*[@id="connectButton"]')
