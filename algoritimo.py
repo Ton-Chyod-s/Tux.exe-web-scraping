@@ -3305,7 +3305,7 @@ class Internet:
                 #Fibra Inicial
                 self.esperar_selecionar_index('pdoport_inout_3main',33)
                 #porta final
-                self.esperar_selecionar_index('pdoport_inout_3main_final','41')
+                self.esperar_selecionar_index('pdoport_inout_3main_final','42')
                 #ligar
                 self.esperar_clicar_ID('connectButton')
                 time.sleep(.05)
@@ -3331,9 +3331,9 @@ class Internet:
                 #porta saida final
                 self.esperar_selecionar_index('splitter_port_out_2main_final','8')
                 #Fibra Inicial
-                self.esperar_selecionar_index('pdoport_inout_3main',42)
+                self.esperar_selecionar_index('pdoport_inout_3main',43)
                 #porta final
-                self.esperar_selecionar_index('pdoport_inout_3main_final','50')
+                self.esperar_selecionar_index('pdoport_inout_3main_final','51')
                 #ligar
                 self.esperar_clicar_ID('connectButton')
                 time.sleep(.05)
