@@ -3444,6 +3444,29 @@ class Internet:
             else:
                 sair()
 
+    def poste_traçado(self):
+        def posicao_mouse(x,y):
+            def on_click(x, y,button,pressed):
+                if button == mouse.Button.left and pressed:
+                    # Retornar False para a execução do listener de eventos
+                    return False
+            # Listener irá verificar quando o mouse clicará
+            with mouse.Listener(on_click=on_click) as listener:
+                while True:
+                    # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                    if not listener.running:
+                        break     
+            #definição da posição do mouse              
+            x, y = pt.position()
+
+
+        posicao_mouse()
+        time.sleep(1)
+
+
+        print()
+
+
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)

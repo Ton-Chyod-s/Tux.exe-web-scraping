@@ -74,7 +74,7 @@ class app:
                     navegador.Conectividade_completa()
                 
                 if event == 'CDOI':
-                    navegador.abastecimento_completa_cdoi()
+                    navegador.poste_traçado()
                     
                 if event == 'Operações':
                     if values['Proj/Id Sicon']:
@@ -440,7 +440,7 @@ class app:
             
             window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
-            sg.popup_notify(f'Carregando...')
+            sg.popup_notify(f'Isso ae guerreiro\nSó mais um pouco vamos entregar 2 celulas hj')
 
             while True:
                 event,values = window.read()
