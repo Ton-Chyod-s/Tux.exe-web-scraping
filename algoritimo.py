@@ -1612,7 +1612,9 @@ class Internet:
             wdw.until(frame_to_be_available_and_switch_to_it(('id','elementSearchFrame')))
             
         for olho in range(1,60):
+            time.sleep(.5)
             xpath_linha = f'.//*[@id="results"]/tbody/tr[{olho}]'
+            time.sleep(.5)
             xpath_olho = f'.//*[@id="results"]/tbody/tr[{olho}]/td[10]/i'
             try:
                 time.sleep(1.5)
@@ -3445,7 +3447,7 @@ class Internet:
                 sair()
 
     def poste_traçado(self):
-        def posicao_mouse(x,y):
+        def coordenada():
             def on_click(x, y,button,pressed):
                 if button == mouse.Button.left and pressed:
                     # Retornar False para a execução do listener de eventos
@@ -3458,14 +3460,18 @@ class Internet:
                         break     
             #definição da posição do mouse              
             x, y = pt.position()
+            time.sleep(2)
+
+            pt.click(x,y)
+            time.sleep(1)
+            pt.rightClick(x,y)
 
 
-        posicao_mouse()
-        time.sleep(1)
+            print(x,y)
 
+        coordenada()
 
-        print()
-
+        
 
 if __name__ == "__main__": 
     #navegador = Internet()
