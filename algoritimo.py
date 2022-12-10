@@ -1812,17 +1812,186 @@ class Internet:
                         if cdoe_sap == '332014': #18 tap intermediaria corning
                             try:
                                 try:
+                                    try:
+                                        self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    except:
+                                        print('não consegui clicar')  
+                                    self.driver.switch_to.default_content() 
+                                    # Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+                                    time.sleep(0.5)   
+                                    #cenario
+                                    self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                    time.sleep(1.5)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida 
+                                    self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:16
+                                    #porta entrada
+                                    self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_3main_final',16)
+                                    #porta inicial
+                                    self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_4main_final',16)
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                    #confirmar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    print(f'{xpath_mancha}\n,fim de cabo')
+                                    sair()
+                                except:
+                                    try:
+                                        time.sleep(0.5)
+                                        self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    except:
+                                        print('não consegui clicar')  
+                                    self.driver.switch_to.default_content() 
+                                    # Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+                                    time.sleep(0.5)    
+                                    #cenario
+                                    self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                    time.sleep(1.5)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida 
+                                    self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:16
+                                    #porta entrada
+                                    self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_3main_final',16)
+                                    #porta inicial
+                                    self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_4main_final',16)
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                    #tipo ligador
+                                    self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                    #confirmar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    print(f'{xpath_mancha}\n,fim de cabo')
+                                    sair()
+                            except Exception as e:
+                                print(e)
+                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
+                                sair()
+                        else:
+                            try:
+                                try:
+                                    time.sleep(0.5)
                                     self.driver.find_element(By.XPATH,xpath_mancha).click()
                                 except:
-                                    print('não consegui clicar')  
-                                self.driver.switch_to.default_content() 
-                                # Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
-                                time.sleep(0.5)   
+                                    print('não consegui clicar') 
+                                # Retorna para a janela principal (fora do iframe)
+                                self.driver.switch_to.default_content()
+                                self.iframe('iframe-content-wrapper')
+                                self.iframe('externalFrame')
+                                
+                                try:
+                                    #cenario
+                                    time.sleep(0.5)
+                                    self.esperar_selecionar_value('cbScenario','pdo_splitter') #Fibra óptica 1:1 Splitter n:n Porta CDO
+                                    time.sleep(2)
+                                    #cabo
+                                    self.esperar_selecionar_index('cable_inout_1main',1)
+                                    #fibra
+                                    self.esperar_selecionar_value('fiber_inout_1main','1')
+                                    time.sleep(.5)
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1/16
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                
+                                    #porta final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','16')
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',1)
+                                
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','16')
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    sair()
+                                except:
+                                    print('não consegui clicar')
+                                    sair()
+
+                                print(f'{xpath_mancha}\n,fim de cabo')
+                            except Exception as e:
+                                print(e)
+                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
+                                sair()
+                        
+                    elif spliter == 'S16_1':
+                        try:
+                            try:
+                                #cenario
+                                time.sleep(0.5)
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
+                                #Fibra Inicial
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
                                 #cenario
                                 self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                                time.sleep(1.5)
+                                time.sleep(2)
                                 #cabo
                                 self.esperar_selecionar_index('cable_inout_1main',1)
                                 #fibra
@@ -1853,22 +2022,38 @@ class Internet:
                                 self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
                                 #confirmar
                                 self.esperar_clicar_ID('attributesConfirmButton')
-                                print(f'{xpath_mancha}\n,fim de cabo')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
                                 sair()
                             except:
-                                try:
-                                    time.sleep(0.5)
-                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                except:
-                                    print('não consegui clicar')  
-                                self.driver.switch_to.default_content() 
-                                # Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
-                                time.sleep(0.5)    
+                                #cenario
+                                time.sleep(0.5)
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
+                                #Fibra Inicial
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
                                 #cenario
                                 self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                                time.sleep(1.5)
+                                time.sleep(2)
                                 #cabo
                                 self.esperar_selecionar_index('cable_inout_1main',1)
                                 #fibra
@@ -1899,307 +2084,142 @@ class Internet:
                                 self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
                                 #confirmar
                                 self.esperar_clicar_ID('attributesConfirmButton')
-                                print(f'{xpath_mancha}\n,fim de cabo')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
                                 sair()
-                        else:
-                            try:
-                                time.sleep(0.5)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                            except:
-                                print('não consegui clicar') 
-                            # Retorna para a janela principal (fora do iframe)
-                            self.driver.switch_to.default_content()
-                            self.iframe('iframe-content-wrapper')
-                            self.iframe('externalFrame')
+                        except Exception as e:
+                            print(e)
+                            sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
+                            sair()
                             
+                    elif spliter == 'S2_1':
+                        try:
                             try:
                                 #cenario
                                 time.sleep(0.5)
-                                self.esperar_selecionar_value('cbScenario','pdo_splitter') #Fibra óptica 1:1 Splitter n:n Porta CDO
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
+                                #Fibra Inicial
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
+                                #cenario
+                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
                                 time.sleep(2)
                                 #cabo
                                 self.esperar_selecionar_index('cable_inout_1main',1)
                                 #fibra
                                 self.esperar_selecionar_value('fiber_inout_1main','1')
-                                time.sleep(.5)
                                 #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1/16
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida 
+                                self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:16
+                                #porta entrada
+                                self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                #porta saida final
+                                self.esperar_selecionar_index('splitter_port_out_3main_final',16)
+                                #porta inicial
+                                self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                #porta final
+                                self.esperar_selecionar_index('pdoport_inout_4main_final',16)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
+                                sair()
+                            except:
+                                #cenario
+                                time.sleep(0.5)
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
                                 self.esperar_selecionar_index('splitter_port_out_2main',1)
-                               
-                                #porta final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','16')
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
                                 #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',1)
-                            
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','16')
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
                                 #ligar
                                 self.esperar_clicar_ID('connectButton')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
+                                #confirmar
                                 self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
+                                #cenario
+                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                time.sleep(2)
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida 
+                                self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:16
+                                #porta entrada
+                                self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                #porta saida final
+                                self.esperar_selecionar_index('splitter_port_out_3main_final',16)
+                                #porta inicial
+                                self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                #porta final
+                                self.esperar_selecionar_index('pdoport_inout_4main_final',16)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
                                 sair()
-                            except:
-                                print('não consegui clicar')
-                                sair()
-
-                            print(f'{xpath_mancha}\n,fim de cabo')
-                    
-                    elif spliter == 'S16_1':
-                        try:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:16
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',16)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',16)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
-                            sair()
-                        except:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:16
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',16)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',16)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
-                            sair()
-                            
-                    elif spliter == 'S2_1':
-                        try:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:16
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',16)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',16)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
-                            sair()
-                        except:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:16
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',16)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',16)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
+                        except Exception as e:
+                            print(e)
+                            sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
                             sair()
 
                     else:
@@ -2388,128 +2408,133 @@ class Internet:
 
                     elif spliter == 'S2_1':
                         try:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:8
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',8)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',8)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
-                            sair()
-                        except:
-                            #cenario
-                            time.sleep(0.5)
-                            self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
-                            wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
-                            self.esperar_clicar_ID('splitter_ratio_inout_2main')
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_2main',1)
-                            #cabo
-                            self. esperar_selecionar_index('cable_inout_3main',1)
-                            #Fibra Inicial
-                            self.esperar_selecionar_index('fiber_inout_3main',1)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            #OK
-                            self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                            time.sleep(1.5)
-                            #cenario
-                            self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
-                            time.sleep(2)
-                            #cabo
-                            self.esperar_selecionar_index('cable_inout_1main',1)
-                            #fibra
-                            self.esperar_selecionar_value('fiber_inout_1main','1')
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
-                            #porta de entrada
-                            self.esperar_selecionar_index('splitter_port_in_2main',1)
-                            #porta saida 
-                            self.esperar_selecionar_index('splitter_port_out_2main',2)
-                            #spliter
-                            self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:8
-                            #porta entrada
-                            self.esperar_selecionar_index('splitter_port_in_3main',1)
-                            #porta saida inicial
-                            self.esperar_selecionar_index('splitter_port_out_3main',1)
-                            #porta saida final
-                            self.esperar_selecionar_index('splitter_port_out_3main_final',8)
-                            #porta inicial
-                            self.esperar_selecionar_index('pdoport_inout_4main',1)
-                            #porta final
-                            self.esperar_selecionar_index('pdoport_inout_4main_final',8)
-                            #ligar
-                            self.esperar_clicar_ID('connectButton')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
-                            #tipo ligador
-                            self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
-                            #confirmar
-                            self.esperar_clicar_ID('attributesConfirmButton')
-                            print(f'{xpath_mancha}\n,Conectividade feita')
+                            try:
+                                #cenario
+                                time.sleep(0.5)
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
+                                #Fibra Inicial
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
+                                #cenario
+                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                time.sleep(2)
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida 
+                                self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_3main',2)  #1:8
+                                #porta entrada
+                                self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                #porta saida final
+                                self.esperar_selecionar_index('splitter_port_out_3main_final',8)
+                                #porta inicial
+                                self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                #porta final
+                                self.esperar_selecionar_index('pdoport_inout_4main_final',8)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
+                                sair()
+                            except:
+                                #cenario
+                                time.sleep(0.5)
+                                self.esperar_selecionar_value('cbScenario','difusion') #Fibra óptica 1:1 Splitter n:n Fibra óptica
+                                wdw.until(element_to_be_clickable(('id', 'splitter_ratio_inout_2main')))
+                                self.esperar_clicar_ID('splitter_ratio_inout_2main')
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_2main',1)
+                                #cabo
+                                self. esperar_selecionar_index('cable_inout_3main',1)
+                                #Fibra Inicial
+                                self.esperar_selecionar_index('fiber_inout_3main',1)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                #OK
+                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                time.sleep(1.5)
+                                #cenario
+                                self.esperar_selecionar_value('cbScenario','doubledifusion_pdo') #Fibra óptica 1:1 Splitter 1:1 Splitter n:n Porta CDO
+                                time.sleep(2)
+                                #cabo
+                                self.esperar_selecionar_index('cable_inout_1main',1)
+                                #fibra
+                                self.esperar_selecionar_value('fiber_inout_1main','1')
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #1:2
+                                #porta de entrada
+                                self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                #porta saida 
+                                self.esperar_selecionar_index('splitter_port_out_2main',2)
+                                #spliter
+                                self.esperar_selecionar_index('splitter_ratio_inout_3main',1)  #1:8
+                                #porta entrada
+                                self.esperar_selecionar_index('splitter_port_in_3main',1)
+                                #porta saida inicial
+                                self.esperar_selecionar_index('splitter_port_out_3main',1)
+                                #porta saida final
+                                self.esperar_selecionar_index('splitter_port_out_3main_final',8)
+                                #porta inicial
+                                self.esperar_selecionar_index('pdoport_inout_4main',1)
+                                #porta final
+                                self.esperar_selecionar_index('pdoport_inout_4main_final',8)
+                                #ligar
+                                self.esperar_clicar_ID('connectButton')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_2','FO.PIGTAIL')
+                                #tipo ligador
+                                self.esperar_selecionar_value('link_LinkConnectionPhysicalType_3','FO.PIGTAIL')
+                                #confirmar
+                                self.esperar_clicar_ID('attributesConfirmButton')
+                                print(f'{xpath_mancha}\n,Conectividade feita')
+                                sair()
+                        except Exception as e:
+                            print(e)
+                            sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
                             sair()
 
                     elif spliter == 'S8_1':
@@ -2736,11 +2761,13 @@ class Internet:
                                 self.esperar_selecionar_index('splitter_port_out_2main',1)   
                                 #porta saida final
                                 self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',9)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','16')
+                                try:
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',9)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','16')
+                                except:
+                                    sair()
                                 time.sleep(1.5)
                                 #ligar
                                 self.esperar_clicar_xpath('//*[@id="connectButton"]')
