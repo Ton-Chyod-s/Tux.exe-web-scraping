@@ -2843,7 +2843,7 @@ class Internet:
                                 #Esperando até seja visivel as Iframe da pagina
                                 wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
                                 wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
-
+                                
                                 #####splitter 5 #####
                                 #cenario
                                 time.sleep(0.5)
@@ -2862,11 +2862,13 @@ class Internet:
                                 self.esperar_selecionar_index('splitter_port_out_2main',1)   
                                 #porta saida final
                                 self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',33)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','41')
+                                try:
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',33)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','40')
+                                except:
+                                    sair()
                                 time.sleep(1.5)
                                 #ligar
                                 self.esperar_clicar_xpath('//*[@id="connectButton"]')
