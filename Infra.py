@@ -185,6 +185,8 @@ class app:
                 
                 janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
+                sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:8 Òó')
+
                 while True:
                     event,values = janela_cdoe_precon.read()
                     if event in (None, 'Sair'):
@@ -313,6 +315,8 @@ class app:
                         ] 
                 
                 janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+
+                sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:16 Òó')
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -614,6 +618,8 @@ class app:
             
             poste = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
             
+            sg.popup_notify(f'Não se esqueça de conferir:\nNumero de hp na celula com o informado\nColocar Id-Sicom na mancha do netwin')
+
             while True:
                 event,values = poste.read()
                 if event in (None, 'Sair'):
@@ -657,6 +663,8 @@ class app:
             ]
 
             window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout,finalize = True, keep_on_top=True)
+
+            sg.popup_notify(f'Não esqueça que nem pode abastecer sn lv O_O')
 
             while True:
                 event,values = window.read()
