@@ -52,7 +52,7 @@ class app:
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
-                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('CDOI',size=(7,1))]
+                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Test',size=(7,1))]
                 ]
             
             window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -73,9 +73,7 @@ class app:
                 if event == 'Conectividade':
                     navegador.Conectividade_completa()
                 
-                if event == 'CDOI':
-                    navegador.abastecimento_completa_cdoi()
-                    
+              
                 if event == 'Operações':
                     if values['projeto']:
                         navegador.operacoes_mud_est(values['id_sicon'],False,False)
@@ -659,7 +657,7 @@ class app:
             layout = [
             [sg.Button('Voltar',size=(6,1)),sg.Text('Abastecimento',size=(20,1),justification = 'c')],
             [sg.Multiline("",key="casa",size=(32,5))],
-            [sg.Button('Inicio',size=(13,1))]
+            [sg.Button('Inicio',size=(13,1)),sg.Button('CDOI',size=(13,1))]
             ]
 
             window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout,finalize = True, keep_on_top=True)
@@ -676,11 +674,16 @@ class app:
                     programa = app()
                     programa 
 
+                if event == 'CDOI':
+                    navegador.abastecimento_completa_cdoi()
+
                 if event == 'Caminho':
                     #navegador.endereco()
                     pass
                 if event == 'Inicio':
                     navegador.abastecimento(values['casa'])
+
+            
 
             window.close()
 
