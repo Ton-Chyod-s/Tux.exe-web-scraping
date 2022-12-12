@@ -115,7 +115,10 @@ class app:
                                 navegador.preencher_form(values['ang'],values['conectada'],values['quantidade'])
 
                         elif values['secundario']:
-                            sg.popup_error('Um dia vai preencher o secundario\nConfia!!!', keep_on_top=True)
+                            if values['again']:
+                                navegador.preencher_form(values['ang'],values['conectada'],values['quantidade'],False,False)
+                            else:
+                                navegador.preencher_form(values['ang'],values['conectada'],values['quantidade'],True,False)
 
                         else:
                             sg.popup_error('Marque o flag primario ou secundario', keep_on_top=True)
