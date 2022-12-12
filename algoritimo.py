@@ -3422,6 +3422,8 @@ class Internet:
                     self.driver.find_element(By.XPATH,'//*[@id="influenceAreaButton"]').click()
                     wdw.until(element_to_be_clickable(('xpath', ".//table[@class='connectionsTable']/tbody/tr[1]/td[1]/a")))
                     self.driver.find_element(By.XPATH,".//table[@class='connectionsTable']/tbody/tr[1]/td[1]/a").click()
+                    time.sleep(1)
+                    sair()
                 else:    
                     sair()
             else:
