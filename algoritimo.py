@@ -3420,9 +3420,8 @@ class Internet:
                         break
                     time.sleep(1)
                     self.driver.find_element(By.XPATH,'//*[@id="influenceAreaButton"]').click()
-                    wdw.until(frame_to_be_available_and_switch_to_it(('xpath','//*[@id="influenceArea_item:79542880"]/td[1]/a')))
-                    self.driver.find_element(By.ID,'//*[@id="influenceArea_item:79542880"]/td[1]/a').click()
-
+                    wdw.until(element_to_be_clickable(('xpath', ".//table[@class='connectionsTable']/tbody/tr[1]/td[1]/a")))
+                    self.driver.find_element(By.XPATH,".//table[@class='connectionsTable']/tbody/tr[1]/td[1]/a").click()
                 else:    
                     sair()
             else:
