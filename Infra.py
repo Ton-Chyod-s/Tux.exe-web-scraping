@@ -50,7 +50,7 @@ class app:
         def teste_metodos():
             sg.theme('Reddit')
             self.layout_login = [
-                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
+                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
                 [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('CDOI',size=(7,1))]
                 ]
@@ -74,11 +74,11 @@ class app:
                     navegador.Conectividade_completa()
                 
                 if event == 'CDOI':
-                    navegador.poste_traçado()
+                    navegador.abastecimento_completa_cdoi()
                     
                 if event == 'Operações':
-                    if values['Proj/Id Sicon']:
-                        navegador.operacoes_mud_est(values['id_sicon'],False)
+                    if values['projeto']:
+                        navegador.operacoes_mud_est(values['id_sicon'],False,False)
                     else:
                         navegador.operacoes_mud_est(values['id_sicon'])
 
@@ -882,13 +882,18 @@ class app:
 
 if __name__ == '__main__':
     try:
-        sg.popup_notify('Aguarde..')
+        ip_local = socket.gethostbyname(socket.gethostname())
+        ip_publico = requests.get('https://api.ipify.org/').text
+    except:
+        ip_local = 'ixi deu um erro no ip local'
+        ip_publico = 'no ip publico tb'
+
+    try:
+        sg.popup_notify('Aguarde, validando informações ...')
         try:
             with open("credenciais.json", encoding='utf-8') as meu_json:
                         dado = json.load(meu_json)
             from selenium.webdriver.firefox.options import Options 
-            ip_local = socket.gethostbyname(socket.gethostname())
-            ip_publico = requests.get('https://api.ipify.org/').text 
             info = dado['email']   
             tr = dado['login']
             senha = dado['senha']

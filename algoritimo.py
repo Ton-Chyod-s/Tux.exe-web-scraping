@@ -2935,12 +2935,19 @@ class Internet:
             else:
                 sair()        
     
-    def operacoes_mud_est(self,id_sicon,projeto=True):
-        wdw = WebDriverWait(self.driver, 60)
+    def operacoes_mud_est(self,id_sicon,projeto=True,botao=True):
+        wdw = WebDriverWait(self.driver, 1)
         self.driver.implicitly_wait(.05)
         try:
-            self.esperar_xpath('//*[@id="operational-module-osp"]')
-            self.esperar_xpath('//*[@id="operation-module-link-osp-2-0"]')
+            try:  
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operational-module-osp"]')))    
+                self.driver.find_element(By.XPATH,'//*[@id="operational-module-osp"]').click()
+                time.sleep(1.3)
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operation-module-link-osp-2-0"]')))    
+                self.driver.find_element(By.XPATH,'//*[@id="operation-module-link-osp-2-0"]').click()
+            except:
+                pass
+
             self.iframe('iframe-content-wrapper')
             self.iframe('elementSearchFrame')
             wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
@@ -2955,46 +2962,21 @@ class Internet:
                 #pesquisar
                 self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
             else:
-                sg.popup_error('Ainda não faro')
-                '''
+                #sg.popup_error('Ainda não faro',keep_on_top=True)
                 #operações
                 wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
                 Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
                 time.sleep(1)
                 #projeto
-                self.esperar_clicar_xpath('//*[@id="codigoProj"]')
+                wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="codigoProj"]')))
+                self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').click()
+                time.sleep(.5)
                 self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
-                #pesquisar
-                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
-                '''
+                time.sleep(.5)
+                self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(Keys.ENTER)
+            
         except:
-            self.iframe('iframe-content-wrapper')
-            self.iframe('elementSearchFrame')
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]')))
-            operacao = self.driver.find_element(By.XPATH,'//*[@id="searchForm"]/table[*]/tbody/tr/td/div/div/div[1]').text
-            if operacao and projeto:
-                #operações
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
-                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
-                time.sleep(1)
-                #id sicon
-                self.esperar_xpath_txt('//*[@id="idsicom"]',id_sicon)
-                #pesquisar
-                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
-            else:
-                sg.popup_error('Ainda não faro')
-                '''
-                #operações
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="operationSelected"]')))
-                Select(self.driver.find_element(By.XPATH,'//*[@id="operationSelected"]')).select_by_index(2)
-                time.sleep(1)
-                #projeto
-                self.esperar_clicar_xpath('//*[@id="codigoProj"]')
-                self.driver.find_element(By.XPATH,'//*[@id="codigoProj"]').send_keys(id_sicon)
-                #pesquisar
-                self.esperar_clicar_xpath('//*[@id="formContainer"]/table/tbody/tr[*]/td/div/div[3]/a/span')
-                '''
-        
+            print('deu erro ae')
         # Retorna para a janela principal (fora do iframe)
         self.driver.switch_to.default_content()
     
