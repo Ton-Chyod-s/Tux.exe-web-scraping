@@ -6,7 +6,7 @@ import socket
 
 sg.popup_notify(f'Carregando...')
 
-versao = '2.1.3'
+versao = '2.1.4'
 navegador = Internet()
 
 class app:
@@ -903,7 +903,7 @@ if __name__ == '__main__':
             info = dado['email']   
             tr = dado['login']
             senha = dado['senha']
-        
+            
         except:
             sg.theme('Reddit')
             layout_login = [
