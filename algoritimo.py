@@ -2714,39 +2714,41 @@ class Internet:
 
                         else:
                             try:
-                                #####splitter 1 #####
+                                 #####splitter 1 #####
                                 try:
                                     #spliter
                                     self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #S8_1
-                                except:
+                                
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)   
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
+                                    #Fibra Inicial
+                                    self.esperar_selecionar_index('pdoport_inout_3main',1)
+                                    #porta final
+                                    self.esperar_selecionar_index('pdoport_inout_3main_final','8')
+                                    #ligar
+                                    self.esperar_clicar_ID('connectButton')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    time.sleep(.05)
+                                    #OK
+                                    self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
                                     sair()
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)   
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                #Fibra Inicial
-                                self.esperar_selecionar_index('pdoport_inout_3main',1)
-                                #porta final
-                                self.esperar_selecionar_index('pdoport_inout_3main_final','8')
-                                #ligar
-                                self.esperar_clicar_ID('connectButton')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                time.sleep(.05)
-                                #OK
-                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                                sair()
-                                time.sleep(1)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                self.driver.switch_to.default_content()
-                                #Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+                                    time.sleep(1)
+                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    self.driver.switch_to.default_content()
+                                    #Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+                                except:
+                                    sg.popup_error('Esqueceu de colocar splitter pow\n','Reinicie o programa',keep_on_top=True)
+                                    sair()
 
                                 #####splitter 2 #####
                                 #cenario
@@ -2761,40 +2763,37 @@ class Internet:
                                 try:
                                     #spliter
                                     self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #S8_2
-                                except:
-                                    sair()
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)   
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                try:
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)   
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
                                     #Fibra Inicial
                                     self.esperar_selecionar_index('pdoport_inout_3main',9)
                                     #porta final
                                     self.esperar_selecionar_index('pdoport_inout_3main_final','16')
+                                    time.sleep(1.5)
+                                    #ligar
+                                    self.esperar_clicar_xpath('//*[@id="connectButton"]')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    time.sleep(.05)
+                                    #OK
+                                    self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                    sair()
+                                    time.sleep(1)
+                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    self.driver.switch_to.default_content()
+                                    #Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
                                     sair()
-                                time.sleep(1.5)
-                                #ligar
-                                self.esperar_clicar_xpath('//*[@id="connectButton"]')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                time.sleep(.05)
-                                #OK
-                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                                sair()
-                                time.sleep(1)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                self.driver.switch_to.default_content()
-                                #Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
-                                
+                                    
                                 #####splitter 3 #####
                                 #cenario
                                 time.sleep(0.5)
@@ -2808,39 +2807,36 @@ class Internet:
                                 try:
                                     #spliter
                                     self.esperar_selecionar_index('splitter_ratio_inout_2main',3) #S8_2
-                                except:
-                                    sair()
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)   
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                try:
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)   
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
                                     #Fibra Inicial
                                     self.esperar_selecionar_index('pdoport_inout_3main',17)
                                     #porta final
                                     self.esperar_selecionar_index('pdoport_inout_3main_final','24')
+                                    time.sleep(1.5)
+                                    #ligar
+                                    self.esperar_clicar_xpath('//*[@id="connectButton"]')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    time.sleep(.05)
+                                    #OK
+                                    self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                    sair()
+                                    time.sleep(1)
+                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    self.driver.switch_to.default_content()
+                                    #Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
                                     sair()
-                                time.sleep(1.5)
-                                #ligar
-                                self.esperar_clicar_xpath('//*[@id="connectButton"]')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                time.sleep(.05)
-                                #OK
-                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                                sair()
-                                time.sleep(1)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                self.driver.switch_to.default_content()
-                                #Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
 
                                 #####splitter 4 #####
                                 #cenario
@@ -2855,40 +2851,37 @@ class Internet:
                                 try:
                                     #spliter
                                     self.esperar_selecionar_index('splitter_ratio_inout_2main',4) #S8_4
-                                except:
-                                    sair()
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)   
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                try:
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)   
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
                                     #Fibra Inicial
                                     self.esperar_selecionar_index('pdoport_inout_3main',25)
                                     #porta final
                                     self.esperar_selecionar_index('pdoport_inout_3main_final','32')
+                                    time.sleep(1.5)
+                                    #ligar
+                                    self.esperar_clicar_xpath('//*[@id="connectButton"]')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    time.sleep(.05)
+                                    #OK
+                                    self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                    sair()
+                                    time.sleep(1)
+                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    self.driver.switch_to.default_content()
+                                    #Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
                                     sair()
-                                time.sleep(1.5)
-                                #ligar
-                                self.esperar_clicar_xpath('//*[@id="connectButton"]')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                time.sleep(.05)
-                                #OK
-                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                                sair()
-                                time.sleep(1)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                self.driver.switch_to.default_content()
-                                #Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
-                                
+
                                 #####splitter 5 #####
                                 #cenario
                                 time.sleep(0.5)
@@ -2902,43 +2895,40 @@ class Internet:
                                 try:
                                     #spliter
                                     self.esperar_selecionar_index('splitter_ratio_inout_2main',5) #S8_5
-                                except:
-                                    sair()
-                                #porta de entrada
-                                self.esperar_selecionar_index('splitter_port_in_2main',1)
-                                #porta saida inicial
-                                self.esperar_selecionar_index('splitter_port_out_2main',1)   
-                                #porta saida final
-                                self.esperar_selecionar_index('splitter_port_out_2main_final','8')
-                                try:
+                                    #porta de entrada
+                                    self.esperar_selecionar_index('splitter_port_in_2main',1)
+                                    #porta saida inicial
+                                    self.esperar_selecionar_index('splitter_port_out_2main',1)   
+                                    #porta saida final
+                                    self.esperar_selecionar_index('splitter_port_out_2main_final','8')
                                     #Fibra Inicial
                                     self.esperar_selecionar_index('pdoport_inout_3main',33)
                                     #porta final
                                     self.esperar_selecionar_index('pdoport_inout_3main_final','40')
+                                    time.sleep(1.5)
+                                    #ligar
+                                    self.esperar_clicar_xpath('//*[@id="connectButton"]')
+                                    time.sleep(.05)
+                                    #tipo ligador
+                                    self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
+                                    #confimar
+                                    self.esperar_clicar_ID('attributesConfirmButton')
+                                    time.sleep(.05)
+                                    #OK
+                                    self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
+                                    sair()
+                                    time.sleep(1)
+                                    self.driver.find_element(By.XPATH,xpath_mancha).click()
+                                    self.driver.switch_to.default_content()
+                                    #Esperando até seja visivel as Iframe da pagina
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                                    wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+
                                 except:
                                     sair()
-                                time.sleep(1.5)
-                                #ligar
-                                self.esperar_clicar_xpath('//*[@id="connectButton"]')
-                                time.sleep(.05)
-                                #tipo ligador
-                                self.esperar_selecionar_ID('link_LinkConnectionPhysicalType_2','FO.PIGTAIL') #pigtail
-                                #confimar
-                                self.esperar_clicar_ID('attributesConfirmButton')
-                                time.sleep(.05)
-                                #OK
-                                self.esperar_xpath('//*[@class="linkbutton no-image confirm button"]')
-                                sair()
-                                time.sleep(1)
-                                self.driver.find_element(By.XPATH,xpath_mancha).click()
-                                self.driver.switch_to.default_content()
-                                #Esperando até seja visivel as Iframe da pagina
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-                                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
 
                             except Exception as e:
                                 print(e)
-                                sg.popup_error('Tem que prestar atenção no cadastro pow\n','Evite conversar\n','Mexer no celular\n', 'Desviar atenção na hora de acionar o programa\n','Reinicie o programa',keep_on_top=True)
                                 sair()
                                 
                     except Exception as e:
