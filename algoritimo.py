@@ -2715,8 +2715,11 @@ class Internet:
                         else:
                             try:
                                 #####splitter 1 #####
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #S8_1
+                                try:
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',1) #S8_1
+                                except:
+                                    sair()
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
@@ -2755,8 +2758,11 @@ class Internet:
                                 #fibra
                                 self.esperar_selecionar_value('fiber_inout_1main','2')
                                 time.sleep(.5)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #S8_2
+                                try:
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',2) #S8_2
+                                except:
+                                    sair()
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
@@ -2799,8 +2805,11 @@ class Internet:
                                 #fibra
                                 self.esperar_selecionar_value('fiber_inout_1main','3')
                                 time.sleep(.5)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',3) #S8_2
+                                try:
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',3) #S8_2
+                                except:
+                                    sair()
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
@@ -2843,8 +2852,11 @@ class Internet:
                                 #fibra
                                 self.esperar_selecionar_value('fiber_inout_1main','4')
                                 time.sleep(.5)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',4) #S8_4
+                                try:
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',4) #S8_4
+                                except:
+                                    sair()
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
@@ -2887,8 +2899,11 @@ class Internet:
                                 #fibra
                                 self.esperar_selecionar_value('fiber_inout_1main','5')
                                 time.sleep(.5)
-                                #spliter
-                                self.esperar_selecionar_index('splitter_ratio_inout_2main',5) #S8_5
+                                try:
+                                    #spliter
+                                    self.esperar_selecionar_index('splitter_ratio_inout_2main',5) #S8_5
+                                except:
+                                    sair()
                                 #porta de entrada
                                 self.esperar_selecionar_index('splitter_port_in_2main',1)
                                 #porta saida inicial
