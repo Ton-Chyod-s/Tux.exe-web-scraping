@@ -2748,7 +2748,7 @@ class Internet:
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
                                     sg.popup_error('Esqueceu de colocar splitter pow\n','Reinicie o programa',keep_on_top=True)
-                                    sair()
+                                    pass
 
                                 #####splitter 2 #####
                                 #cenario
@@ -2792,7 +2792,7 @@ class Internet:
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
-                                    sair()
+                                    pass
                                     
                                 #####splitter 3 #####
                                 #cenario
@@ -2836,7 +2836,7 @@ class Internet:
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
-                                    sair()
+                                    pass
 
                                 #####splitter 4 #####
                                 #cenario
@@ -2880,7 +2880,7 @@ class Internet:
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
                                     wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
                                 except:
-                                    sair()
+                                    pass
 
                                 #####splitter 5 #####
                                 #cenario
