@@ -1149,7 +1149,7 @@ class Internet:
             self.driver.switch_to.default_content() 
             sg.popup_error(f'Ixi deu um erro ae O_O \nse pa você ta no caminho errado ou \nnão é o CABO',keep_on_top=True)
 
-    def traçado (self,id_Sicom,traçado=True, origem=True,projeto=True):
+    def traçado (self,id_Sicom,traçado=True, origem=True,projeto=True,id_projeto=True):
         wdw = WebDriverWait(self.driver, 30)
         try:
             self.iframe('iframe-content-wrapper')
@@ -1162,10 +1162,15 @@ class Internet:
                     self.esperar_selecionar_ID('ownerId','2') #arquivo eletronico
                 else:
                     self.esperar_selecionar_ID('ownerId','1') #oi
-                #id sicon
-                self.esperar_txt_ID('idSicom',id_Sicom)
-                self.esperar_xpath('/html/body/div[*]/div[2]/form/div/div[2]/table[4]/tbody/tr[2]/td[1]/div[2]/div/ul/li')
-                
+                if id_projeto:
+                    #id sicon
+                    self.esperar_txt_ID('idSicom',id_Sicom)
+                    self.esperar_xpath('/html/body/div[*]/div[2]/form/div/div[2]/table[4]/tbody/tr[2]/td[1]/div[2]/div/ul/li')
+                else:
+                    #nome de projeto
+                    self.esperar_txt_ID('project',id_Sicom)
+                    self.esperar_xpath('//*[@id="project_div"]/ul/li[1]/a')
+
                 if projeto:
                     self.esperar_selecionar_value('catProjectStateId','191') #implantação concluido
                 else:
@@ -1314,7 +1319,7 @@ class Internet:
             self.driver.switch_to.default_content() 
             sg.popup_error(f'Ixi deu um erro ae O_O \nse pa você ta no caminho errado ou \nnão é a Hub/Ceos p',keep_on_top=True)
 
-    def cdoi(self,id_sicon,estacao,topologia=True):
+    def cdoi(self,id_sicon,estacao,topologia=True,id_projeto=True):
         self.iframe('iframe-content-wrapper')
         self.iframe('externalIspIframe')
         self.iframe('dados')
@@ -1325,9 +1330,14 @@ class Internet:
             self.esperar_selecionar_value('network','Óptica GPON')
             #fabricante
             self.esperar_selecionar_value('idFabricante','FURUKAWA')
-            #Id-sicon
-            self.esperar_txt_ID('id_sicom_name',id_sicon)
-            self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            if id_projeto:
+                #Id-sicon
+                self.esperar_txt_ID('id_sicom_name',id_sicon)
+                self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            else:
+                #Nome projeto
+                self.esperar_txt_ID('projecto_name',id_sicon)
+                self.esperar_xpath('/html/body/div[*]/ul/li/strong')
 
             if topologia:
                 self.esperar_selecionar_value('topology','A/B')

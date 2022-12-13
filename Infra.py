@@ -273,7 +273,7 @@ class app:
                 sg.theme('reddit') 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Checkbox('>= 41 hp',key=('maior')),sg.Button('Spliter',size=(8,1))],
-                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(18,1),key='id-sicom')], 
+                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(10,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')], 
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
@@ -290,10 +290,16 @@ class app:
                         programa
 
                     if event == 'CDOI':
-                        if values['maior']:
-                            navegador.cdoi(values['id-sicom'],values['estacao'],False)
+                        if values['projeto']:
+                            if values['maior']:
+                                navegador.cdoi(values['id-sicom'],values['estacao'],False,False)
+                            else:
+                                navegador.cdoi(values['id-sicom'],values['estacao'],True,False)
                         else:
-                            navegador.cdoi(values['id-sicom'],values['estacao'],True)
+                            if values['maior']:
+                                navegador.cdoi(values['id-sicom'],values['estacao'],False)
+                            else:
+                                navegador.cdoi(values['id-sicom'],values['estacao'],True)
 
                     if event == 'Spliter':
                         if values['maior']:
@@ -611,7 +617,7 @@ class app:
         def poste():
             sg.theme('Reddit')
             poste_layout = [
-                            [sg.Button('Voltar',size=(5,1)),sg.Text('Poste',size=(11,1),justification=('c')),sg.Button('Traçado',size=(11,1))],
+                            [sg.Button('Voltar',size=(5,1)),sg.Checkbox('Proj',key='projeto'),sg.Button('Traçado',size=(11,1))],
                             [sg.Text('ID Sicom',size=(11,1)),sg.Input(size=(21,1),key='id-sicom')],
                             [sg.Text('Capa/Forn',size=(11,1)),sg.Input(size=(8,1),key='capacidade'),sg.Input(size=(11,1),key='fornecedor')],
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Button('Tipo 2',size=(6,1))]  
@@ -650,7 +656,10 @@ class app:
                     else:
                         sg.popup('Marque o flag \nCC para Concreto Circular ou \nCdT para Concreto duplo T', keep_on_top=True)
                 
-                if event == 'Traçado':  
+                if event == 'Traçado':
+                    if values['projeto']:
+                        navegador.traçado(values['id-sicom'],False,False,True,False)
+                    else:
                         navegador.traçado(values['id-sicom'],False,False)
 
             poste.close()
