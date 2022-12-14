@@ -1024,6 +1024,11 @@ class Internet:
                     self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
                     time.sleep(1.5)
 
+                #localização
+                self.esperar_xpath('//*[@id="location_tab_localization"]')
+                
+                sg.popup_no_buttons('Confere a localização antes de guarde dmr\nTMJ!')
+
                 #guardar
                 #esperar_xpath('//*[@id="forms_button_save"]')
                     
@@ -3502,7 +3507,7 @@ class Internet:
         pt.click(x,y)
         time.sleep(.5)
         #clicar com direito
-        pt.rightClick(1321,310)
+        pt.Click(1321,310)
 
         self.driver.switch_to.default_content()
 
