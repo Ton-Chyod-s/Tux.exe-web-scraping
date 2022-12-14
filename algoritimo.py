@@ -3507,7 +3507,7 @@ class Internet:
         pt.click(x,y)
         time.sleep(.5)
         #clicar com direito
-        pt.Click(1321,310)
+        pt.click(1321,310)
 
         self.driver.switch_to.default_content()
 
