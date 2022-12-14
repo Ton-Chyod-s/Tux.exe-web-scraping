@@ -622,7 +622,7 @@ class app:
                             [sg.Button('Voltar',size=(5,1)),sg.Text('Poste',justification='c',size=(7,1)),sg.Stretch(),sg.Button('Traçado',size=(11,1))],
                             [sg.Text('ID Sicom',size=(11,1)),sg.Input(size=(11,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')],
                             [sg.Text('Capa/Forn',size=(11,1)),sg.Input(size=(8,1),key='capacidade'),sg.Input(size=(11,1),key='fornecedor')],
-                            [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Button('Tipo 2',size=(6,1))]  
+                            [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Checkbox('CPoste',key='CPoste')]  
             ]
             
             poste = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
@@ -640,23 +640,36 @@ class app:
                     programa
                         
                 if event == 'Poste':
-                    if values['cdt']:
-                        navegador.poste_inicio()
-                        navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
+                    if values['CPoste']:
+                        if values['cdt']:
+                            navegador.poste_inicio()
+                            time.sleep(1)
+                            navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
 
-                    elif values['cc']:
-                        navegador.poste_inicio()
-                        navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,True,False)
+                        elif values['cc']:
+                            navegador.poste_inicio()
+                            time.sleep(1)
+                            navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,True,False)
+                        else:
+                            pass
                     else:
-                        sg.popup('Marque o flag \nCC para Concreto Circular ou \nCdT para Concreto duplo T', keep_on_top=True)
+                        if values['cdt']:
+                            navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
+
+                        elif values['cc']:
+                            navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,True,False)
+                        else:
+                            sg.popup('Marque o flag \nCC para Concreto Circular ou \nCdT para Concreto duplo T', keep_on_top=True)
 
                 if event == 'Tipo 2':
                     if values['cdt']:
                         navegador.poste_inicio()
+                        time.sleep(1)
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,False,False)
 
                     elif values['cc']:
                         navegador.poste_inicio()
+                        time.sleep(1)
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,False,False,False)
 
                     else:
