@@ -1027,7 +1027,7 @@ class Internet:
                 #localização
                 self.esperar_xpath('//*[@id="location_tab_localization"]')
                 
-                sg.popup_no_buttons('Confere a localização antes de guarde dmr\nTMJ!')
+                sg.popup_no_buttons('Confere a localização antes de guardar dmr\nTMJ!',keep_on_top='True')
 
                 #guardar
                 #esperar_xpath('//*[@id="forms_button_save"]')
