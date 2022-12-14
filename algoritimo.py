@@ -1265,7 +1265,7 @@ class Internet:
             else:
                 print('nem encontrei')
 
-    def hub_box_p(self,id_sicon,estacao,numero, hub_box=True):
+    def hub_box_p(self,id_sicon,estacao,numero, hub_box=True,projeto=True):
         self.iframe('iframe-content-wrapper')
         self.iframe('externalIspIframe')
         self.iframe('dados')
@@ -1284,9 +1284,14 @@ class Internet:
                 self.esperar_selecionar_value('idFabricante','GENÉRICO')
             #destinação 
             self.esperar_selecionar_value('destinationId','1000385') #acesso gpon
-            #Id-sicon
-            self.esperar_txt_ID('id_sicom_name',id_sicon)
-            self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            if projeto:
+                #Id-sicon
+                self.esperar_txt_ID('id_sicom_name',id_sicon)
+                self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            else:
+                #nome projeto
+                self.esperar_txt_ID('projecto_name',id_sicon)
+                self.esperar_xpath('//li[@class="ac_even ac_over"]')
             if hub_box:
                 pass
             else:

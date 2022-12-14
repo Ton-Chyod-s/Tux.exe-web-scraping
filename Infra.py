@@ -237,7 +237,7 @@ class app:
                 sg.theme('reddit') 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Text(),sg.Button('Spliter',size=(8,1))],
-                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(18,1),key='id-sicom')], 
+                        [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(10,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')], 
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(5,1),key='estacao'),sg.Button('Ceos/p',size=(9,1))],
                         [sg.Text('Número'),sg.Text(size=(1,1)),sg.Input(size=(5,1),key='numero'),sg.Checkbox('Ceos P', enable_events=False, key='ceos_p')]  
                         ] 
@@ -255,11 +255,18 @@ class app:
                         programa
 
                     if event == 'Ceos/p':
-                        if values['ceos_p']:
-                            navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'],False)
+                        if values['projeto']:
+                            if values['ceos_p']:
+                                navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'],False,False)
 
+                            else:
+                                navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'],True,False)
                         else:
-                            navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'])
+                            if values['ceos_p']:
+                                navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'],False)
+
+                            else:
+                                navegador.hub_box_p(values['id-sicom'],values['estacao'],values['numero'])
 
                     if event == 'Spliter':
                         if values['ceos_p']:
@@ -643,15 +650,15 @@ class app:
                     if values['CPoste']:
                         if values['cdt']:
                             navegador.poste_inicio()
-                            time.sleep(1)
+                            time.sleep(2)
                             navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
 
                         elif values['cc']:
                             navegador.poste_inicio()
-                            time.sleep(1)
+                            time.sleep(2)
                             navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,True,False)
                         else:
-                            pass
+                            sg.popup('Marque o flag \nCC para Concreto Circular ou \nCdT para Concreto duplo T', keep_on_top=True)
                     else:
                         if values['cdt']:
                             navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
