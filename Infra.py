@@ -72,8 +72,7 @@ class app:
                  
                 if event == 'Conectividade':
                     navegador.Conectividade_completa()
-                
-              
+            
                 if event == 'Operações':
                     if values['projeto']:
                         navegador.operacoes_mud_est(values['id_sicon'],False,False)
@@ -82,6 +81,9 @@ class app:
 
                 if event == 'Endereço':
                     navegador.atribuir_endereco()
+
+                if event == 'Test':
+                    navegador.poste_traçado()
                     
             window.close()
 
@@ -617,7 +619,7 @@ class app:
         def poste():
             sg.theme('Reddit')
             poste_layout = [
-                            [sg.Button('Voltar',size=(5,1)),sg.Text('Poste',justification='c'),sg.Stretch(),sg.Button('Traçado',size=(11,1))],
+                            [sg.Button('Voltar',size=(5,1)),sg.Text('Poste',justification='c',size=(7,1)),sg.Stretch(),sg.Button('Traçado',size=(11,1))],
                             [sg.Text('ID Sicom',size=(11,1)),sg.Input(size=(11,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')],
                             [sg.Text('Capa/Forn',size=(11,1)),sg.Input(size=(8,1),key='capacidade'),sg.Input(size=(11,1),key='fornecedor')],
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Button('Tipo 2',size=(6,1))]  

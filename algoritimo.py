@@ -3475,30 +3475,46 @@ class Internet:
                 sair()
 
     def poste_traçado(self):
-        def coordenada():
-            def on_click(x, y,button,pressed):
-                if button == mouse.Button.left and pressed:
-                    # Retornar False para a execução do listener de eventos
-                    return False
-            # Listener irá verificar quando o mouse clicará
-            with mouse.Listener(on_click=on_click) as listener:
-                while True:
-                    # Assim que o mouse clicar, o listener irá encerrar e parar o loop
-                    if not listener.running:
-                        break     
-            #definição da posição do mouse              
-            x, y = pt.position()
-            time.sleep(2)
+        
+        def on_click(x, y,button,pressed):
+            if button == mouse.Button.left and pressed:
+                # Retornar False para a execução do listener de eventos
+                return False
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break     
+        #definição da posição do mouse              
+        x , y = pt.position()
+        #iframe
+        self.iframe('iframe-content-wrapper')
+        #adicionar
+        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
+        #local
+        self.esperar_clicar_xpath('//*[@id="olControlAddInfranode"]')
+        time.sleep(1)
+        #poste
+        self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[17]/a/div[2]')
+        #poste_2
+        self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[17]/ul/li/a/div[2]')
+        #clicar no local escolhido
+        pt.click(x,y)
+        time.sleep(.5)
+        #clicar com direito
+        pt.rightClick(1321,310)
 
-            pt.click(x,y)
-            time.sleep(1)
-            pt.rightClick(x,y)
+        
 
 
-            print(x,y)
+        self.driver.switch_to.default_content()
 
-        coordenada()
+        #z , q = pt.position()
+        #time.sleep(1)
 
+        #print(x,y)
+        #print(z,q)
         
 
 if __name__ == "__main__": 
