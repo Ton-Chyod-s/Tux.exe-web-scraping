@@ -83,7 +83,7 @@ class app:
                     navegador.atribuir_endereco()
 
                 if event == 'Test':
-                    navegador.poste_traçado()
+                    sg.popup('To testando pow', keep_on_top=True)
                     
             window.close()
 
@@ -641,18 +641,22 @@ class app:
                         
                 if event == 'Poste':
                     if values['cdt']:
+                        navegador.poste_inicio()
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False)
 
                     elif values['cc']:
+                        navegador.poste_inicio()
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,True,False)
                     else:
                         sg.popup('Marque o flag \nCC para Concreto Circular ou \nCdT para Concreto duplo T', keep_on_top=True)
 
                 if event == 'Tipo 2':
                     if values['cdt']:
+                        navegador.poste_inicio()
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,False,False)
 
                     elif values['cc']:
+                        navegador.poste_inicio()
                         navegador.poste(values['capacidade'],values['fornecedor'],values['id-sicom'],False,True,True,False,False,False,False)
 
                     else:

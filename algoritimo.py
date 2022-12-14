@@ -3474,8 +3474,7 @@ class Internet:
             else:
                 sair()
 
-    def poste_traçado(self):
-        
+    def poste_inicio(self):
         def on_click(x, y,button,pressed):
             if button == mouse.Button.left and pressed:
                 # Retornar False para a execução do listener de eventos
@@ -3505,16 +3504,8 @@ class Internet:
         #clicar com direito
         pt.rightClick(1321,310)
 
-        
-
-
         self.driver.switch_to.default_content()
 
-        #z , q = pt.position()
-        #time.sleep(1)
-
-        #print(x,y)
-        #print(z,q)
         
 
 if __name__ == "__main__": 
