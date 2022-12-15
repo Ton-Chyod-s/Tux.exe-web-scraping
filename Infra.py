@@ -12,9 +12,11 @@ navegador = Internet()
 
 class app:
     def __init__(self):
-        menu_def = ['&Arquivo', ['&Nome de utilizador','&Tema']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
-        '&As-Built','&Completa','Forms google']]
+        selected_theme = 'Reddit'
+        sg.theme(selected_theme)
 
+        menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
+        '&As-Built','&Completa','Forms google']]
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
             [sg.Button('Web',size=(5,1)), sg.Text('INFRA',justification='c',size=(9,1)),sg.Button('Login',size=(6,1))],
@@ -81,7 +83,8 @@ class app:
                     navegador.atribuir_endereco()
 
                 if event == 'Test':
-                    sg.popup('To testando pow', keep_on_top=True)
+                    navegador.tracado_inicio()
+                    #sg.popup('To testando pow', keep_on_top=True)
                     
             window.close()
 
@@ -797,7 +800,7 @@ class app:
 
             window.close()
         
-        def tema():
+       
             import PySimpleGUI as sg
 
             themes = sg.theme_list()
@@ -831,7 +834,6 @@ class app:
                     sg.theme('selected_theme')
                     layout = [[sg.T('Tema')],[sg.Text('Select Theme:'), sg.Combo(values=themes,default_value=selected_theme, size=(15, 1), enable_events=True, key='select_theme')], [sg.B('Voltar')]]
                     window = sg.Window('',layout)
-
 
         while True:
             event,values = window.read()
@@ -944,10 +946,6 @@ class app:
             if event == 'Forms google':
                 window.close()
                 forms_google()
-
-            if event == 'Tema':
-                window.close()
-                tema()
 
         window.close()
 

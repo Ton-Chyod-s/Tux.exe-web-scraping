@@ -3516,8 +3516,64 @@ class Internet:
 
         self.driver.switch_to.default_content()
 
+    def tracado_inicio(self):
+        def on_click(x, y,button,pressed):
+            if button == mouse.Button.left and pressed:
+                # Retornar False para a execução do listener de eventos
+                return False
+        
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break     
+        #definição da posição do mouse              
+        x , y = pt.position()
+
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break    
+
+        #definição da posição do mouse              
+        a , b = pt.position()
+
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break    
+
+        #definição da posição do mouse              
+        c , d = pt.position()
+
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break    
+
+        #definição da posição do mouse              
+        k , l = pt.position()
+
         
 
+        print(x , y,'\n',a , b,'\n', c , d,'\n',k , l)
+
+    
+        pt.click(c , d)
+
+        time.sleep(1)
+
+        pt.doubleClick(x , y)
+
+        
+    
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
