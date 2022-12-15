@@ -1007,7 +1007,7 @@ if __name__ == '__main__':
             
                 window.close()
         try:
-            url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/Mind%20Tux"
+            url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/tux%20mind"
             options = Options()
             options.headless = True
             driver = Firefox(options=options)

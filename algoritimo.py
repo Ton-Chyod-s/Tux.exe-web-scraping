@@ -18,6 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from selenium.webdriver.support import expected_conditions as EC
 
+
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -3565,14 +3566,25 @@ class Internet:
 
         print(x , y,'\n',a , b,'\n', c , d,'\n',k , l)
 
-    
-        pt.click(c , d)
-
-        time.sleep(1)
-
-        pt.doubleClick(x , y)
-
         
+
+        pt.click(x , y)
+        time.sleep(.5)
+
+        pt.doubleClick(a , b)
+        time.sleep(.5)
+        
+        pt.click(a , b)
+        time.sleep(.5)
+
+        pt.doubleClick(c , d)
+        time.sleep(.5)
+
+        pt.click(c , d)
+        time.sleep(.5)
+
+        pt.doubleClick(k , l)
+
     
 if __name__ == "__main__": 
     #navegador = Internet()
