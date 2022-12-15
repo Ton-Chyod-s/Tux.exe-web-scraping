@@ -3,6 +3,7 @@ from algoritimo import *
 from tqdm import tqdm
 import requests
 import socket
+import random
 
 sg.popup_notify(f'Carregando...')
 
@@ -11,9 +12,8 @@ navegador = Internet()
 
 class app:
     def __init__(self):
-        sg.theme('Reddit')
-        menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
-                                                                                                                                                                    '&As-Built','&Completa','Forms google']]
+        menu_def = ['&Arquivo', ['&Nome de utilizador','&Tema']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
+        '&As-Built','&Completa','Forms google']]
 
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
@@ -24,7 +24,6 @@ class app:
         window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
 
         def celula():
-            sg.theme('Reddit')
             self.layout_login = [
             [sg.Button('Voltar',size=(6,1)),sg.Text('Informações da celula',size=(20,1),justification = 'c')],
             [sg.Text('Nomenclatura',size=(13,1),justification = 'l'),sg.Input(size=(16,1))],
@@ -48,7 +47,6 @@ class app:
             window.close()
 
         def teste_metodos():
-            sg.theme('Reddit')
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
@@ -131,7 +129,6 @@ class app:
             window.close()
 
         def nome_utilizador():
-            sg.theme('Reddit')
             self.layout_login = [
                 [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('TR:\t'),sg.Input(size=(15,1),key='nome')], 
@@ -148,12 +145,13 @@ class app:
                 event,values = window.read()
                 if event == sg.WIN_CLOSED or event == 'Sair': # if user closes window or clicks cancel
                     break
-
+                
                 if event == 'Voltar':
                     window.close()
                     programa = app()
                     programa 
-
+                
+        
                 if event == 'Ok':
                     if values['nome'] or values['senha'] == None:
                         dados = {
@@ -175,7 +173,7 @@ class app:
                 window.close()
 
         def janela_cdoe_precom():
-                sg.theme('reddit') 
+ 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Text('1:8',size=(8,1),justification=('c')),sg.Button('Spliter',size=(8,1))],
                         [sg.Text('ID Sicom'), 
@@ -234,7 +232,7 @@ class app:
                 janela_cdoe_precon.close()
 
         def janela_Hub_ceos_p():
-                sg.theme('reddit') 
+ 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Text(),sg.Button('Spliter',size=(8,1))],
                         [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(10,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')], 
@@ -279,7 +277,7 @@ class app:
                 janela_cdoe_precon.close()
 
         def janela_cdoi():
-                sg.theme('reddit') 
+ 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Checkbox('>= 41 hp',key=('maior')),sg.Button('Spliter',size=(8,1))],
                         [sg.Text('ID Sicom'),sg.Text(size=(0,1)),sg.Input(size=(10,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')], 
@@ -319,7 +317,7 @@ class app:
                 janela_cdoe_precon.close()
 
         def janela_cdoe_precom_2022():
-                sg.theme('reddit') 
+ 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)),sg.Text('1:16',size=(8,1),justification=('c')),sg.Button('Spliter',size=(8,1))],
                         [sg.Text('ID Sicom'), 
@@ -378,7 +376,7 @@ class app:
                 janela_cdoe_precon.close()
 
         def janela_cdoe_comun():
-                sg.theme('reddit') 
+ 
                 layout_cdoe = [
                         [sg.Button('Voltar',size=(5,1)), sg.Stretch(), sg.Text('Criação de CDOE Comun')],
                         [sg.Text('ID Sicom'), 
@@ -420,7 +418,6 @@ class app:
                 janela_cdoe_comun.close()  
 
         def cabo_comun():
-            sg.theme('Reddit')
             cabo_layout = [
                             [sg.Button('Voltar',size=(5,1)), sg.Stretch(), sg.Text('Cabo Comun')],
                             [sg.Text('ID Sicom \t'), 
@@ -449,7 +446,6 @@ class app:
             cabo_comun.close()  
 
         def cabo_precom():
-            sg.theme('Reddit')
             cabo_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Text('Cabo Precom',justification=('c'),size=(13,1)),sg.Stretch(),sg.Button('Cabo',size=(7,1))],
                             [sg.Text('ID Sicom \t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='ID Sicom')],
@@ -481,7 +477,6 @@ class app:
             window.close()
 
         def conectivade():
-            sg.theme('Reddit')
             conectividade_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Text('1:8',size=(7,1),justification='c') ,  sg.Stretch(),sg.Checkbox('Reverso', enable_events=False, key='rev')],
                             [sg.Button('Conectividade',size=(11,1)),sg.Stretch(),sg.Button('Conectar_p',size=(10,1))],
@@ -531,7 +526,6 @@ class app:
             window.close()
 
         def conectivade_2022():
-            sg.theme('Reddit')
             conectividade_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Text('1:16',size=(7,1),justification='c') ,  sg.Stretch(),sg.Checkbox('Reverso', enable_events=False, key='rev')],
                             [sg.Button('Conectividade',size=(11,1)),sg.Stretch(),sg.Button('Conectar_p',size=(10,1))],
@@ -580,7 +574,6 @@ class app:
             window.close()
 
         def as_built():
-            sg.theme('Reddit')
             as_built_layout = [
                 [sg.Button('Voltar',size=(5,1)), sg.Stretch(), sg.Text('As - Built Cabo/Estação')],
                 [sg.Text('Id_Cdoe'),sg.Input(size = (15,1),key='cdoe'),sg.Checkbox('S/N',key='Checkbox')],
@@ -624,7 +617,6 @@ class app:
             as_built.close()
 
         def poste():
-            sg.theme('Reddit')
             poste_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Text('Poste',justification='c',size=(7,1)),sg.Stretch(),sg.Button('Traçado',size=(11,1))],
                             [sg.Text('ID Sicom',size=(11,1)),sg.Input(size=(11,1),key='id-sicom'),sg.Checkbox('Proj',key='projeto')],
@@ -691,7 +683,6 @@ class app:
             poste.close()
 
         def abastecimento():  
-            sg.theme('Reddit')
             layout = [
             [sg.Button('Voltar',size=(6,1)),sg.Text('Abastecimento',size=(20,1),justification = 'c')],
             [sg.Multiline("",key="casa",size=(32,5))],
@@ -726,7 +717,6 @@ class app:
             window.close()
 
         def cabo_primario():
-            sg.theme('Reddit')
             cabo_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Checkbox('N/Proj',key='nome projeto'),sg.Stretch(), sg.Checkbox('288',key='288')],
                             [sg.Text('ID Sicom '),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='id_sicom')],
@@ -777,7 +767,6 @@ class app:
             window.close()
 
         def conectividade_cdoi():
-            sg.theme('Reddit')
             conectividade_layout = [
                             [sg.Button('Voltar',size=(5,1)),sg.Text('CDOI') , sg.Stretch()],
                             [sg.Button('Conectividade',size=(11,1)),sg.Stretch()],
@@ -807,11 +796,48 @@ class app:
                         sg.popup_error('Marque o flag 64/splitada', keep_on_top=True)
 
             window.close()
+        
+        def tema():
+            import PySimpleGUI as sg
+
+            themes = sg.theme_list()
+            selected_theme = 'Reddit'
+            current_them = sg.theme()
+            sg.theme(selected_theme)
+
+            layout = [
+                    [sg.T('Tema',size=(15,1),justification='c')],
+                    [sg.Text('Select Theme:'), 
+                    sg.Combo(values=themes, default_value=selected_theme, size=(15, 1), enable_events=True, key='select_theme')],
+                    [sg.B('Voltar')]
+                ]
+
+            window = sg.Window('', layout=layout)
+
+            while True:
+                e, v= window.read()
+                if e is None:
+                    break
+                
+                elif e == 'Voltar':
+                    window.close()
+                    programa = app()
+                    programa   
+
+
+                elif e == 'select_theme':
+                    selected_theme = v['select_theme']
+                    window.close()
+                    sg.theme('selected_theme')
+                    layout = [[sg.T('Tema')],[sg.Text('Select Theme:'), sg.Combo(values=themes,default_value=selected_theme, size=(15, 1), enable_events=True, key='select_theme')], [sg.B('Voltar')]]
+                    window = sg.Window('',layout)
+
+
         while True:
             event,values = window.read()
             if event == sg.WIN_CLOSED or event == 'Sair': # if user closes window or clicks cancel
                 break
-            
+              
             if event == 'Web':
                 try:
                     if values['home']:
@@ -919,6 +945,10 @@ class app:
                 window.close()
                 forms_google()
 
+            if event == 'Tema':
+                window.close()
+                tema()
+
         window.close()
 
 if __name__ == '__main__':
@@ -940,7 +970,6 @@ if __name__ == '__main__':
             senha = dado['senha']
             
         except:
-            sg.theme('Reddit')
             layout_login = [
                 [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('TR:*\t'),sg.Input(size=(15,1),key='nome')], 
@@ -1027,7 +1056,7 @@ if __name__ == '__main__':
                 app()
                 
             else:
-                sg.theme('Reddit')
+
                 sg.popup_error(frase, keep_on_top=True)
                 driver.close()
         except:
