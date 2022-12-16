@@ -3522,6 +3522,14 @@ class Internet:
             if button == mouse.Button.left and pressed:
                 # Retornar False para a execução do listener de eventos
                 return False
+
+        def esperar_clicar():
+            # Listener irá verificar quando o mouse clicará
+            with mouse.Listener(on_click=on_click) as listener:
+                while True:
+                    # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                    if not listener.running:
+                        break  
         
         # Listener irá verificar quando o mouse clicará
         with mouse.Listener(on_click=on_click) as listener:
@@ -3542,6 +3550,7 @@ class Internet:
         #definição da posição do mouse              
         a , b = pt.position()
 
+        '''
         # Listener irá verificar quando o mouse clicará
         with mouse.Listener(on_click=on_click) as listener:
             while True:
@@ -3562,28 +3571,45 @@ class Internet:
         #definição da posição do mouse              
         k , l = pt.position()
 
+        '''
+
+        time.sleep(1.5)
         
-
-        print(x , y,'\n',a , b,'\n', c , d,'\n',k , l)
-
-        
-
-        pt.click(x , y)
+        #iframe
+        self.iframe('iframe-content-wrapper')
         time.sleep(.5)
-
+        #adicionar
+        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
+        #traçado
+        self.esperar_clicar_xpath('//*[@id="olControlAddRouteOi"]')
+        #Aéreo
+        self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/a/div[2]')
+        #Aéreo em apoio
+        self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/ul/li[2]/a/div')
+        
+        pt.click(x , y)
+        time.sleep(1)
+        
         pt.doubleClick(a , b)
         time.sleep(.5)
-        
-        pt.click(a , b)
-        time.sleep(.5)
 
-        pt.doubleClick(c , d)
+        esperar_clicar()
         time.sleep(.5)
+        esperar_clicar()
+        time.sleep(2)
 
-        pt.click(c , d)
-        time.sleep(.5)
+        self.esperar_clicar_xpath('//*[@id="finish"]/span')
 
-        pt.doubleClick(k , l)
+        #pt.click(a , b)
+        #time.sleep(.5)
+
+        #pt.doubleClick(c , d)
+        #time.sleep(.5)
+
+        #pt.click(c , d)
+        #time.sleep(.5)
+
+        #pt.doubleClick(k , l)
 
     
 if __name__ == "__main__": 
