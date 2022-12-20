@@ -39,15 +39,17 @@ class Internet:
         if web_1:
             self.driver = Edge()
         elif web_2:
-            self.driver = Chrome()
+            self.driver = Chrome()  
         elif web_3:
             self.driver = Ie()
         else:
             self.driver = Firefox()
           
         self.driver.maximize_window()
+        
         if home:
-            self.driver.get("http://netwin-vtal.interno/")
+            self.driver.get("http://www.google.com.br")
+            #self.driver.get("http://netwin-vtal.interno/")
         else:
             self.driver.get("http://netwin.intranet/")
 
