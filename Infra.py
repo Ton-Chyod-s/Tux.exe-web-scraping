@@ -1048,13 +1048,11 @@ if __name__ == '__main__':
             driver.close()
         except:
             driver.close()
-
         try:
             if on == 'on':
                 app()
                 
             else:
-
                 sg.popup_error(frase, keep_on_top=True)
                 driver.close()
         except:
