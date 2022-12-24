@@ -48,7 +48,7 @@ class Internet:
         self.driver.maximize_window()
         
         if home:
-            self.driver.get("http://www.google.com.br")
+            self.driver.get("http://netwin-vtal.interno/")
             #self.driver.get("http://netwin-vtal.interno/")
         else:
             self.driver.get("http://netwin.intranet/")
