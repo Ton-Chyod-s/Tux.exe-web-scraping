@@ -7,7 +7,7 @@ import random
 
 sg.popup_notify(f'Carregando...')
 
-versao = '2.1.4'
+versao = '2.1.4 - Unofficial'
 navegador = Internet()
 
 class app:
