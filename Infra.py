@@ -83,7 +83,7 @@ class app:
                     navegador.atribuir_endereco()
 
                 if event == 'Test':
-                    navegador.tracado_inicio()
+                    navegador.mudar_cabo()
                     #sg.popup('To testando pow', keep_on_top=True)
                     
             window.close()

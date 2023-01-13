@@ -3613,7 +3613,21 @@ class Internet:
 
         #pt.doubleClick(k , l)
 
+    def mudar_cabo(self):
+        wdw = WebDriverWait(self.driver, 5)
+        self.iframe('iframe-content-wrapper')
+        
+        #comp lance (netwin)
+        tot_cl = self.driver.find_element(By.XPATH,'/html/body/div[*]/div[2]/form/div/div[5]/div/div[3]/div[4]/div/table/tbody/tr/td[3]')
+        cl_folgas = tot_cl.get_attribute('title')
+
+        #CL e folgas
+        self.esperar_xpath('//*[@id="tab-entity"]/ul/li[4]/a/label')
+        time.sleep(.5)
     
+        
+        self.driver.switch_to.default_content()
+
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
