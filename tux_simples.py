@@ -357,7 +357,7 @@ class Internet:
                     except:
                         sair()
     
-versao = '2.1.4 - Unofficial'
+versao = '1.0.1 - Unofficial'
 navegador = Internet()
 
 class app:
@@ -365,14 +365,14 @@ class app:
         selected_theme = 'Reddit'
         sg.theme(selected_theme)
 
-        menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Utilitario',['&Poste']]
+        menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Utilitario',['&Poste', '&Atribuir endereço']]
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
             [sg.Button('Web',size=(5,1)), sg.Text('INFRA',justification='c',size=(9,1)),sg.Button('Login',size=(6,1))],
             [sg.Combo(['Firefox','Chrome','Internet Explorer','Edge']),sg.Checkbox('V-tal',key='home')],
             ]
 
-        window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
+        window = sg.Window('Tux-Netwin', icon='compacto.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
 
         def poste():
             poste_layout = [
@@ -382,7 +382,7 @@ class app:
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Checkbox('CPoste',key='CPoste')]  
             ]
             
-            poste = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
+            poste = sg.Window('Tux-Netwin', icon='compacto.ico', layout=poste_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = poste.read()
@@ -446,7 +446,7 @@ class app:
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Nome do Utilizador', icon='compacto.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -516,7 +516,15 @@ class app:
             if event == 'Nome de utilizador':
                 window.close()
                 nome_utilizador()
-                
+            
+            if event == 'Login':
+                navegador.entrar_driver()
+
+            if event == 'Atribuir endereço':
+                try:
+                    navegador.atribuir_endereco()
+                except:
+                    sg.popup('Nem ta na pagina certa', keep_on_top=True)
 
         window.close()
 
