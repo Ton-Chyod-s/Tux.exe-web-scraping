@@ -3502,10 +3502,10 @@ class Internet:
         x , y = pt.position()
         #iframe
         self.iframe('iframe-content-wrapper')
-        #adicionar
-        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
-        #local
-        self.esperar_clicar_xpath('//*[@id="olControlAddInfranode"]')
+        #Modificar atributos
+        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
+        #Quebrar traçado
+        self.esperar_clicar_xpath('//*[@id="olControlSplitRouteOi"]')
         time.sleep(1)
         #poste
         self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[17]/a/div[2]')
