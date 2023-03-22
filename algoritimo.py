@@ -215,7 +215,7 @@ class Internet:
             wdw.until(element_to_be_clickable(('xpath', '//*[@id="idTipoElemento"]')))
             objeto_aereo = self.driver.find_element(By.XPATH,'//*[@id="idTipoElemento"]').text
 
-            if objeto_aereo == 'CDOE':
+            if objeto_aereo == '    CDOE':
                 self.esperar_clicar_ID('id_sicom_name')
                 #Tipo
                 if confirmar:
@@ -303,8 +303,9 @@ class Internet:
             wdw = WebDriverWait(self.driver, 60)
             wdw.until(element_to_be_clickable(('xpath', '//*[@id="idTipoElemento"]')))
             objeto_aereo = self.driver.find_element(By.XPATH,'//*[@id="idTipoElemento"]').text
-            
-            if objeto_aereo == 'CDOE':
+            print(objeto_aereo)
+
+            if objeto_aereo == '    CDOE':
                 self.esperar_clicar_ID('id_sicom_name')
                 #Tipo
                 if confirmar:
