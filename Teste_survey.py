@@ -41,9 +41,24 @@ moradia = f'{linha1}\n{linha2}\n{linha3}\n{linha4}\n{linha5}\n{linha6}\n{linha7}
 #ler arquivo
 arquivo = et.parse('moradia1.xml')
 raiz = arquivo.getroot()
+'''
+for linha in raiz.findall('coordX'):
+    print(linha.text)
 
-for filhas in raiz:
-    print(filhas.tag, filhas.text)
+for linha in raiz.findall('coordY'):
+    print(linha.text)
+'''
+print(raiz[2].text)
+
+#print(et.tostring(raiz, encoding='utf8').decode('utf8'))
+
+for movie in raiz.iter('coordX'):
+    print(movie.text)
+
+#for filhas in raiz:
+    #print(filhas.tag, filhas.attrib )
 
 #escrever xml
 #arquivo.write('new_livros.xml')
+
+
