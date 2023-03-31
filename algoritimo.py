@@ -133,6 +133,7 @@ class Internet:
         wdw = WebDriverWait(self.driver, 60)
         wdw.until(element_to_be_clickable(('xpath', elemento)))    
         time.sleep(.15)
+        self.driver.find_element(By.XPATH,elemento).clear()
         self.driver.find_element(By.XPATH,elemento).send_keys(txt)
     
     def esperar_selecionar_index(self,elemento,num):
@@ -201,7 +202,7 @@ class Internet:
         
         self.driver.switch_to.default_content()
 
-    def cdoe_precon(self,id_sicon,estação,est=True,confirmar=True,frame=True,sap=True,sap_1=True,campo=True,tbd=True,projeto=True):
+    def cdoe_precon(self,id_sicon,estação,numero,est=True,confirmar=True,frame=True,sap=True,sap_1=True,campo=True,tbd=True,projeto=True):
         
         #Esperando até seja visivel as Iframe da pagina
         if frame:
@@ -214,8 +215,7 @@ class Internet:
             wdw = WebDriverWait(self.driver, 60)
             wdw.until(element_to_be_clickable(('xpath', '//*[@id="idTipoElemento"]')))
             objeto_aereo = self.driver.find_element(By.XPATH,'//*[@id="idTipoElemento"]').text
-
-            if objeto_aereo == '    CDOE':
+            if objeto_aereo == '    CDOE' or objeto_aereo == 'CDOE':
                 self.esperar_clicar_ID('id_sicom_name')
                 #Tipo
                 if confirmar:
@@ -266,7 +266,7 @@ class Internet:
                 self.esperar_clicar_xpath('/html/body/table/tbody/tr/td/div/div/div/form/div/table/tbody/tr[*]/td/div/ul/li[1]/a/span')
 
                 if tbd:
-                    pass
+                    self.esperar_xpath_txt('//*[@id="nomecNumber"]', numero)
                 else:
                     #tbd
                     self.esperar_clicar_xpath('//*[@id="outOfPattern_check"]') #fora de padrão
@@ -276,8 +276,9 @@ class Internet:
                     time.sleep(1)
                     etiqueta_padrao = self.driver.find_element(By.XPATH,'//*[@id="onPatternTag"]').text()
                     '''
-                    time.sleep(1)
-                    self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+'000'+'-TBD')
+                    time.sleep(.5)
+                    self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+ numero +'-TBD')
+                    self.esperar_xpath_txt('//*[@id="nomecNumber"]', '0')
 
                 #Confimar
                 self.esperar_clicar_ID('confAssoc')
@@ -291,7 +292,7 @@ class Internet:
             self.driver.switch_to.default_content() 
             sg.popup_error(f'Ixi deu um erro ae O_O \nse pa você ta no caminho errado ou \nnão é a CDOE',keep_on_top=True)
 
-    def cdoe_precon_2022(self,id_sicon,estação,est=True,confirmar=True,frame=True,precom_rs=True,tbd=True,projeto=True):
+    def cdoe_precon_2022(self,id_sicon,estação,numero,est=True,confirmar=True,frame=True,precom_rs=True,tbd=True,projeto=True,):
         #Esperando até seja visivel as Iframe da pagina
         if frame:
             self.iframe('iframe-content-wrapper')
@@ -305,7 +306,7 @@ class Internet:
             objeto_aereo = self.driver.find_element(By.XPATH,'//*[@id="idTipoElemento"]').text
             print(objeto_aereo)
 
-            if objeto_aereo == '    CDOE':
+            if objeto_aereo == 'CDOE' or objeto_aereo == '    CDOE':
                 self.esperar_clicar_ID('id_sicom_name')
                 #Tipo
                 if confirmar:
@@ -360,7 +361,7 @@ class Internet:
                 self.esperar_clicar_xpath('/html/body/table/tbody/tr/td/div/div/div/form/div/table/tbody/tr[*]/td/div/ul/li[1]/a/span')
                 
                 if tbd:
-                    pass
+                    self.esperar_xpath_txt('//*[@id="nomecNumber"]', numero)
                 else:
                     #tbd
                     self.esperar_clicar_xpath('//*[@id="outOfPattern_check"]') #fora de padrão
@@ -370,8 +371,9 @@ class Internet:
                     time.sleep(1)
                     etiqueta_padrao = self.driver.find_element(By.XPATH,'//*[@id="onPatternTag"]').text()
                     '''
-                    time.sleep(1)
-                    self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+'000'+'-TBD')
+                    time.sleep(.5)
+                    self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+ numero +'-TBD')
+                    self.esperar_xpath_txt('//*[@id="nomecNumber"]', '0')
 
                 #Confimar
                 self.esperar_clicar_ID('confAssoc')
@@ -925,16 +927,7 @@ class Internet:
                 #Fora de padão 
                 time.sleep(.05)
                 self.esperar_clicar_ID('location_input_FORA_PADRAO')
-                #Etiqueta
-                time.sleep(.05)
-                self.esperar_xpath('//*[@id="location_input_etiquetaEmCampo"]')
-                time.sleep(.05)
-                if cap == None:
-                    self.esperar_xpath_txt('//*[@id="location_input_etiquetaEmCampo"]', poste )
-                else:
-                    fornecedor =  poste ,  '-'  , cap
-                    self.esperar_xpath_txt('//*[@id="location_input_etiquetaEmCampo"]', fornecedor )
-
+                
                 #Capacidade (Altura/Esforço)
                 self.esperar_xpath('//span[@id="select2-location_select_poleCapacity-container"]')
                 self.esperar_xpath_txt('//input[@class="select2-search__field"]',poste)
@@ -999,7 +992,7 @@ class Internet:
                     self.esperar_xpath('//*[@id="select2-location_select_source-container"]')        
                     self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Netwin')
                     self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
-                    
+
                 #caracteristica
                 self.esperar_xpath('//*[@id="location_tab_caracterizacao"]')
                     
@@ -1012,6 +1005,18 @@ class Internet:
                     self.esperar_xpath('//*[@id="select2-location_select_owner-container"]')
                     self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Oi')
                     self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+                
+                #etiqueta de campo
+                if cap == None:
+                    pass
+                else:
+                    if cap == '':
+                        fornecedor =  poste 
+                    else:
+                        fornecedor =  poste ,  '-'  , cap
+                    time.sleep(.5)
+                    self.esperar_xpath_txt('//*[@id="location_input_etiquetaEmCampo"]', fornecedor )
+
                 '''
                 #Número
                 self.esperar_xpath('//*[@class="select2-selection__placeholder"]')

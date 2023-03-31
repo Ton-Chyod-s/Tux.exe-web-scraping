@@ -3,11 +3,10 @@ from algoritimo import *
 from tqdm import tqdm
 import requests
 import socket
-import random
 
 sg.popup_notify(f'Carregando...')
 
-versao = '2.1.4 - Unofficial'
+versao = '2.1.5 - Unofficial'
 navegador = Internet()
 
 class app:
@@ -23,7 +22,7 @@ class app:
             [sg.Combo(['Firefox','Chrome','Internet Explorer','Edge']),sg.Checkbox('V-tal',key='home')],
             ]
 
-        window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
+        window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
 
         def celula():
             self.layout_login = [
@@ -34,7 +33,7 @@ class app:
             [sg.Text('Cabo',size=(13,1),justification = 'l'),sg.Input(size=(7,1)),sg.Button('Ok',size=(5,1))]
             ]
 
-            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
+            window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
 
             while True:
                 event,values = window.read()
@@ -55,7 +54,7 @@ class app:
                 [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Test',size=(7,1))]
                 ]
             
-            window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -97,7 +96,7 @@ class app:
                 [sg.Output(size=(30,4),key='senha')],
             ]
             
-            window = sg.Window('Formulario', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Formulario', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -133,7 +132,7 @@ class app:
 
         def nome_utilizador():
             self.layout_login = [
-                [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('TR:\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
@@ -142,7 +141,7 @@ class app:
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Nome do Utilizador', icon='tux-natal.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -182,12 +181,14 @@ class app:
                         [sg.Text('ID Sicom'), 
                         sg.Text(size=(0,1)),sg.Input(size=(8,1),key='ID Sicom'),sg.Checkbox('Proj', enable_events=False, key='projeto')], 
                         [sg.Text('Estação '), 
-                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='Estação'),sg.Button('CDOE',size=(6,1))],  
-                        [sg.Button('Alivio',size=(9,1)),sg.Checkbox('Fim/c', enable_events=False, key='Fim/c'),sg.Checkbox('TBD', enable_events=False, key='TBD')],
+                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='Estação'),sg.Checkbox('Fim/c', enable_events=False, key='Fim/c')],  
+                        [sg.Text('Numero '), 
+                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='num'),sg.Button('CDOE',size=(6,1))],
+                        [sg.Button('Alivio',size=(9,1)),sg.Checkbox('TBD/Número', enable_events=False, key='TBD')],
                         
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:8 Òó')
 
@@ -204,27 +205,27 @@ class app:
                     if event == 'CDOE':
                         if values['projeto']:
                             if values['Fim/c']:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,True,False,False,True,False) 
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,True,False,False,True,False) 
                             else:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,False,True,False,True,False)
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,False,True,False,True,False)
                         else:
                             if values['Fim/c']:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,True,False,False) 
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,True,False,False) 
                             else:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,False,True,False)
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,False,True,False)
 
                     if event == 'Alivio':
                         if values['projeto']: 
                             if values['TBD']:
                                 if values['Fim/c']:
-                                    navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,True,False,False,False,False) 
+                                    navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,True,False,False,False,False) 
                                 else:
-                                    navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,False,True,False,False,False)
+                                    navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,False,True,False,False,False)
                         else:
                             if values['Fim/c']:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,True,False,False,False) 
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,True,False,False,False) 
                             else:
-                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],True,None,True,False,True,False,False)
+                                navegador.cdoe_precon(values['ID Sicom'],values['Estação'],values['num'],True,None,True,False,True,False,False)
 
                     if event == 'Spliter':
                         if values['Fim/c']:
@@ -243,7 +244,7 @@ class app:
                         [sg.Text('Número'),sg.Text(size=(1,1)),sg.Input(size=(5,1),key='numero'),sg.Checkbox('Ceos P', enable_events=False, key='ceos_p')]  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -287,7 +288,7 @@ class app:
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -326,12 +327,13 @@ class app:
                         [sg.Text('ID Sicom'), 
                         sg.Text(size=(0,1)),sg.Input(size=(8,1),key='ID Sicom'),sg.Checkbox('Proj', enable_events=False, key='projeto')], 
                         [sg.Text('Estação '), 
-                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='Estação'),sg.Button('CDOE',size=(6,1))],  
-                        [sg.Button('Alivio',size=(9,1)),sg.Checkbox('Fim/c', enable_events=False, key='Fim/c'),sg.Checkbox('TBD', enable_events=False, key='TBD')],
-                        
+                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='Estação'),sg.Checkbox('Fim/c', enable_events=False, key='Fim/c')],
+                        [sg.Text('Numero '), 
+                        sg.Text(size=(0,1)),sg.Input(size=(8,1),key='num'),sg.Button('CDOE',size=(6,1))],
+                        [sg.Button('Alivio',size=(9,1)),sg.Checkbox('TBD/Número', enable_events=False, key='TBD')],
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:16 Òó')
 
@@ -354,27 +356,27 @@ class app:
                     if event == 'CDOE':
                         if values['projeto']:
                             if values['Fim/c']:
-                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,False,True,False,True,False)
+                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,False,True,False,True,False)
                             else:
-                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,True,True,False,True,False)
+                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,True,True,False,True,False)
                         else: 
                             if values['Fim/c']:
-                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,False,True,False)
+                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,False,True,False)
                             else:
-                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,True,True,False)
+                                navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,True,True,False)
 
                     if event == 'Alivio':  
                         if values['TBD']:
                             if values['projeto']:
                                 if values['Fim/c']:
-                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,False,True,False,False,False)
+                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,False,True,False,False,False)
                                 else:
-                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,True,True,False,False,False)
+                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,True,True,False,False,False)
                             else:
                                 if values['Fim/c']:
-                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,False,True,False,False)
+                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,False,True,False,False)
                                 else:
-                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],True,True,True,False,False)
+                                    navegador.cdoe_precon_2022(values['ID Sicom'],values['Estação'],values['num'],True,True,True,False,False)
 
                 janela_cdoe_precon.close()
 
@@ -392,7 +394,7 @@ class app:
                         [sg.Button('Sair',size=(5,1)),sg.Button('Spliter',size=(5,1)),sg.Text('Num-Est',justification='c'),sg.Input(key='num',size=(4,1))]
                         ] 
                 
-                janela_cdoe_comun = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_comun = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_comun.read()
@@ -434,7 +436,7 @@ class app:
                             [sg.Button('Sair',size=(5,1)),sg.Button('Cabo',size=(11,1)),sg.Button('None',size=(11,1))]  
             ]
             
-            cabo_comun = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            cabo_comun = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_comun.read()
@@ -457,7 +459,7 @@ class app:
                             [sg.Text('Comprimento\t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='Comprimento')],  
             ]
             
-            window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             sg.popup_notify(f'Isso ae guerreiro\nSó mais um pouco vamos entregar 2 celulas hj')
 
@@ -486,7 +488,7 @@ class app:
                             [sg.Checkbox('S2-1', enable_events=False, key='S2-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -535,7 +537,7 @@ class app:
                             [sg.Checkbox('S16-1', enable_events=False, key='S16-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -585,7 +587,7 @@ class app:
                             
             ]
             
-            as_built = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
+            as_built = sg.Window('Netwin', icon='favicon.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = as_built.read()
@@ -627,7 +629,7 @@ class app:
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Checkbox('CPoste',key='CPoste')]  
             ]
             
-            poste = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=poste_layout, keep_on_top=True, finalize = True)
+            poste = sg.Window('Netwin', icon='favicon.ico', layout=poste_layout, keep_on_top=True, finalize = True)
             
             sg.popup_notify(f'Não se esqueça de conferir:\nNumero de hp na celula com o informado\nColocar Id-Sicom na mancha do netwin')
 
@@ -692,7 +694,7 @@ class app:
             [sg.Button('Inicio',size=(13,1)),sg.Button('CDOI',size=(13,1))]
             ]
 
-            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout,finalize = True, keep_on_top=True)
+            window = sg.Window('Netwin', icon='favicon.ico',layout=layout,finalize = True, keep_on_top=True)
 
             sg.popup_notify(f'Não esqueça que nem pode abastecer sn lv O_O')
 
@@ -727,7 +729,7 @@ class app:
                             [sg.Checkbox('12',key='12'),sg.Checkbox('36',key='36'),sg.Checkbox('72',key='72'),sg.Checkbox('144',key='144')],           
                             ]
             
-            window = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = window.read()
@@ -776,7 +778,7 @@ class app:
                             [sg.Checkbox('64 hp', enable_events=False, key='64'),sg.Checkbox('Splitada', enable_events=False, key='splitada')]   
             ]
             
-            cabo_precon = sg.Window('Tux-Netwin', icon='tux-natal.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -969,7 +971,7 @@ if __name__ == '__main__':
             
         except:
             layout_login = [
-                [sg.Text('Tux-Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Netwin',size=(20,1),justification=('c'))],
                 [sg.Text('TR:*\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:*\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
@@ -978,7 +980,7 @@ if __name__ == '__main__':
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Tux-Netwin', icon='tux-natal.ico',layout=layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Netwin', icon='favicon.ico',layout=layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
