@@ -48,7 +48,8 @@ for linha in raiz.findall('coordX'):
 for linha in raiz.findall('coordY'):
     print(linha.text)
 '''
-print(raiz[2].text)
+raiz[2].clear()
+print(raiz[2].attrib)
 
 #print(et.tostring(raiz, encoding='utf8').decode('utf8'))
 
