@@ -31,7 +31,7 @@ class app:
                 [],
                 ]
             
-            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
