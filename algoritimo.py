@@ -3677,7 +3677,7 @@ class Internet:
             time.sleep(1.3)
             
             if resultado == 'Nenhum resultado encontrado':
-                sg.popup_auto_close('Não encontrei o CEP\nPreencha manualmente')
+                sg.popup_ok('Não encontrei o CEP\nPreencha manualmente')
             else:
                 self.esperar_xpath_txt('//*[@id="location_addresses_input_numFachada"]',numero)
                 time.sleep(.3)
