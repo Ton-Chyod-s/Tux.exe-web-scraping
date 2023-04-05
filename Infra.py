@@ -15,7 +15,7 @@ class app:
         sg.theme(selected_theme)
 
         menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
-        '&As-Built','&Completa','Forms google']]
+        '&As-Built','&Completa','&Forms google','&Survey']]
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
             [sg.Button('Web',size=(5,1)), sg.Text('INFRA',justification='c',size=(9,1)),sg.Button('Login',size=(6,1))],
@@ -23,6 +23,47 @@ class app:
             ]
 
         window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
+
+
+        def survey():
+            self.layout_login = [
+                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
+                [sg.Output(size=(45,4),key='senha')],
+                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Test',size=(7,1))]
+                ]
+            
+            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+
+            while True:
+                event,values = window.read()
+                if event in (None, 'Sair'):
+                    break 
+
+                if event == 'Voltar':
+                    window.close()
+                    programa = app()
+                    programa 
+
+                if event == 'spliter':
+                    navegador.Spliter_completa()
+                 
+                if event == 'Conectividade':
+                    navegador.Conectividade_completa()
+            
+                if event == 'Operações':
+                    if values['projeto']:
+                        navegador.operacoes_mud_est(values['id_sicon'],False,False)
+                    else:
+                        navegador.operacoes_mud_est(values['id_sicon'])
+
+                if event == 'Endereço':
+                    navegador.atribuir_endereco()
+
+                if event == 'Test':
+                    navegador.mudar_cabo()
+                    #sg.popup('To testando pow', keep_on_top=True)
+                    
+            window.close()
 
         def celula():
             self.layout_login = [
@@ -945,9 +986,14 @@ class app:
             if event == 'Completa':
                 window.close()
                 teste_metodos()
+
             if event == 'Forms google':
                 window.close()
                 forms_google()
+
+            if event == 'Survey':
+                window.close()
+                survey()
 
         window.close()
 

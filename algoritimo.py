@@ -3634,6 +3634,41 @@ class Internet:
         
         self.driver.switch_to.default_content()
 
+    def endereco_survey(self,endereco):
+        def on_click(x, y,button,pressed):
+            if button == mouse.Button.left and pressed:
+                # Retornar False para a execução do listener de eventos
+                return False
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break     
+        #definição da posição do mouse              
+        x , y = pt.position()
+        #iframe
+        self.iframe('iframe-content-wrapper')
+        #Modificar atributos
+        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
+        #local
+        self.esperar_clicar_xpath('//*[@id="olControlModifyInfranode"]')
+        time.sleep(1)
+        #clicar no local escolhido
+        pt.click(x,y)
+        time.sleep(2.5)
+        #localização
+        self.esperar_clicar_xpath('//*[@id="location_tab_localization"]')
+        #editar
+        self.esperar_clicar_xpath('//*[@id="79429867"]/td[4]/a[2]')
+        #iframe
+        self.iframe('externalLocationIframe')
+        #Filtro Logradouro
+        self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-container"]')
+        #digite algo ae
+        #self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
+
+        self.driver.switch_to.default_content()
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
