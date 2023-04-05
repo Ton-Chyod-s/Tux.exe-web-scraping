@@ -3672,12 +3672,12 @@ class Internet:
             #digite algo ae
             self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
             time.sleep(1.5)
+            resultado = self.driver.find_element(By.XPATH,'//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]').text
             self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]')
             time.sleep(1.3)
-            resultado = self.driver.find_element(By.XPATH,'//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]').text
-
+            
             if resultado == 'Nenhum resultado encontrado':
-                sg.popup_auto_close('Não encontrei o CEP')
+                sg.popup_auto_close('Não encontrei o CEP\nPreencha manualmente')
             else:
                 self.esperar_xpath_txt('//*[@id="location_addresses_input_numFachada"]',numero)
                 time.sleep(.3)
