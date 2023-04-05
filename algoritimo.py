@@ -3644,40 +3644,53 @@ class Internet:
             while True:
                 # Assim que o mouse clicar, o listener irá encerrar e parar o loop
                 if not listener.running:
-                    break     
-        #definição da posição do mouse              
-        x , y = pt.position()
-        #iframe
-        self.iframe('iframe-content-wrapper')
-        #Modificar atributos
-        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
-        #local
-        self.esperar_clicar_xpath('//*[@id="olControlModifyInfranode"]')
-        time.sleep(1)
-        #clicar no local escolhido
-        pt.click(x,y)
-        time.sleep(2.5)
-        #iframe
-        self.iframe('externalLocationIframe')
-        #localização
-        self.esperar_clicar_xpath('//*[@id="location_tab_localization"]')
-        time.sleep(.5)
-        #editar
-        self.esperar_clicar_xpath('/html/body/div[5]/div/div/div/form/div[2]/div/div[2]/div/div/div[3]/div[2]/div/div/div/div/div/div/div/div/div[2]/div/table/tbody/tr[1]/td[4]/a[2]')
-        time.sleep(1)
-        #Filtro Logradouro
-        self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-container"]')
-        time.sleep(.7)
-        #digite algo ae
-        self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
-        time.sleep(3.5)
-        self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]')
-        time.sleep(.5)
-        self.esperar_xpath_txt('//*[@id="location_addresses_input_numFachada"]',numero)
-        time.sleep(.3)
-        #self.esperar_clicar_xpath('//*[@id="modal_button_ok"]"]',numero)
+                    break
+        try:     
+            #definição da posição do mouse              
+            x , y = pt.position()
+            #iframe
+            self.iframe('iframe-content-wrapper')
+            #Modificar atributos
+            self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
+            #local
+            self.esperar_clicar_xpath('//*[@id="olControlModifyInfranode"]')
+            time.sleep(1)
+            #clicar no local escolhido
+            pt.click(x,y)
+            time.sleep(1)
+            #iframe
+            self.iframe('externalLocationIframe')
+            #localização
+            self.esperar_clicar_xpath('//*[@id="location_tab_localization"]')
+            time.sleep(.5)
+            #editar
+            self.esperar_clicar_xpath('/html/body/div[5]/div/div/div/form/div[2]/div/div[2]/div/div/div[3]/div[2]/div/div/div/div/div/div/div/div/div[2]/div/table/tbody/tr[1]/td[4]/a[2]')
+            time.sleep(1)
+            #Filtro Logradouro
+            self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-container"]')
+            time.sleep(.7)
+            #digite algo ae
+            self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
+            time.sleep(1.5)
+            self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]')
+            time.sleep(1.3)
+            resultado = self.driver.find_element(By.XPATH,'//*[@id="select2-location_addresses_select_baseAddress-results"]/li[1]').text
 
-        self.driver.switch_to.default_content()
+            if resultado == 'Nenhum resultado encontrado':
+                sg.popup_auto_close('Não encontrei o CEP')
+            else:
+                self.esperar_xpath_txt('//*[@id="location_addresses_input_numFachada"]',numero)
+                time.sleep(.3)
+                #self.esperar_clicar_xpath('//*[@id="modal_button_ok"]"]',numero)
+            self.driver.switch_to.default_content()
+        except:
+            self.driver.switch_to.default_content()
+            #iframe
+            self.iframe('iframe-content-wrapper')
+            #Fechar
+            self.esperar_clicar_xpath('/html/body/div[7]/div[1]/a[1]/span')
+            self.driver.switch_to.default_content()
+
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
