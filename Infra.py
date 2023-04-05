@@ -27,9 +27,8 @@ class app:
 
         def survey():
             self.layout_login = [
-                [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
-                [sg.Output(size=(45,4),key='senha')],
-                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Test',size=(7,1))]
+                [sg.Button('Voltar',size=(5,1)),sg.Button('Endereço',size=(9,1)),sg.Stretch(),sg.Input(size=(15,1),key='id_sicon')], 
+                [],
                 ]
             
             window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -50,18 +49,9 @@ class app:
                 if event == 'Conectividade':
                     navegador.Conectividade_completa()
             
-                if event == 'Operações':
-                    if values['projeto']:
-                        navegador.operacoes_mud_est(values['id_sicon'],False,False)
-                    else:
-                        navegador.operacoes_mud_est(values['id_sicon'])
-
                 if event == 'Endereço':
-                    navegador.atribuir_endereco()
+                    navegador.endereco_survey(values['id_sicon'])
 
-                if event == 'Test':
-                    navegador.mudar_cabo()
-                    #sg.popup('To testando pow', keep_on_top=True)
                     
             window.close()
 

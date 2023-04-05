@@ -3657,16 +3657,17 @@ class Internet:
         #clicar no local escolhido
         pt.click(x,y)
         time.sleep(2.5)
-        #localização
-        self.esperar_clicar_xpath('//*[@id="location_tab_localization"]')
-        #editar
-        self.esperar_clicar_xpath('//*[@id="79429867"]/td[4]/a[2]')
         #iframe
         self.iframe('externalLocationIframe')
+        #localização
+        self.esperar_clicar_xpath('//*[@id="location_tab_localization"]')
+        time.sleep(.5)
+        #editar
+        self.esperar_clicar_xpath('/html/body/div[5]/div/div/div/form/div[2]/div/div[2]/div/div/div[3]/div[2]/div/div/div/div/div/div/div/div/div[2]/div/table/tbody/tr[1]/td[4]/a[2]')
         #Filtro Logradouro
         self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-container"]')
         #digite algo ae
-        #self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
+        self.esperar_xpath_txt('/html/body/span/span/span[1]/input',endereco)
 
         self.driver.switch_to.default_content()
 if __name__ == "__main__": 
