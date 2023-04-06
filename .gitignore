@@ -17292,3 +17292,5 @@ infra/Lib/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py
 infra/Lib/site-packages/pip/_vendor/rich/_null_file.py
 infra/Lib/site-packages/pip/_vendor/rich/__pycache__/_null_file.cpython-310.pyc
 infra/Lib/site-packages/pip-23.0.1.dist-info/entry_points.txt
+infra/Lib/site-packages/unidecode/x1f1.py
+infra/Lib/site-packages/unidecode/x005.py
