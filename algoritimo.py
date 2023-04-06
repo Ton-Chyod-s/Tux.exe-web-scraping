@@ -18,6 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from unidecode import unidecode 
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3695,7 +3696,9 @@ class Internet:
         coordenada = cood_x + ', ' + codd_y
         try:
             self.driver.get("http://google.com.br")
+            time.sleep(1)
             self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
+            time.sleep(.3)
             self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
             time.sleep(1)
             self.esperar_clicar_xpath('//*[@id="lu_map"]')
@@ -3703,12 +3706,30 @@ class Internet:
             wdw = WebDriverWait(self.driver, 10)
             wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
             cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-            cood2 = cood1.split()
-            cood3 = cood2.remove('R.','S')
-            print(cood3)
+            sem_acento = unidecode(cood1)
+            minuscula = sem_acento.lower()
+            str_tabela = minuscula.split()
+            letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+            for letra in letras_remover:
+                str_tabela = [ l.replace(letra, '') for l in str_tabela ]
 
-        except:
-            sg.popup_ok('Tente novamente')
+            sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+            try:
+                if sem_espaco_vazio[1] == None:
+                    sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
+                else:
+                    try:
+                        sg.popup(f'O cep é:\n{sem_espaco_vazio[2]}',keep_on_top=True)
+                    except:
+                        sg.popup(f'O cep é:\n{sem_espaco_vazio[1]}',keep_on_top=True)
+            except:
+                try:
+                    sg.popup(f'O cep é:\n{sem_espaco_vazio[0]}',keep_on_top=True)
+                except:
+                    sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
+                    
+        except: 
+            sg.popup_ok('Tente novamente', keep_on_top=True)
 
 if __name__ == "__main__": 
     #navegador = Internet()

@@ -1,4 +1,4 @@
-import PyInstaller.__main__
+'''import PyInstaller.__main__
 
 
 PyInstaller.__main__.run([
@@ -13,3 +13,5 @@ PyInstaller.__main__.run([
     '--disable-windowed-traceback',
     '--key=Teamomtos2!'
 ])
+
+'''
