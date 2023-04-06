@@ -27,8 +27,9 @@ class app:
 
         def survey():
             self.layout_login = [
-                [sg.Button('Voltar',size=(5,1)),sg.Button('CEP',size=(4,1)),sg.Stretch(),sg.Input(size=(8,1),key='id_sicon'),sg.Input(size=(4,1),key='numero')], 
-                [],
+                [sg.Button('Voltar',size=(5,1))],
+                [sg.Button('CEP',size=(8,1)),sg.Stretch(),sg.Input(size=(8,1),key='id_sicon'),sg.Input(size=(4,1),key='numero')], 
+                [sg.Button('Procurar',size=(8,1)),sg.Stretch(),sg.Input(size=(8,1),key='coodx'),sg.Input(size=(4,1),key='coody')],
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -52,6 +53,8 @@ class app:
                 if event == 'CEP':
                     navegador.endereco_survey(values['id_sicon'],values['numero'])
 
+                if event == 'Procurar':
+                    navegador.procurar_cep()
                     
             window.close()
 

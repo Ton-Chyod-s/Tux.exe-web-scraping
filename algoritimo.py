@@ -17,7 +17,7 @@ import os
 from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.common.keys import Keys
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3665,7 +3665,7 @@ class Internet:
             time.sleep(.5)
             #editar
             self.esperar_clicar_xpath('/html/body/div[5]/div/div/div/form/div[2]/div/div[2]/div/div/div[3]/div[2]/div/div/div/div/div/div/div/div/div[2]/div/table/tbody/tr[1]/td[4]/a[2]')
-            time.sleep(1)
+            time.sleep(1.5)
             #Filtro Logradouro
             self.esperar_clicar_xpath('//*[@id="select2-location_addresses_select_baseAddress-container"]')
             time.sleep(.7)
@@ -3690,6 +3690,19 @@ class Internet:
             #Fechar
             self.esperar_clicar_xpath('/html/body/div[7]/div[1]/a[1]/span')
             self.driver.switch_to.default_content()
+
+    def procurar_cep(self):
+        coordenada = '-20.432088, -54.558126'
+        self.driver.get("http://google.com.br")
+        self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
+        self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
+        time.sleep(1)
+        self.esperar_clicar_xpath('//*[@id="lu_map"]')
+        time.sleep(1)
+        wdw = WebDriverWait(self.driver, 10)
+        wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
+        cood = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+        print(cood)
 
 if __name__ == "__main__": 
     #navegador = Internet()
