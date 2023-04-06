@@ -3691,18 +3691,24 @@ class Internet:
             self.esperar_clicar_xpath('/html/body/div[7]/div[1]/a[1]/span')
             self.driver.switch_to.default_content()
 
-    def procurar_cep(self):
-        coordenada = '-20.432088, -54.558126'
-        self.driver.get("http://google.com.br")
-        self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
-        self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
-        time.sleep(1)
-        self.esperar_clicar_xpath('//*[@id="lu_map"]')
-        time.sleep(1)
-        wdw = WebDriverWait(self.driver, 10)
-        wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-        cood = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-        print(cood)
+    def procurar_cep(self,cood_x,codd_y):
+        coordenada = cood_x + ', ' + codd_y
+        try:
+            self.driver.get("http://google.com.br")
+            self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
+            self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
+            time.sleep(1)
+            self.esperar_clicar_xpath('//*[@id="lu_map"]')
+            time.sleep(1)
+            wdw = WebDriverWait(self.driver, 10)
+            wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
+            cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+            cood2 = cood1.split()
+            cood3 = cood2.remove('R.','S')
+            print(cood3)
+
+        except:
+            sg.popup_ok('Tente novamente')
 
 if __name__ == "__main__": 
     #navegador = Internet()
