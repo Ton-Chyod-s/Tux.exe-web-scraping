@@ -22,10 +22,9 @@ from selenium.webdriver.common.keys import Keys
 from unidecode import unidecode 
 import xml.etree.ElementTree as et
 import shutil
-import jpype
-import asposecells
-jpype.startJVM()
-from asposecells.api import Workbook, FileFormatType
+from openpyxl import workbook, load_workbook
+from openpyxl.utils import get_column_letter
+
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3767,32 +3766,13 @@ class Internet:
             print("Erro ao tentar excluir o arquivo XML:", e)
 
     def ler_excel(self):
+        wb = load_workbook('coordenada.xlsx')
+        ws = wb.active
+    
+        for i in range(1,10):
+            print(ws[f'D{i}'].value)
         
-        # Load Excel workbook 
-        wb = Workbook("coordenada.xlsx") 
-        # Get worksheets collection 
-        collection = wb.getWorksheets() 
-        collectionCount = collection.getCount() 
-        # Loop through all the worksheets
-        for worksheetIndex in range(collectionCount): 
-            # Get worksheet using its index 
-            worksheet = collection.get(worksheetIndex) 
-            # Print worksheet name 
-            print("Worksheet: " + str(worksheet.getName())) 
-            # Get number of rows and columns 
-            rows = worksheet.getCells().getMaxDataRow() 
-            cols = worksheet.getCells().getMaxDataColumn() 
-
-            #Loop through rows 
-            for i in range(rows): 
-                # Loop through each column in selected row 
-                for j in range(cols): 
-                    # Print cell value 
-                    print(worksheet.getCells().get(i, j).getValue(), end =" | ")
-
-                # Print line break 
-                print("\n")
-
+        
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
