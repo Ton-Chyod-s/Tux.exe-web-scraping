@@ -3769,9 +3769,13 @@ class Internet:
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active
     
-        for i in range(1,10):
-            print(ws[f'D{i}'].value)
-        
+        for i in range(2,10):
+            coord = ws[f'D{i}'].value
+            print(coord.split(''))
+            '''coordx = coord[1]
+            coordy = coord[2]
+            print(f'x:\t {coordx} y:\t {coordy}')'''
+            
         
 if __name__ == "__main__": 
     #navegador = Internet()
