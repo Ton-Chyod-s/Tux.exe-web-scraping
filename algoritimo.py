@@ -22,7 +22,10 @@ from selenium.webdriver.common.keys import Keys
 from unidecode import unidecode 
 import xml.etree.ElementTree as et
 import shutil
-import openpyxl
+import jpype
+import asposecells
+jpype.startJVM()
+from asposecells.api import Workbook, FileFormatType
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3766,9 +3769,10 @@ class Internet:
     def ler_excel(self):
         
         # Load Excel workbook 
-        wb = Workbook("workbook.xlsx") 
+        wb = Workbook("coordenada.xlsx") 
         # Get worksheets collection 
-        collection = wb.getWorksheets() collectionCount = collection.getCount() 
+        collection = wb.getWorksheets() 
+        collectionCount = collection.getCount() 
         # Loop through all the worksheets
         for worksheetIndex in range(collectionCount): 
             # Get worksheet using its index 
@@ -3788,8 +3792,6 @@ class Internet:
 
                 # Print line break 
                 print("\n")
-
-        print(workseet)
 
 if __name__ == "__main__": 
     #navegador = Internet()
