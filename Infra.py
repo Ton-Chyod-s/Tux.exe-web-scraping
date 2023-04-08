@@ -30,6 +30,8 @@ class app:
                 [sg.Button('Voltar',size=(5,1))],
                 [sg.Button('CEP',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon'),sg.Input(size=(10,1),key='numero')], 
                 [sg.Button('Procurar',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='coodx'),sg.Input(size=(10,1),key='coody')],
+                [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
+                [sg.Button('Gravar KMZ',size=(8,1),key='gravar')]
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -55,6 +57,9 @@ class app:
 
                 if event == 'Procurar':
                     navegador.procurar_cep(values['coodx'],values['coody'])
+
+                if event == 'KML':
+                    navegador.cadastro_poste_kmz(values['cood_x'],values['cood_y'])
                     
             window.close()
 
@@ -991,7 +996,7 @@ class app:
         window.close()
 
 if __name__ == '__main__':
-    try:
+   ''' try:
         ip_local = socket.gethostbyname(socket.gethostname())
         ip_publico = requests.get('https://api.ipify.org/').text
     except:
@@ -1099,4 +1104,5 @@ if __name__ == '__main__':
         except:
             pass
     except:
-        sg.popup_error('Reinicie o programa!', keep_on_top=True)
+        sg.popup_error('Reinicie o programa!', keep_on_top=True)'''
+app()

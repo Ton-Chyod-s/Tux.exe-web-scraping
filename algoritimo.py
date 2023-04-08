@@ -19,6 +19,7 @@ import pandas as pd
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from unidecode import unidecode 
+import xml.etree.ElementTree as et
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3731,6 +3732,41 @@ class Internet:
         except: 
             sg.popup_ok('Tente novamente', keep_on_top=True)
 
+    def cadastro_poste_kmz(self,coodx,coody):
+        #ler arquivo
+        tree = et.parse('hp.xml')
+        root = tree.getroot()
+
+
+        root.find('coordX').text = coodx
+        print(root[2].text)
+        root.find('coordY').text = coody
+        print(root[3].text)
+
+        #escrever xml
+        tree.write('moradia1.xml')
+        
+
+        '''
+        for linha in raiz.findall('coordX'): #ler coordenada x com laço de repetição
+            print(linha.text)
+
+        for linha in raiz.findall('coordY'): #ler coordenada y com laço de repetição
+            print(linha.text)
+        '''
+        
+        #print(raiz[2].text)
+
+        #print(et.tostring(raiz, encoding='utf8').decode('utf8'))
+
+        #for i in raiz.iter('coordX'):
+            #print(i.text)
+
+        #for filhas in raiz:
+            #print(filhas.tag, filhas.attrib )
+
+        #escrever xml
+        #arquivo.write('new_livros.xml')
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
