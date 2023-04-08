@@ -13,6 +13,7 @@ import time
 import PySimpleGUI as sg
 from pynput import mouse
 from random import randint
+import random
 import os
 from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
@@ -20,6 +21,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from unidecode import unidecode 
 import xml.etree.ElementTree as et
+import shutil
+import openpyxl
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3733,40 +3736,40 @@ class Internet:
             sg.popup_ok('Tente novamente', keep_on_top=True)
 
     def cadastro_poste_kmz(self,coodx,coody):
+        minha_lista = []
+        for i in range (6):
+            minha_lista.append(random.randint(1,9))
+        num = int(''.join(map(str,minha_lista)))
+        novo_numero = '20200824091321' + str(num)
         #ler arquivo
         tree = et.parse('hp.xml')
         root = tree.getroot()
-
-
+        #modificar corrdenada no arquivo xml
         root.find('coordX').text = coodx
-        print(root[2].text)
         root.find('coordY').text = coody
-        print(root[3].text)
-
         #escrever xml
-        tree.write('moradia1.xml')
+        tree.write('moradia1//moradia1.xml')
+        #tarnsformar em zip
+        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+        caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+        #deletar arquivo xml
+        try: 
+            os.remove(caminho_do_arquivo) 
+            print("Arquivo XML removido com sucesso!")     
+        except FileNotFoundError: 
+            print("Arquivo XML não encontrado!") 
+        except PermissionError: 
+            print("Sem permissão para excluir o arquivo XML!") 
+        except Exception as e: 
+            print("Erro ao tentar excluir o arquivo XML:", e)
+
+    def ler_excel(self):
+        #abre o arquivo
+        workbook = openpyxl.load_workbook('coordenada.xlsx')
+        workseet = workbook['ns1:coordinates']
         
+        print(workseet)
 
-        '''
-        for linha in raiz.findall('coordX'): #ler coordenada x com laço de repetição
-            print(linha.text)
-
-        for linha in raiz.findall('coordY'): #ler coordenada y com laço de repetição
-            print(linha.text)
-        '''
-        
-        #print(raiz[2].text)
-
-        #print(et.tostring(raiz, encoding='utf8').decode('utf8'))
-
-        #for i in raiz.iter('coordX'):
-            #print(i.text)
-
-        #for filhas in raiz:
-            #print(filhas.tag, filhas.attrib )
-
-        #escrever xml
-        #arquivo.write('new_livros.xml')
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
