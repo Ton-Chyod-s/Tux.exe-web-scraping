@@ -3764,10 +3764,31 @@ class Internet:
             print("Erro ao tentar excluir o arquivo XML:", e)
 
     def ler_excel(self):
-        #abre o arquivo
-        workbook = openpyxl.load_workbook('coordenada.xlsx')
-        workseet = workbook['ns1:coordinates']
         
+        # Load Excel workbook 
+        wb = Workbook("workbook.xlsx") 
+        # Get worksheets collection 
+        collection = wb.getWorksheets() collectionCount = collection.getCount() 
+        # Loop through all the worksheets
+        for worksheetIndex in range(collectionCount): 
+            # Get worksheet using its index 
+            worksheet = collection.get(worksheetIndex) 
+            # Print worksheet name 
+            print("Worksheet: " + str(worksheet.getName())) 
+            # Get number of rows and columns 
+            rows = worksheet.getCells().getMaxDataRow() 
+            cols = worksheet.getCells().getMaxDataColumn() 
+
+            #Loop through rows 
+            for i in range(rows): 
+                # Loop through each column in selected row 
+                for j in range(cols): 
+                    # Print cell value 
+                    print(worksheet.getCells().get(i, j).getValue(), end =" | ")
+
+                # Print line break 
+                print("\n")
+
         print(workseet)
 
 if __name__ == "__main__": 
