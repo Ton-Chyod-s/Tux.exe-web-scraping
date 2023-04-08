@@ -3765,18 +3765,40 @@ class Internet:
         except Exception as e: 
             print("Erro ao tentar excluir o arquivo XML:", e)
 
-    def ler_excel(self):
+    def criar_hp_coord(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active
     
-        for i in range(2,10):
-            coord = ws[f'D{i}'].value
-            print(coord.split(''))
-            '''coordx = coord[1]
-            coordy = coord[2]
-            print(f'x:\t {coordx} y:\t {coordy}')'''
+        for i in range(1,401):
+            coordx = ws[f'D{i}'].value
+            coordy = ws[f'E{i}'].value
+            minha_lista = []
+            for i in range (6):
+                minha_lista.append(random.randint(1,9))
+            num = int(''.join(map(str,minha_lista)))
+            novo_numero = '20200824091321' + str(num)
+            #ler arquivo
+            tree = et.parse('hp.xml')
+            root = tree.getroot()
+            #modificar corrdenada no arquivo xml
+            root.find('coordX').text = str(coordx)
+            root.find('coordY').text = str(coordy)
+            #escrever xml
+            tree.write('moradia1//moradia1.xml')
+            #tarnsformar em zip
+            shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+            caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+            #deletar arquivo xml
+            try: 
+                os.remove(caminho_do_arquivo) 
+                print("Arquivo XML removido com sucesso!")     
+            except FileNotFoundError: 
+                print("Arquivo XML não encontrado!") 
+            except PermissionError: 
+                print("Sem permissão para excluir o arquivo XML!") 
+            except Exception as e: 
+                print("Erro ao tentar excluir o arquivo XML:", e)
             
-        
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)

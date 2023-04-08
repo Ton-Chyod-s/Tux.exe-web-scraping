@@ -29,7 +29,7 @@ class app:
                 [sg.Button('CEP',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon'),sg.Input(size=(10,1),key='numero')], 
                 [sg.Button('Procurar',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='coodx'),sg.Input(size=(10,1),key='coody')],
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
-                [sg.Button('excel',size=(8,1))]
+                [sg.Button('criar_hp_coord',size=(16,1))]
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -59,8 +59,8 @@ class app:
                 if event == 'KML':
                     navegador.cadastro_poste_kmz(values['cood_x'],values['cood_y'])
                 
-                if event == 'excel':
-                    navegador.ler_excel()
+                if event == 'criar_hp_coord':
+                    navegador.criar_hp_coord()
                     
             window.close()
 
