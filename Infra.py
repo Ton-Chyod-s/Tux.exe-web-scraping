@@ -1,8 +1,6 @@
 import PySimpleGUI as sg
 from algoritimo import *
-from tqdm import tqdm
-import requests
-import socket
+
 
 sg.popup_notify(f'Carregando...')
 
