@@ -3804,7 +3804,7 @@ class Internet:
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active
     
-        for i in range(1,401):
+        for i in range(2,402):
             coordx = ws[f'D{i}'].value
             coordy = ws[f'E{i}'].value
         
