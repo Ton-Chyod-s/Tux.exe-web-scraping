@@ -3798,7 +3798,8 @@ class Internet:
                 print("Sem permissão para excluir o arquivo XML!") 
             except Exception as e: 
                 print("Erro ao tentar excluir o arquivo XML:", e)
-            
+    
+             
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)

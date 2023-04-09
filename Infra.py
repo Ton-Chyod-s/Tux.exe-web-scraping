@@ -29,7 +29,7 @@ class app:
                 [sg.Button('CEP',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon'),sg.Input(size=(10,1),key='numero')], 
                 [sg.Button('Procurar',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='coodx'),sg.Input(size=(10,1),key='coody')],
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
-                [sg.Button('criar_hp_coord',size=(16,1))]
+                [sg.Button('Criar Hp',size=(15,1)),sg.Button('Pesquisar CEP',size=(15,1))]
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
