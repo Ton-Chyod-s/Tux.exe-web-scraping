@@ -3770,8 +3770,8 @@ class Internet:
         ws = wb.active
     
         for i in range(1,401):
-            coordx = ws[f'D{i}'].value
-            coordy = ws[f'E{i}'].value
+            coordx = ws[f'C{i}'].value
+            coordy = ws[f'D{i}'].value
             minha_lista = []
             for i in range (6):
                 minha_lista.append(random.randint(1,9))
@@ -3805,14 +3805,14 @@ class Internet:
         ws = wb.active
     
         for i in range(2,402):
-            coordx = ws[f'D{i}'].value
-            coordy = ws[f'E{i}'].value
+            coordx = ws[f'C{i}'].value
+            coordy = ws[f'D{i}'].value
         
         
-            coordenada = str(coordx) + ', ' + str(coordy)
+            coordenada = str(coordy) + ', ' + str(coordx)
             try:
                 self.driver.get("http://google.com.br")
-                time.sleep(1)
+                time.sleep(2)
                 self.esperar_xpath_txt('//*[@id="APjFqb"]',coordenada)
                 time.sleep(.3)
                 self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
