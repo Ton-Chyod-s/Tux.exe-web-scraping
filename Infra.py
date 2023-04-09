@@ -62,6 +62,9 @@ class app:
                 if event == 'criar_hp_coord':
                     navegador.criar_hp_coord()
                     
+                if event == 'Pesquisar CEP':
+                    navegador.planilha_cep()
+                    
             window.close()
 
         def celula():
