@@ -3809,11 +3809,11 @@ class Internet:
             coordy = ws[f'E{i}'].value
         
         
-            coordenada = coordx + ', ' + coordy
+            coordenada = str(coordx) + ', ' + str(coordy)
             try:
                 self.driver.get("http://google.com.br")
                 time.sleep(1)
-                self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
+                self.esperar_xpath_txt('//*[@id="APjFqb"]',coordenada)
                 time.sleep(.3)
                 self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
                 time.sleep(1)
