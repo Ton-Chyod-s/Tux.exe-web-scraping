@@ -3925,14 +3925,21 @@ class Internet:
                     sem_acento = unidecode(endereco)
                     minuscula = sem_acento.lower()
                     str_tabela = minuscula.split()
-                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','y','x','w','z','.',',','-','"']
                     for letra in letras_remover:
                         str_tabela = [ l.replace(letra, '') for l in str_tabela ]
                     sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
                     cep = str(sem_espaco_vazio)
+                    
+                    
+                    print(cep[2])
+
                     sem_aspa = cep.replace("'","")
                     sem_colchete = sem_aspa.replace('[','').replace(']','')
-                    cell.value = sem_colchete
+
+
+
+                    #cell.value = sem_colchete
                     
                 except:
                     cell.value = 'CEP NÃO ENCONTRADO'
