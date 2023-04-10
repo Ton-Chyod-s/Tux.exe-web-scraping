@@ -3807,7 +3807,7 @@ class Internet:
         for i in range(2,402):
             coordx = ws[f'C{i}'].value
             coordy = ws[f'D{i}'].value
-            cell = ws.cell(row=5, column=i)
+            cell = ws.cell(row=i, column=5)
         
             coordenada = str(coordy) + ', ' + str(coordx)
             try:
