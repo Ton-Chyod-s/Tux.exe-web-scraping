@@ -23,7 +23,7 @@ from unidecode import unidecode
 import xml.etree.ElementTree as et
 import shutil
 from openpyxl import workbook, load_workbook
-from openpyxl.utils import get_column_letter
+
 
 
 sg.popup_notify(f'Carregando biblioteca...')
@@ -3852,7 +3852,7 @@ class Internet:
             except: 
                 print('Tente novamente')
                 
-            workbook.save('coordenada.xlsx')
+            wb.save('coordenada.xlsx')
             
 if __name__ == "__main__": 
     #navegador = Internet()
