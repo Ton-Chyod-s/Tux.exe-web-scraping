@@ -22,7 +22,6 @@ class app:
 
         window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
 
-
         def survey():
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
@@ -59,7 +58,7 @@ class app:
                 if event == 'KML':
                     navegador.cadastro_poste_kmz(values['cood_x'],values['cood_y'])
                 
-                if event == 'criar_hp_coord':
+                if event == 'Criar Hp':
                     navegador.criar_hp_coord()
                     
                 if event == 'Pesquisar CEP':

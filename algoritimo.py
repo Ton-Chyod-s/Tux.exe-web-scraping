@@ -22,7 +22,7 @@ from selenium.webdriver.common.keys import Keys
 from unidecode import unidecode 
 import xml.etree.ElementTree as et
 import shutil
-from openpyxl import workbook, load_workbook
+from openpyxl import load_workbook
 
 
 
@@ -3766,93 +3766,148 @@ class Internet:
             print("Erro ao tentar excluir o arquivo XML:", e)
 
     def criar_hp_coord(self):
-        wb = load_workbook('coordenada.xlsx')
-        ws = wb.active
-    
         for i in range(1,401):
-            coordx = ws[f'C{i}'].value
-            coordy = ws[f'D{i}'].value
+            wb = load_workbook('coordenada.xlsx')
+            ws = wb.active
+            coordx = ws[f'A{i}'].value
+            coordy = ws[f'B{i}'].value
             minha_lista = []
-            for i in range (6):
-                minha_lista.append(random.randint(1,9))
-            num = int(''.join(map(str,minha_lista)))
-            novo_numero = '20200824091321' + str(num)
-            #ler arquivo
-            tree = et.parse('hp.xml')
-            root = tree.getroot()
-            #modificar corrdenada no arquivo xml
-            root.find('coordX').text = str(coordx)
-            root.find('coordY').text = str(coordy)
-            #escrever xml
-            tree.write('moradia1//moradia1.xml')
-            #tarnsformar em zip
-            shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-            caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
-            #deletar arquivo xml
-            try: 
-                os.remove(caminho_do_arquivo) 
-                print("Arquivo XML removido com sucesso!")     
-            except FileNotFoundError: 
-                print("Arquivo XML não encontrado!") 
-            except PermissionError: 
-                print("Sem permissão para excluir o arquivo XML!") 
-            except Exception as e: 
-                print("Erro ao tentar excluir o arquivo XML:", e)
-    
+            if coordx == 'None':
+                break
+            else:
+                for i in range (6):
+                    minha_lista.append(random.randint(1,9))
+                num = int(''.join(map(str,minha_lista)))
+                novo_numero = '20200824091321' + str(num)
+                #ler arquivo
+                tree = et.parse('hp.xml')
+                root = tree.getroot()
+                #modificar corrdenada no arquivo xml
+                root.find('coordX').text = str(coordx)
+                root.find('coordY').text = str(coordy)
+                #escrever xml
+                tree.write('moradia1//moradia1.xml')
+                #tarnsformar em zip
+                shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+                #deletar arquivo xml
+                try: 
+                    os.remove(caminho_do_arquivo) 
+                    print("Arquivo XML removido com sucesso!")     
+                except FileNotFoundError: 
+                    print("Arquivo XML não encontrado!") 
+                except PermissionError: 
+                    print("Sem permissão para excluir o arquivo XML!") 
+                except Exception as e: 
+                    print("Erro ao tentar excluir o arquivo XML:", e)
+
     def planilha_cep(self):
-        
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active
-    
+        self.driver.get("https://www.google.com.br/maps")     
         for i in range(2,402):
-            coordx = ws[f'C{i}'].value
-            coordy = ws[f'D{i}'].value
+            coordx = ws[f'A{i}'].value
+            coordy = ws[f'B{i}'].value
             cell = ws.cell(row=i, column=5)
-        
-            coordenada = str(coordy) + ', ' + str(coordx)
-            try:
-                self.driver.get("http://google.com.br")
-                time.sleep(2)
-                self.esperar_xpath_txt('//*[@id="APjFqb"]',coordenada)
-                time.sleep(.3)
-                self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
-                time.sleep(1)
-                self.esperar_clicar_xpath('//*[@id="lu_map"]')
-                time.sleep(1)
-                wdw = WebDriverWait(self.driver, 10)
-                wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-                cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-                sem_acento = unidecode(cood1)
-                minuscula = sem_acento.lower()
-                str_tabela = minuscula.split()
-                letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
-                for letra in letras_remover:
-                    str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-
-                sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
+            if coordenada == 'None, None':
+                break
+            else:
                 try:
-                    if sem_espaco_vazio[1] == None:
-                        print('Tem que usar o CEP padrão')
-                        cell.value = 'CEP NÃO ENCONTRADO'
-                    else:
-                        try:
-                            print(f'O cep é:\n{sem_espaco_vazio[2]}')
-                            cell.value = sem_espaco_vazio[2]
-                        except:
-                            print(f'O cep é:\n{sem_espaco_vazio[1]}')
-                            cell.value = sem_espaco_vazio[1]
-                except:
+                    self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
+                    time.sleep(.5)
+                    self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]')
+                    wdw = WebDriverWait(self.driver, 10)
+                    wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
+                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+                    sem_acento = unidecode(cood1)
+                    minuscula = sem_acento.lower()
+                    str_tabela = minuscula.split()
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+                    for letra in letras_remover:
+                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
+                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
                     try:
-                        print(f'O cep é:\n{sem_espaco_vazio[0]}')
-                        cell.value = sem_espaco_vazio[0]
+                        if sem_espaco_vazio[1] == None:
+                            print('Tem que usar o CEP padrão')
+                            cell.value = 'CEP NÃO ENCONTRADO'
+                        else:
+                            try:
+                                print(f'O cep é:\n{sem_espaco_vazio[2]}')
+                                cell.value = sem_espaco_vazio[2]
+                            except:
+                                print(f'O cep é:\n{sem_espaco_vazio[1]}')
+                                cell.value = sem_espaco_vazio[1]
                     except:
-                        print('Tem que usar o CEP padrão')
-                        cell.value = 'CEP NÃO ENCONTRADO'
-                        
-            except: 
-                print('Tente novamente')
+                        try:
+                            print(f'O cep é:\n{sem_espaco_vazio[0]}')
+                            cell.value = sem_espaco_vazio[0]
+                        except:
+                            print('Tem que usar o CEP padrão')
+                            cell.value = 'CEP NÃO ENCONTRADO'
+                            
+                except: 
+                    print('Tente novamente')
+                    
+                wb.save('coordenada.xlsx')
+
+    '''
+    def planilha_cep(self):
+            wb = load_workbook('coordenada.xlsx')
+            ws = wb.active
+            
+            for i in range(2,402):
+                coordx = ws[f'A{i}'].value
+                coordy = ws[f'B{i}'].value
+                cell = ws.cell(row=i, column=6)
                 
-            wb.save('coordenada.xlsx')
+                coordenada = str(coordy) + ', ' + str(coordx)
+                try:
+                    self.driver.get("http://google.com.br")
+                    time.sleep(2)
+                    self.esperar_xpath_txt('//*[@id="APjFqb"]',coordenada)
+                    time.sleep(.3)
+                    self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
+                    time.sleep(1)
+                    self.esperar_clicar_xpath('//*[@id="lu_map"]')
+                    time.sleep(1)
+                    wdw = WebDriverWait(self.driver, 10)
+                    wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
+                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+                    sem_acento = unidecode(cood1)
+                    minuscula = sem_acento.lower()
+                    str_tabela = minuscula.split()
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+                    for letra in letras_remover:
+                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
+
+                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+                    try:
+                        if sem_espaco_vazio[1] == None:
+                            print('Tem que usar o CEP padrão')
+                            cell.value = 'CEP NÃO ENCONTRADO'
+                        else:
+                            try:
+                                print(f'O cep é:\n{sem_espaco_vazio[2]}')
+                                cell.value = sem_espaco_vazio[2]
+                            except:
+                                print(f'O cep é:\n{sem_espaco_vazio[1]}')
+                                cell.value = sem_espaco_vazio[1]
+                    except:
+                        try:
+                            print(f'O cep é:\n{sem_espaco_vazio[0]}')
+                            cell.value = sem_espaco_vazio[0]
+                        except:
+                            print('Tem que usar o CEP padrão')
+                            cell.value = 'CEP NÃO ENCONTRADO'
+                                
+                except: 
+                    print('Tente novamente')
+                        
+                wb.save('coordenada.xlsx')'''
+
+
+
             
 if __name__ == "__main__": 
     #navegador = Internet()
