@@ -3766,13 +3766,14 @@ class Internet:
             print("Erro ao tentar excluir o arquivo XML:", e)
 
     def criar_hp_coord(self):
-        for i in range(1,401):
+        for i in range(2,402):
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             minha_lista = []
-            if coordx == 'None':
+            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
+            if coordenada == 'None, None':
                 break
             else:
                 for i in range (6):
@@ -3908,7 +3909,7 @@ class Internet:
 
 
 
-            
+
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
