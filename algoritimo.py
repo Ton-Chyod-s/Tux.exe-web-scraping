@@ -3932,14 +3932,16 @@ class Internet:
                     cep = str(sem_espaco_vazio)
                     sem_aspa = cep.replace("'","").replace('[','').replace(']','')
             
-                    print(sem_aspa)
+                    print(sem_aspa[-8:])
 
-                    #cell.value = sem_colchete
+                    cell.value = sem_aspa[-8:]
                     
                 except:
                     cell.value = 'CEP NÃO ENCONTRADO'
 
                 wb.save('coordenada.xlsx')
+                
+                print('Arquivo salvo')
 
 if __name__ == "__main__": 
     #navegador = Internet()
