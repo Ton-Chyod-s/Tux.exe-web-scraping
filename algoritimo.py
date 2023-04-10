@@ -3807,7 +3807,7 @@ class Internet:
         for i in range(2,402):
             coordx = ws[f'C{i}'].value
             coordy = ws[f'D{i}'].value
-        
+            cell = ws.cell(row=5, column=i)
         
             coordenada = str(coordy) + ', ' + str(coordx)
             try:
@@ -3832,21 +3832,28 @@ class Internet:
                 sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
                 try:
                     if sem_espaco_vazio[1] == None:
-                        sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
+                        print('Tem que usar o CEP padrão',keep_on_top=True)
+                        cell.value = 'CEP NÃO ENCONTRADO'
                     else:
                         try:
-                            sg.popup(f'O cep é:\n{sem_espaco_vazio[2]}',keep_on_top=True)
+                            print(f'O cep é:\n{sem_espaco_vazio[2]}',keep_on_top=True)
+                            cell.value = sem_espaco_vazio[2]
                         except:
-                            sg.popup(f'O cep é:\n{sem_espaco_vazio[1]}',keep_on_top=True)
+                            print(f'O cep é:\n{sem_espaco_vazio[1]}',keep_on_top=True)
+                            cell.value = sem_espaco_vazio[1]
                 except:
                     try:
-                        sg.popup(f'O cep é:\n{sem_espaco_vazio[0]}',keep_on_top=True)
+                        print(f'O cep é:\n{sem_espaco_vazio[0]}',keep_on_top=True)
+                        cell.value = sem_espaco_vazio[0]
                     except:
-                        sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
+                        print('Tem que usar o CEP padrão',keep_on_top=True)
+                        cell.value = 'CEP NÃO ENCONTRADO'
                         
             except: 
-                sg.popup_ok('Tente novamente', keep_on_top=True)
-          
+                print('Tente novamente', keep_on_top=True)
+                
+            workbook.save('coordenada.xlsx')
+            
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
