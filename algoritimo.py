@@ -3832,25 +3832,25 @@ class Internet:
                 sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
                 try:
                     if sem_espaco_vazio[1] == None:
-                        print('Tem que usar o CEP padrão',keep_on_top=True)
+                        print('Tem que usar o CEP padrão')
                         cell.value = 'CEP NÃO ENCONTRADO'
                     else:
                         try:
-                            print(f'O cep é:\n{sem_espaco_vazio[2]}',keep_on_top=True)
+                            print(f'O cep é:\n{sem_espaco_vazio[2]}')
                             cell.value = sem_espaco_vazio[2]
                         except:
-                            print(f'O cep é:\n{sem_espaco_vazio[1]}',keep_on_top=True)
+                            print(f'O cep é:\n{sem_espaco_vazio[1]}')
                             cell.value = sem_espaco_vazio[1]
                 except:
                     try:
-                        print(f'O cep é:\n{sem_espaco_vazio[0]}',keep_on_top=True)
+                        print(f'O cep é:\n{sem_espaco_vazio[0]}')
                         cell.value = sem_espaco_vazio[0]
                     except:
-                        print('Tem que usar o CEP padrão',keep_on_top=True)
+                        print('Tem que usar o CEP padrão')
                         cell.value = 'CEP NÃO ENCONTRADO'
                         
             except: 
-                print('Tente novamente', keep_on_top=True)
+                print('Tente novamente')
                 
             workbook.save('coordenada.xlsx')
             
