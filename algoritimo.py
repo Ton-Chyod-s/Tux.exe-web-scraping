@@ -24,7 +24,6 @@ import xml.etree.ElementTree as et
 import shutil
 from openpyxl import load_workbook
 from geopy.geocoders import Nominatim
-import reverse_geocode
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3932,7 +3931,7 @@ class Internet:
                     cep = str(sem_espaco_vazio)
                     sem_aspa = cep.replace("'","")
                     sem_colchete = sem_aspa.replace('[','').replace(']','')
-
+                    print(sem_colchete, )
 
                     #cell.value = sem_colchete
                     
