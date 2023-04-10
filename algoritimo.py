@@ -23,8 +23,8 @@ from unidecode import unidecode
 import xml.etree.ElementTree as et
 import shutil
 from openpyxl import load_workbook
-
-
+from geopy.geocoders import Nominatim
+import reverse_geocode
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3907,8 +3907,37 @@ class Internet:
                         
                 wb.save('coordenada.xlsx')'''
 
+    def cep_geopy(self):
+        wb = load_workbook('coordenada.xlsx')
+        ws = wb.active  
+        for i in range(2,402):
+            coordx = ws[f'A{i}'].value
+            coordy = ws[f'B{i}'].value
+            cell = ws.cell(row=i, column=5)
+            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
+            if coordenada == 'None, None':
+                break
+            else:
+                try:
+                    geolocator = Nominatim(user_agent='geoapiExercises')
+                    location = geolocator.reverse(coordenada)
+                    endereco = location.address
+                    sem_acento = unidecode(endereco)
+                    minuscula = sem_acento.lower()
+                    str_tabela = minuscula.split()
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+                    for letra in letras_remover:
+                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
+                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+                    cep = str(sem_espaco_vazio)
+                    sem_aspa = cep.replace("'","")
+                    sem_colchete = sem_aspa.replace('[','').replace(']','')
+                    cell.value = sem_colchete
+                    
+                except:
+                    cell.value = 'CEP NÃO ENCONTRADO'
 
-
+                wb.save('coordenada.xlsx')
 
 if __name__ == "__main__": 
     #navegador = Internet()

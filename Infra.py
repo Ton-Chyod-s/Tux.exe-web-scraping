@@ -62,7 +62,7 @@ class app:
                     navegador.criar_hp_coord()
                     
                 if event == 'Pesquisar CEP':
-                    navegador.planilha_cep()
+                    navegador.cep_geopy()
                     
             window.close()
 
