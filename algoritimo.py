@@ -3934,7 +3934,6 @@ class Internet:
                     sem_colchete = sem_aspa.replace('[','').replace(']','')
 
 
-
                     #cell.value = sem_colchete
                     
                 except:
