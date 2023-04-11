@@ -24,6 +24,7 @@ import xml.etree.ElementTree as et
 import shutil
 from openpyxl import load_workbook
 from geopy.geocoders import Nominatim
+import requests
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3943,6 +3944,32 @@ class Internet:
                 
         print('Arquivo salvo')
 
+    def endereco_cep(self):
+        wb = load_workbook('coordenada.xlsx')
+        ws = wb.active  
+        for i in range(2,402):
+            print(f"Endereço{i}")
+            cell = ws.cell(row=i, column=6)
+            cep = ws[f'E{i}'].value
+            try:
+                if len(cep) == 8:
+                    link = f'https://viacep.com.br/ws/{cep}/json/'
+
+                    requisicao = requests.get(link)
+
+                    print(requisicao)
+
+                    dic_requisicao = requisicao.json()
+
+                    uf = dic_requisicao['uf']
+                    cidade = dic_requisicao['localidade']
+                    bairro = dic_requisicao['bairro']
+                    print(dic_requisicao)
+                else:
+                    print("CEP Inválido")
+            except:
+                print('Acabou as linhas')
+    
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
