@@ -1,4 +1,16 @@
-import reverse_geocode as rg
+from pycep_correios import get_address_from_cep, WebService
+from openpyxl import load_workbook
+from time import sleep
+from tqdm import tqdm
 
-coordinates = (51.5214588,-0.1729636),(9.936033, 76.259952),(37.38605,-122.08385)
-rg.search(coordinates)
+wb = load_workbook('coordenada.xlsx')
+ws = wb.active
+for i in tqdm(range(2,402), desc ="Carregando..."):
+    sleep(.5)
+    endereco = get_address_from_cep('88066260', webservice=WebService.CORREIOS)    
+
+    '''print(endereco['logradouro'])
+        print(endereco['bairro'])
+        print(endereco['cidade'])
+        print(endereco['uf'])
+        print(endereco['cep'])'''

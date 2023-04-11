@@ -67,6 +67,9 @@ class app:
                 
                 if event == 'Endereço':
                     navegador.endereco_cep()
+                
+                if event =='Test':
+                    navegador.end_cood()
                     
             window.close()
 

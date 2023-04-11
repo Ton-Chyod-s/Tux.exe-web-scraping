@@ -25,7 +25,9 @@ import shutil
 from openpyxl import load_workbook
 from geopy.geocoders import Nominatim
 import requests
-import pycep_correios
+from tqdm import tqdm
+from pycep_correios import get_address_from_cep, WebService
+from time import sleep
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3978,6 +3980,52 @@ class Internet:
             except:
                 pass
     
+    def end_cood(self):
+        wb = load_workbook('coordenada.xlsx')
+        ws = wb.active  
+        for i in tqdm(range(2,402), desc ="Carregando..."):
+            sleep(.1)
+            coordx = ws[f'A{i}'].value
+            coordy = ws[f'B{i}'].value
+            cell = ws.cell(row=i, column=5)
+            cell_1 = ws.cell(row=i, column=6)
+            cell_2 = ws.cell(row=i, column=7)
+            cell_3 = ws.cell(row=i, column=8)
+            cell_4 = ws.cell(row=i, column=9)
+            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
+            if coordenada == 'None, None':
+                break
+            else:
+                try:
+                    geolocator = Nominatim(user_agent='geoapiExercises')
+                    location = geolocator.reverse(coordenada)
+                    endereco = location.address
+                    sem_acento = unidecode(endereco)
+                    minuscula = sem_acento.lower()
+                    str_tabela = minuscula.split()
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','y','x','w','z','.',',','-','"']
+                    for letra in letras_remover:
+                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
+                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+                    cep = str(sem_espaco_vazio)
+                    sem_aspa = cep.replace("'","").replace('[','').replace(']','')
+                    cep_final = sem_aspa[-8:]
+                    cell.value = cep_final
+                except:
+                    cell.value = 'CEP NÃO ENCONTRADO'
+            try:
+                    
+                endereco = get_address_from_cep(cep_final, webservice=WebService.CORREIOS)    
+
+                cell_1.value = endereco['logradouro']
+                cell_2.value = endereco['bairro']
+                cell_3.value = endereco['cidade']
+                cell_4.value = endereco['uf']
+
+            except:
+                pass
+
+                wb.save('coordenada.xlsx')
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
