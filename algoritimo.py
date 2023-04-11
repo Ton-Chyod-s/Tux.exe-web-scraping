@@ -3706,13 +3706,11 @@ class Internet:
     def procurar_cep(self,cood_x,codd_y):
         coordenada = cood_x + ', ' + codd_y
         try:
-            self.driver.get("http://google.com.br")
-            time.sleep(1)
-            self.esperar_xpath_txt('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input',coordenada)
+            self.driver.get("https://www.google.com.br/maps")
+            time.sleep(.5)
+            self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
             time.sleep(.3)
-            self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
-            time.sleep(1)
-            self.esperar_clicar_xpath('//*[@id="lu_map"]')
+            self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
             time.sleep(1)
             wdw = WebDriverWait(self.driver, 10)
             wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
@@ -3836,7 +3834,6 @@ class Internet:
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
         for i in range(2,402):
-            print(f"Cep{i}")
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             cell = ws.cell(row=i, column=5)
@@ -3855,25 +3852,9 @@ class Internet:
                                 if 'postcode' in address: 
                                     return address['postcode'] 
                      
-                    print(buscar_cep(coordy,coordx))
-                         
-                    '''geolocator = Nominatim(user_agent='geoapiExercises')
-                    location = geolocator.reverse(coordenada)
-                    endereco = location.address
-                    sem_acento = unidecode(endereco)
-                    minuscula = sem_acento.lower()
-                    str_tabela = minuscula.split()
-                    
-                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','y','x','w','z','.',',','-','"']
-                    for letra in letras_remover:
-                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
-                    cep = str(sem_espaco_vazio)
-                    sem_aspa = cep.replace("'","").replace('[','').replace(']','')
-            
-                    cep_final = sem_aspa[-8:]
-
-                    cell.value = cep_final'''
+                    cep_final = buscar_cep(coordy,coordx).replace("-","")
+                    cell.value = cep_final
+                    wb.save('coordenada.xlsx')     
                     
                 except:
                     cell.value = 'CEP NÃO ENCONTRADO'
@@ -3893,19 +3874,8 @@ class Internet:
             cell_3 = ws.cell(row=i, column=9)
             cep = ws[f'E{i}'].value
             try:
-                import requests 
-                def buscar_cep(lat, lon): 
-                    url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}" 
-                    response = requests.get(url) 
-                    if response.status_code == 200: 
-                        data = response.json() 
-                        if 'address' in data: 
-                            address = data['address'] 
-                            if 'postcode' in address: 
-                                return address['postcode'] 
-                    return None
                 
-                '''if len(cep) == 8:
+                if len(cep) == 8:
                     link = f'https://viacep.com.br/ws/{cep}/json/'
 
                     requisicao = requests.get(link)
@@ -3923,7 +3893,7 @@ class Internet:
                     
                     wb.save('coordenada.xlsx')
                 else:
-                    print("CEP Inválido")'''
+                    print("CEP Inválido")
             except:
                 pass
     
