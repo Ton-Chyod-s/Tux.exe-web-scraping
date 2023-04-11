@@ -3950,6 +3950,9 @@ class Internet:
         for i in range(2,402):
             print(f"Endereço{i}")
             cell = ws.cell(row=i, column=6)
+            cell_1 = ws.cell(row=i, column=7)
+            cell_2 = ws.cell(row=i, column=8)
+            cell_3 = ws.cell(row=i, column=9)
             cep = ws[f'E{i}'].value
             try:
                 if len(cep) == 8:
@@ -3957,18 +3960,22 @@ class Internet:
 
                     requisicao = requests.get(link)
 
-                    print(requisicao)
-
                     dic_requisicao = requisicao.json()
 
                     uf = dic_requisicao['uf']
                     cidade = dic_requisicao['localidade']
                     bairro = dic_requisicao['bairro']
-                    print(dic_requisicao)
+                    logradouro = dic_requisicao['logradouro']
+                    cell.value = logradouro
+                    cell_1.value = bairro
+                    cell_2.value = cidade
+                    cell_3.value = uf
+                    
+                    wb.save('coordenada.xlsx')
                 else:
                     print("CEP Inválido")
             except:
-                print('Acabou as linhas')
+                pass
     
 if __name__ == "__main__": 
     #navegador = Internet()
