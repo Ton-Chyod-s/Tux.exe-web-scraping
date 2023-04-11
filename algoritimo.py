@@ -25,6 +25,7 @@ import shutil
 from openpyxl import load_workbook
 from geopy.geocoders import Nominatim
 import requests
+import pycep_correios
 
 sg.popup_notify(f'Carregando biblioteca...')
 
