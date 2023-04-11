@@ -25,11 +25,8 @@ class app:
         def survey():
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
-                [sg.Button('CEP',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon'),sg.Input(size=(10,1),key='numero')], 
-                [sg.Button('Procurar',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='coodx'),sg.Input(size=(10,1),key='coody')],
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
-                [sg.Button('Criar Hp',size=(15,1)),sg.Button('Pesquisar CEP',size=(15,1))],
-                [sg.Button('Endereço',size=(15,1)),sg.Button('Test',size=(15,1))]
+                [sg.Button('1-Endereço',size=(11,1)),sg.Button('2-Criar Hp',size=(11,1)),sg.Input(size=(5,1))],
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -44,31 +41,13 @@ class app:
                     programa = app()
                     programa 
 
-                if event == 'spliter':
-                    navegador.Spliter_completa()
-                 
-                if event == 'Conectividade':
-                    navegador.Conectividade_completa()
-            
-                if event == 'CEP':
-                    navegador.endereco_survey(values['id_sicon'],values['numero'])
-
-                if event == 'Procurar':
-                    navegador.procurar_cep(values['coodx'],values['coody'])
-
                 if event == 'KML':
                     navegador.cadastro_poste_kmz(values['cood_x'],values['cood_y'])
                 
-                if event == 'Criar Hp':
+                if event == '2-Criar Hp':
                     navegador.criar_hp_coord()
-                    
-                if event == 'Pesquisar CEP':
-                    navegador.cep_geopy()
                 
-                if event == 'Endereço':
-                    navegador.endereco_cep()
-                
-                if event =='Test':
+                if event =='1-Endereço':
                     navegador.end_cood()
                     
             window.close()

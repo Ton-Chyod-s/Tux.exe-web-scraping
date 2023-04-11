@@ -28,7 +28,6 @@ import requests
 from tqdm import tqdm
 from pycep_correios import get_address_from_cep, WebService
 from time import sleep
-
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -3769,146 +3768,67 @@ class Internet:
             print("Erro ao tentar excluir o arquivo XML:", e)
 
     def criar_hp_coord(self):
-        for i in range(2,402):
-            print(f"hp{i}")
+        for i in tqdm(range(2,402), desc ="Carregando..."):
+            sleep(.1)
+            tree = et.parse('hp.xml')
+            root = tree.getroot()
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
+            numero = str(ws[f'C{i}'].value)
+            workbook = load_workbook('roteiro.xlsx')
+            worksheet = workbook.active
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             minha_lista = []
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
                 break
-            else:
-                for linha in range (6):
-                    minha_lista.append(random.randint(1,9))
-                num = int(''.join(map(str,minha_lista)))
-                novo_numero = '20200824091321' + str(num)
-                #ler arquivo
-                tree = et.parse('hp.xml')
-                root = tree.getroot()
-                #modificar corrdenada no arquivo xml
-                root.find('coordX').text = str(coordx)
-                root.find('coordY').text = str(coordy)
-                #escrever xml
-                tree.write('moradia1//moradia1.xml')
-                #tarnsformar em zip
-                shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-                caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
-                #deletar arquivo xml
-                try: 
-                    os.remove(caminho_do_arquivo)      
-                except FileNotFoundError: 
-                    print("Arquivo XML não encontrado!") 
-                except PermissionError: 
-                    print("Sem permissão para excluir o arquivo XML!") 
-                except Exception as e: 
-                    print("Erro ao tentar excluir o arquivo XML:", e)
+            cep = str(ws[f'E{i}'].value)
+            for i in range(2, 502):
+                cep_2 = str(worksheet[f'V{i}'].value)
+                bairro = str(worksheet[f'M{i}'].value)
+                roteiro = str(worksheet[f'C{i}'].value)
+                localidade = str(worksheet[f'H{i}'].value)
+                cod_logradouro = str(worksheet[f'N{i}'].value)
+                logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
+                if cep_2 == 'None':
+                    break
+                elif cep_2 == cep:
+                    for country in root.findall('enderecoEdificio'):
+                        country.find('logradouro').text = logradouro
+                        country.find('numero_fachada').text = numero
+                        country.find('cep').text = cep_2
+                        country.find('bairro').text = bairro
+                        country.find('id_roteiro').text = roteiro
+                        country.find('id_localidade').text = localidade
+                        country.find('cod_lograd').text = cod_logradouro
 
-    '''def planilha_cep(self):
-        wb = load_workbook('coordenada.xlsx')
-        ws = wb.active
-        self.driver.get("https://www.google.com.br/maps")     
-        for i in range(2,402):
-            coordx = ws[f'A{i}'].value
-            coordy = ws[f'B{i}'].value
-            cell = ws.cell(row=i, column=5)
-            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
-            if coordenada == 'None, None':
-                break
-            else:
-                try:
-                    self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
-                    time.sleep(.5)
-                    self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]')
-                    wdw = WebDriverWait(self.driver, 10)
-                    wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-                    sem_acento = unidecode(cood1)
-                    minuscula = sem_acento.lower()
-                    str_tabela = minuscula.split()
-                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
-                    for letra in letras_remover:
-                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
-                    try:
-                        if sem_espaco_vazio[1] == None:
-                            print('Tem que usar o CEP padrão')
-                            cell.value = 'CEP NÃO ENCONTRADO'
-                        else:
-                            try:
-                                print(f'O cep é:\n{sem_espaco_vazio[2]}')
-                                cell.value = sem_espaco_vazio[2]
-                            except:
-                                print(f'O cep é:\n{sem_espaco_vazio[1]}')
-                                cell.value = sem_espaco_vazio[1]
-                    except:
-                        try:
-                            print(f'O cep é:\n{sem_espaco_vazio[0]}')
-                            cell.value = sem_espaco_vazio[0]
-                        except:
-                            print('Tem que usar o CEP padrão')
-                            cell.value = 'CEP NÃO ENCONTRADO'
-                            
-                except: 
-                    print('Tente novamente')
+                    for linha in range (6):
+                        minha_lista.append(random.randint(1,9))
+                    num = int(''.join(map(str,minha_lista)))
+                    novo_numero = '20200824091321' + str(num)
+                    #modificar corrdenada no arquivo xml
+                    root.find('coordX').text = str(coordx)
+                    root.find('coordY').text = str(coordy)
+                    root.find('localidade').text = str(worksheet[f'J{i}'].value)
+                    #escrever xml
+                    tree.write('moradia1//moradia1.xml')
+                    #tarnsformar em zip
+                    shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                    caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+                    #deletar arquivo xml
+                    try: 
+                        os.remove(caminho_do_arquivo)      
+                    except FileNotFoundError: 
+                        print("Arquivo XML não encontrado!") 
+                    except PermissionError: 
+                        print("Sem permissão para excluir o arquivo XML!") 
+                    except Exception as e: 
+                        print("Erro ao tentar excluir o arquivo XML:", e)
+                    break
+
+        sg.popup_no_border('Operação concluida',keep_on_top=True)
                     
-                wb.save('coordenada.xlsx')'''
-
-    '''def planilha_cep(self):
-            wb = load_workbook('coordenada.xlsx')
-            ws = wb.active
-            
-            for i in range(2,402):
-                coordx = ws[f'A{i}'].value
-                coordy = ws[f'B{i}'].value
-                cell = ws.cell(row=i, column=6)
-                
-                coordenada = str(coordy) + ', ' + str(coordx)
-                try:
-                    self.driver.get("http://google.com.br")
-                    time.sleep(2)
-                    self.esperar_xpath_txt('//*[@id="APjFqb"]',coordenada)
-                    time.sleep(.3)
-                    self.esperar_clicar_xpath('/html/body/div[1]/div[3]/form/div[1]/div[1]/div[4]/center/input[1]')
-                    time.sleep(1)
-                    self.esperar_clicar_xpath('//*[@id="lu_map"]')
-                    time.sleep(1)
-                    wdw = WebDriverWait(self.driver, 10)
-                    wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-                    sem_acento = unidecode(cood1)
-                    minuscula = sem_acento.lower()
-                    str_tabela = minuscula.split()
-                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
-                    for letra in letras_remover:
-                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-
-                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
-                    try:
-                        if sem_espaco_vazio[1] == None:
-                            print('Tem que usar o CEP padrão')
-                            cell.value = 'CEP NÃO ENCONTRADO'
-                        else:
-                            try:
-                                print(f'O cep é:\n{sem_espaco_vazio[2]}')
-                                cell.value = sem_espaco_vazio[2]
-                            except:
-                                print(f'O cep é:\n{sem_espaco_vazio[1]}')
-                                cell.value = sem_espaco_vazio[1]
-                    except:
-                        try:
-                            print(f'O cep é:\n{sem_espaco_vazio[0]}')
-                            cell.value = sem_espaco_vazio[0]
-                        except:
-                            print('Tem que usar o CEP padrão')
-                            cell.value = 'CEP NÃO ENCONTRADO'
-                                
-                except: 
-                    print('Tente novamente')
-                        
-                wb.save('coordenada.xlsx')'''
-
     def cep_geopy(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
@@ -3988,10 +3908,6 @@ class Internet:
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             cell = ws.cell(row=i, column=5)
-            cell_1 = ws.cell(row=i, column=6)
-            cell_2 = ws.cell(row=i, column=7)
-            cell_3 = ws.cell(row=i, column=8)
-            cell_4 = ws.cell(row=i, column=9)
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
                 break
@@ -4011,22 +3927,12 @@ class Internet:
                     sem_aspa = cep.replace("'","").replace('[','').replace(']','')
                     cep_final = sem_aspa[-8:]
                     cell.value = cep_final
+                    wb.save('coordenada.xlsx')
                 except:
                     cell.value = 'CEP NÃO ENCONTRADO'
-            try:
-                    
-                endereco = get_address_from_cep(cep_final, webservice=WebService.CORREIOS)    
 
-                cell_1.value = endereco['logradouro']
-                cell_2.value = endereco['bairro']
-                cell_3.value = endereco['cidade']
-                cell_4.value = endereco['uf']
-                wb.save('coordenada.xlsx')
+        sg.popup_no_titlebar('Operação Concluida!!', keep_on_top=True)
 
-            except:
-                pass
-
-        sg.popup_no_titlebar('Operação Concluida!!')
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
