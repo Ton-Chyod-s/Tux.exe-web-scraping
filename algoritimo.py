@@ -3766,6 +3766,7 @@ class Internet:
 
     def criar_hp_coord(self):
         for i in range(2,402):
+            print(f"hp{i}")
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             coordx = ws[f'A{i}'].value
@@ -3775,7 +3776,7 @@ class Internet:
             if coordenada == 'None, None':
                 break
             else:
-                for i in range (6):
+                for linha in range (6):
                     minha_lista.append(random.randint(1,9))
                 num = int(''.join(map(str,minha_lista)))
                 novo_numero = '20200824091321' + str(num)
@@ -3792,8 +3793,7 @@ class Internet:
                 caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                 #deletar arquivo xml
                 try: 
-                    os.remove(caminho_do_arquivo) 
-                    print("Arquivo XML removido com sucesso!")     
+                    os.remove(caminho_do_arquivo)      
                 except FileNotFoundError: 
                     print("Arquivo XML não encontrado!") 
                 except PermissionError: 
@@ -3801,7 +3801,7 @@ class Internet:
                 except Exception as e: 
                     print("Erro ao tentar excluir o arquivo XML:", e)
 
-    def planilha_cep(self):
+    '''def planilha_cep(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active
         self.driver.get("https://www.google.com.br/maps")     
@@ -3849,10 +3849,9 @@ class Internet:
                 except: 
                     print('Tente novamente')
                     
-                wb.save('coordenada.xlsx')
+                wb.save('coordenada.xlsx')'''
 
-    '''
-    def planilha_cep(self):
+    '''def planilha_cep(self):
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             
@@ -3910,6 +3909,7 @@ class Internet:
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
         for i in range(2,402):
+            print(f"Cep{i}")
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             cell = ws.cell(row=i, column=5)
@@ -3941,7 +3941,7 @@ class Internet:
 
                 wb.save('coordenada.xlsx')
                 
-                print('Arquivo salvo')
+        print('Arquivo salvo')
 
 if __name__ == "__main__": 
     #navegador = Internet()
