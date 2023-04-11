@@ -4021,11 +4021,12 @@ class Internet:
                 cell_2.value = endereco['bairro']
                 cell_3.value = endereco['cidade']
                 cell_4.value = endereco['uf']
+                wb.save('coordenada.xlsx')
 
             except:
                 pass
 
-                wb.save('coordenada.xlsx')
+        sg.popup_no_titlebar('Operação Concluida!!')
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
