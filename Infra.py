@@ -48,7 +48,7 @@ class app:
                     navegador.criar_hp_coord()
                 
                 if event =='1-Endereço':
-                    navegador.end_cood()
+                    navegador.cep_geopy()
                     
             window.close()
 

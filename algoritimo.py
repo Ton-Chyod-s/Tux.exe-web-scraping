@@ -10,6 +10,7 @@ import json
 from selenium.webdriver.common.by import By
 import pyautogui as pt
 import time
+from time import sleep
 import PySimpleGUI as sg
 from pynput import mouse
 from random import randint
@@ -27,7 +28,9 @@ from geopy.geocoders import Nominatim
 import requests
 from tqdm import tqdm
 from pycep_correios import get_address_from_cep, WebService
-from time import sleep
+from geopy.geocoders import Nominatim
+
+
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -3842,7 +3845,19 @@ class Internet:
                 break
             else:
                 try:
-                    geolocator = Nominatim(user_agent='geoapiExercises')
+                    def buscar_cep(lat, lon): 
+                        url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}" 
+                        response = requests.get(url) 
+                        if response.status_code == 200: 
+                            data = response.json() 
+                            if 'address' in data: 
+                                address = data['address'] 
+                                if 'postcode' in address: 
+                                    return address['postcode'] 
+                     
+                    print(buscar_cep(coordy,coordx))
+                         
+                    '''geolocator = Nominatim(user_agent='geoapiExercises')
                     location = geolocator.reverse(coordenada)
                     endereco = location.address
                     sem_acento = unidecode(endereco)
@@ -3858,7 +3873,7 @@ class Internet:
             
                     cep_final = sem_aspa[-8:]
 
-                    cell.value = cep_final
+                    cell.value = cep_final'''
                     
                 except:
                     cell.value = 'CEP NÃO ENCONTRADO'
@@ -3878,7 +3893,19 @@ class Internet:
             cell_3 = ws.cell(row=i, column=9)
             cep = ws[f'E{i}'].value
             try:
-                if len(cep) == 8:
+                import requests 
+                def buscar_cep(lat, lon): 
+                    url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}" 
+                    response = requests.get(url) 
+                    if response.status_code == 200: 
+                        data = response.json() 
+                        if 'address' in data: 
+                            address = data['address'] 
+                            if 'postcode' in address: 
+                                return address['postcode'] 
+                    return None
+                
+                '''if len(cep) == 8:
                     link = f'https://viacep.com.br/ws/{cep}/json/'
 
                     requisicao = requests.get(link)
@@ -3896,7 +3923,7 @@ class Internet:
                     
                     wb.save('coordenada.xlsx')
                 else:
-                    print("CEP Inválido")
+                    print("CEP Inválido")'''
             except:
                 pass
     
@@ -3905,6 +3932,9 @@ class Internet:
         ws = wb.active  
         for i in tqdm(range(2,402), desc ="Carregando..."):
             sleep(.1)
+            
+            
+            
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             cell = ws.cell(row=i, column=5)
