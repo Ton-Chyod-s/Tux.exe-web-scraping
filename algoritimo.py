@@ -29,7 +29,7 @@ import requests
 from tqdm import tqdm
 from pycep_correios import get_address_from_cep, WebService
 from geopy.geocoders import Nominatim
-
+import googlemaps
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3703,43 +3703,56 @@ class Internet:
             self.esperar_clicar_xpath('/html/body/div[7]/div[1]/a[1]/span')
             self.driver.switch_to.default_content()
 
-    def procurar_cep(self,cood_x,codd_y):
-        coordenada = cood_x + ', ' + codd_y
-        try:
-            self.driver.get("https://www.google.com.br/maps")
-            time.sleep(.5)
-            self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
-            time.sleep(.3)
-            self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
-            time.sleep(1)
-            wdw = WebDriverWait(self.driver, 10)
-            wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-            cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
-            sem_acento = unidecode(cood1)
-            minuscula = sem_acento.lower()
-            str_tabela = minuscula.split()
-            letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
-            for letra in letras_remover:
-                str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-
-            sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
-            try:
-                if sem_espaco_vazio[1] == None:
-                    sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
-                else:
-                    try:
-                        sg.popup(f'O cep é:\n{sem_espaco_vazio[2]}',keep_on_top=True)
-                    except:
-                        sg.popup(f'O cep é:\n{sem_espaco_vazio[1]}',keep_on_top=True)
-            except:
+    def procurar_cep(self):
+        for i in tqdm(range(2,402), desc ="Carregando..." ):
+            wb = load_workbook('coordenada.xlsx')
+            ws = wb.active
+            coordx = ws[f'A{i}'].value
+            coordy = ws[f'B{i}'].value
+            cell = ws.cell(row=i, column=5)
+            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
+            if coordenada == 'None, None':
+                break
+            else:
                 try:
-                    sg.popup(f'O cep é:\n{sem_espaco_vazio[0]}',keep_on_top=True)
-                except:
-                    sg.popup('Tem que usar o CEP padrão',keep_on_top=True)
-                    
-        except: 
-            sg.popup_ok('Tente novamente', keep_on_top=True)
+                    self.driver.get("https://www.google.com.br/maps")
+                    time.sleep(.5)
+                    self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
+                    time.sleep(.3)
+                    self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
+                    time.sleep(1)
+                    wdw = WebDriverWait(self.driver, 10)
+                    wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
+                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+                    sem_acento = unidecode(cood1)
+                    minuscula = sem_acento.lower()
+                    str_tabela = minuscula.split()
+                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','w','z','.',',','-']
+                    for letra in letras_remover:
+                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
 
+                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
+                    try:
+                        if sem_espaco_vazio[1] == None:
+                            cell.value = 'Tem que usar o CEP padrão'
+                        else:
+                            try:
+                                cell.value = sem_espaco_vazio[2]
+                                 
+                            except:
+                                cell.value = sem_espaco_vazio[1]
+                    except:
+                        try:
+                            cell.value = sem_espaco_vazio[0]
+                        except:
+                            cell.value = 'Tem que usar o CEP padrão'
+                            
+                except: 
+                    sg.popup_ok('Tente novamente', keep_on_top=True)
+                    break
+
+                wb.save('coordenada.xlsx')
+                
     def cadastro_poste_kmz(self,coodx,coody):
         minha_lista = []
         for i in range (6):
@@ -3933,6 +3946,12 @@ class Internet:
 
         sg.popup_no_titlebar('Operação Concluida!!', keep_on_top=True)
 
+    def google_maps(self):
+        gmaps = googlemaps.Client(key='nifty-motif-383500')
+        reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
+        print(reverse_geocode_result.adress)
+        
+        
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
