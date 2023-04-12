@@ -26,7 +26,9 @@ class app:
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
-                [sg.Button('1-Endereço',size=(11,1)),sg.Button('2-Criar Hp',size=(11,1)),sg.Input(size=(5,1))],
+                [sg.Text('End/Num',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='end'),sg.Input(size=(10,1),key='num')],
+                [sg.Button('1-Endereço',size=(11,1)),sg.Button('2-Criar Hp',size=(11,1)),sg.Checkbox('Goo', enable_events=False, key='check')],
+                [sg.Button('3-Importar',size=(11,1)),sg.Button('4-Mud End',size=(11,1)),sg.Checkbox('End', enable_events=False, key='check completo')],
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -46,9 +48,22 @@ class app:
                 
                 if event == '2-Criar Hp':
                     navegador.criar_hp_coord()
-                
+
                 if event =='1-Endereço':
-                    navegador.procurar_cep()
+                    if values['check']:
+                        navegador.procurar_cep()
+
+                    elif values['check completo']:
+                        navegador.endereco_cep()
+
+                    else:
+                        navegador.cep_geopy()
+
+                if event =='3-Importar':
+                    pass
+
+                if event == '4-Mud End':
+                    navegador.endereco_survey(values['end'],values['num'])
                     
             window.close()
 

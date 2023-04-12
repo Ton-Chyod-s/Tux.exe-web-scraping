@@ -30,6 +30,7 @@ from tqdm import tqdm
 from pycep_correios import get_address_from_cep, WebService
 from geopy.geocoders import Nominatim
 import googlemaps
+from selenium import webdriver
 
 sg.popup_notify(f'Carregando biblioteca...')
 
@@ -3704,26 +3705,46 @@ class Internet:
             self.driver.switch_to.default_content()
 
     def procurar_cep(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome(options=options)
+
+
+        def esperar_xpath_txt(elemento,txt):
+            wdw = WebDriverWait(driver, 60)
+            wdw.until(element_to_be_clickable(('xpath', elemento)))    
+            time.sleep(.15)
+            driver.find_element(By.XPATH,elemento).clear()
+            driver.find_element(By.XPATH,elemento).send_keys(txt)
+
+        def esperar_clicar_xpath(elemento):
+            wdw = WebDriverWait(driver, 60)
+            wdw.until(EC.element_to_be_clickable((By.XPATH, elemento)))
+            driver.find_element(By.XPATH,elemento).click()
+        
         for i in tqdm(range(2,402), desc ="Carregando..." ):
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
-            cell = ws.cell(row=i, column=5)
+            cell1 = ws.cell(row=1, column=7)
+            cell = ws.cell(row=i, column=7)
+            cell1.value = 'CEP GOOGLE MAPS'
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
                 break
             else:
                 try:
-                    self.driver.get("https://www.google.com.br/maps")
+                    driver.get("https://www.google.com.br/maps")
                     time.sleep(.5)
-                    self.esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
+                    esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
                     time.sleep(.3)
-                    self.esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
+                    esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
+
                     time.sleep(1)
-                    wdw = WebDriverWait(self.driver, 10)
+                    wdw = WebDriverWait(driver, 10)
                     wdw.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]')))
-                    cood1 = self.driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
+                    cood1 = driver.find_element(By.XPATH,'//*[@id="QA0Szd"]/div/div/div[*]/div[*]/div/div[*]/div/div/div[10]/div[*]/div[*]/span[2]').text
                     sem_acento = unidecode(cood1)
                     minuscula = sem_acento.lower()
                     str_tabela = minuscula.split()
@@ -3846,10 +3867,19 @@ class Internet:
     def cep_geopy(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
-        for i in range(2,402):
+        for i in tqdm(range(2,402), desc ="Carregando..."):
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
-            cell = ws.cell(row=i, column=5)
+            cell1 = ws.cell(row=1, column=6)
+            cell2 = ws.cell(row=1, column=3)
+            cell3 = ws.cell(row=1, column=4)
+            cell4 = ws.cell(row=1, column=5)
+            cell5 = ws.cell(row=1, column=8)
+            cell6= ws.cell(row=1, column=9)
+            cell7= ws.cell(row=1, column=10)
+            cell8= ws.cell(row=1, column=11)
+
+            cell = ws.cell(row=i, column=6)
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
                 break
@@ -3866,6 +3896,15 @@ class Internet:
                                     return address['postcode'] 
                      
                     cep_final = buscar_cep(coordy,coordx).replace("-","")
+                    cell1.value = 'CEP GEOPY'
+                    cell2.value = 'NUMERO'
+                    cell3.value = 'QUANTIDADE'
+                    cell4.value = 'PREDIO'
+                    cell5.value = 'LOGRADOURO'
+                    cell6.value = 'BAIRRO'
+                    cell7.value = 'CIDADE'
+                    cell8.value = 'UF'
+                    
                     cell.value = cep_final
                     wb.save('coordenada.xlsx')     
                     
@@ -3879,13 +3918,12 @@ class Internet:
     def endereco_cep(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
-        for i in range(2,402):
-            print(f"Endereço{i}")
-            cell = ws.cell(row=i, column=6)
-            cell_1 = ws.cell(row=i, column=7)
-            cell_2 = ws.cell(row=i, column=8)
-            cell_3 = ws.cell(row=i, column=9)
-            cep = ws[f'E{i}'].value
+        for i in tqdm(range(2,402), desc ="Carregando..."):
+            cell = ws.cell(row=i, column=8)
+            cell_1 = ws.cell(row=i, column=9)
+            cell_2 = ws.cell(row=i, column=10)
+            cell_3 = ws.cell(row=i, column=11)
+            cep = ws[f'G{i}'].value
             try:
                 
                 if len(cep) == 8:
@@ -3905,49 +3943,14 @@ class Internet:
                     cell_3.value = uf
                     
                     wb.save('coordenada.xlsx')
+                    print('Arquivo salvo')
                 else:
                     print("CEP Inválido")
             except:
                 pass
-    
-    def end_cood(self):
-        wb = load_workbook('coordenada.xlsx')
-        ws = wb.active  
-        for i in tqdm(range(2,402), desc ="Carregando..."):
-            sleep(.1)
-            
-            
-            
-            coordx = ws[f'A{i}'].value
-            coordy = ws[f'B{i}'].value
-            cell = ws.cell(row=i, column=5)
-            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
-            if coordenada == 'None, None':
-                break
-            else:
-                try:
-                    geolocator = Nominatim(user_agent='geoapiExercises')
-                    location = geolocator.reverse(coordenada)
-                    endereco = location.address
-                    sem_acento = unidecode(endereco)
-                    minuscula = sem_acento.lower()
-                    str_tabela = minuscula.split()
-                    letras_remover = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','y','x','w','z','.',',','-','"']
-                    for letra in letras_remover:
-                        str_tabela = [ l.replace(letra, '') for l in str_tabela ]
-                    sem_espaco_vazio = [elemento for elemento in str_tabela if elemento.strip() != ""]
-                    cep = str(sem_espaco_vazio)
-                    sem_aspa = cep.replace("'","").replace('[','').replace(']','')
-                    cep_final = sem_aspa[-8:]
-                    cell.value = cep_final
-                    wb.save('coordenada.xlsx')
-                except:
-                    cell.value = 'CEP NÃO ENCONTRADO'
-
-        sg.popup_no_titlebar('Operação Concluida!!', keep_on_top=True)
 
     def google_maps(self):
-        gmaps = googlemaps.Client(key='nifty-motif-383500')
+        gmaps = googlemaps.Client(key='AIzaSyCrvhqOWCsosiVtza5JoktlMCuJ_qFUSCA')
         reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
         print(reverse_geocode_result.adress)
         

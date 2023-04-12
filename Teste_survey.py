@@ -1,16 +1,10 @@
-from pycep_correios import get_address_from_cep, WebService
-from openpyxl import load_workbook
-from time import sleep
-from tqdm import tqdm
+import googlemaps 
 
-wb = load_workbook('coordenada.xlsx')
-ws = wb.active
-for i in tqdm(range(2,402), desc ="Carregando..."):
-    sleep(.5)
-    endereco = get_address_from_cep('88066260', webservice=WebService.CORREIOS)    
+gmaps = googlemaps.Client(key='AIzaSyA2cS5CMyuGcE6PFmMTvUWf8S8AwcVdFBM')
+# Look up an address with reverse geocoding
+reverse_geocode_result = gmaps.reverse_geocode((-27.75722428, -48.51074237))
 
-    '''print(endereco['logradouro'])
-        print(endereco['bairro'])
-        print(endereco['cidade'])
-        print(endereco['uf'])
-        print(endereco['cep'])'''
+
+for i in reverse_geocode_result[1]:
+    print(i)
+        
