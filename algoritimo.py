@@ -3816,6 +3816,8 @@ class Internet:
             numero = str(ws[f'C{i}'].value)
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
+            quantidade = str(ws[f'D{i}'].value)
+
             minha_lista = []
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
@@ -3826,6 +3828,7 @@ class Internet:
                 cep = str(ws[f'G{i}'].value)
             else:
                 cep = str(ws[f'G{i}'].value)
+                    
             for i in range(2, 502):
                 cep_2 = str(worksheet[f'V{i}'].value)
                 bairro = str(worksheet[f'M{i}'].value)
@@ -3853,10 +3856,12 @@ class Internet:
                     root.find('coordX').text = str(coordx)
                     root.find('coordY').text = str(coordy)
                     root.find('localidade').text = str(worksheet[f'J{i}'].value)
+                    #if quantidade == 'None':
                     #escrever xml
                     tree.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+            
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                     #deletar arquivo xml
                     try: 
