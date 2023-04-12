@@ -3809,16 +3809,23 @@ class Internet:
             root = tree.getroot()
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
-            numero = str(ws[f'C{i}'].value)
             workbook = load_workbook('roteiro.xlsx')
             worksheet = workbook.active
+            geo_cep = ws[f'F{i}'].value
+            google_cep = ws[f'G{i}'].value
+            numero = str(ws[f'C{i}'].value)
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             minha_lista = []
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
                 break
-            cep = str(ws[f'E{i}'].value)
+            elif google_cep == 'None':
+                cep = str(ws[f'F{i}'].value)
+            elif geo_cep == google_cep:
+                cep = str(ws[f'G{i}'].value)
+            else:
+                cep = str(ws[f'G{i}'].value)
             for i in range(2, 502):
                 cep_2 = str(worksheet[f'V{i}'].value)
                 bairro = str(worksheet[f'M{i}'].value)
