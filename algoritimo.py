@@ -3817,7 +3817,8 @@ class Internet:
             coordx = ws[f'A{i}'].value
             coordy = ws[f'B{i}'].value
             quantidade = str(ws[f'D{i}'].value)
-
+            predio = str(ws[f'E{i}'].value)
+            
             minha_lista = []
             coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
             if coordenada == 'None, None':
@@ -3858,7 +3859,7 @@ class Internet:
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
-                    if quantidade != 'None':
+                    if quantidade != 'None' and predio == 'None':
                         for linha in range(0,int(quantidade)):
                             num = random.randint(1,int(quantidade))
                             novo_numero = f'20200824091321{str(num)}4483{str(num)}'
@@ -3878,7 +3879,10 @@ class Internet:
                             shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                                 
                             print(novo_numero)
-                                 
+                    
+                    elif predio != 'None':
+                        pass
+                              
                     else:
                         print('vou deixar passa')
                         
