@@ -3860,7 +3860,7 @@ class Internet:
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
                     if quantidade != 'None' and predio == 'None':
-                        for linha in range(0,int(quantidade)):
+                        for linha in range(0,(int(quantidade)-1)):
                             num = random.randint(1,int(quantidade))
                             novo_numero = f'20200824091321{str(num)}4483{str(num)}'
                             
