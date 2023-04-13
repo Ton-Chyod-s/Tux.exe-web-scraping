@@ -3861,6 +3861,10 @@ class Internet:
                     
                     if quantidade != 'None' and predio == 'None':
                         for linha in range(0,(int(quantidade)-1)):
+                            
+                            root.find('coordX').text = str(coordx + 0.01)
+                            root.find('coordY').text = str(coordy + 0.01)
+                            
                             num = random.randint(1,int(quantidade))
                             novo_numero = f'20200824091321{str(num)}4483{str(num)}'
                             
