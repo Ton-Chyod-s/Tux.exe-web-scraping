@@ -3801,9 +3801,10 @@ class Internet:
             print("Sem permissão para excluir o arquivo XML!") 
         except Exception as e: 
             print("Erro ao tentar excluir o arquivo XML:", e)
-
+            #tqdm(range(2,402), desc ="Carregando..."):
+            
     def criar_hp_coord(self):
-        for i in tqdm(range(2,402), desc ="Carregando..."):
+        for i in range(2,402):
             sleep(.1)
             tree = et.parse('hp.xml')
             root = tree.getroot()
@@ -3811,7 +3812,6 @@ class Internet:
             ws = wb.active
             workbook = load_workbook('roteiro.xlsx')
             worksheet = workbook.active
-            geo_cep = ws[f'F{i}'].value
             google_cep = ws[f'G{i}'].value
             numero = str(ws[f'C{i}'].value)
             coordx = ws[f'A{i}'].value
@@ -3824,25 +3824,22 @@ class Internet:
                 break
             elif google_cep == 'None':
                 cep = str(ws[f'F{i}'].value)
-            elif geo_cep == google_cep:
-                cep = str(ws[f'G{i}'].value)
             else:
                 cep = str(ws[f'G{i}'].value)
-                    
+            
             for i in range(2, 502):
-                cep_2 = str(worksheet[f'V{i}'].value)
                 bairro = str(worksheet[f'M{i}'].value)
                 roteiro = str(worksheet[f'C{i}'].value)
                 localidade = str(worksheet[f'H{i}'].value)
                 cod_logradouro = str(worksheet[f'N{i}'].value)
                 logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
-                if cep_2 == 'None':
+                if cep == 'None':
                     break
-                elif cep_2 == cep:
+                else:
                     for country in root.findall('enderecoEdificio'):
                         country.find('logradouro').text = logradouro
                         country.find('numero_fachada').text = numero
-                        country.find('cep').text = cep_2
+                        country.find('cep').text = cep
                         country.find('bairro').text = bairro
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
@@ -3856,12 +3853,35 @@ class Internet:
                     root.find('coordX').text = str(coordx)
                     root.find('coordY').text = str(coordy)
                     root.find('localidade').text = str(worksheet[f'J{i}'].value)
-                    #if quantidade == 'None':
                     #escrever xml
                     tree.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-            
+                    
+                    if quantidade != 'None':
+                        for linha in range(0,int(quantidade)):
+                            num = random.randint(1,int(quantidade))
+                            novo_numero = f'20200824091321{str(num)}4483{str(num)}'
+                            
+                            for country in root.findall('enderecoEdificio'):
+                                country.find('logradouro').text = logradouro
+                                country.find('numero_fachada').text = numero
+                                country.find('cep').text = cep
+                                country.find('bairro').text = bairro
+                                country.find('id_roteiro').text = roteiro
+                                country.find('id_localidade').text = localidade
+                                country.find('cod_lograd').text = cod_logradouro
+                                    
+                            #escrever xml
+                            tree.write('moradia1//moradia1.xml')
+                            #tarnsformar em zip
+                            shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                                
+                            print(novo_numero)
+                                 
+                    else:
+                        print('vou deixar passa')
+                        
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                     #deletar arquivo xml
                     try: 
