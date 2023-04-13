@@ -31,7 +31,7 @@ from pycep_correios import get_address_from_cep, WebService
 from geopy.geocoders import Nominatim
 import googlemaps
 from selenium import webdriver
-
+import zipfile as zipf
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -3806,7 +3806,6 @@ class Internet:
     def criar_hp_coord(self):
         for i in range(2,402):
             sleep(.1)
-            
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             workbook = load_workbook('roteiro.xlsx')
@@ -3826,13 +3825,13 @@ class Internet:
                 cep = str(ws[f'F{i}'].value)
             else:
                 cep = str(ws[f'G{i}'].value)
-                
-                
+                    
             bairro = str(worksheet[f'M{i}'].value)
             roteiro = str(worksheet[f'C{i}'].value)
             localidade = str(worksheet[f'H{i}'].value)
             cod_logradouro = str(worksheet[f'N{i}'].value)
             logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
+
             if quantidade == 'None':
                 tree = et.parse('hp.xml')
                 root = tree.getroot()    
@@ -3860,20 +3859,31 @@ class Internet:
                     tree.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+
+                    caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+                    #deletar arquivo xml
+                    try: 
+                        os.remove(caminho_do_arquivo)      
+                    except FileNotFoundError: 
+                        print("Arquivo XML não encontrado!") 
+                    except PermissionError: 
+                        print("Sem permissão para excluir o arquivo XML!") 
+                    except Exception as e: 
+                        print("Erro ao tentar excluir o arquivo XML:", e)
                     
-            elif quantidade != 'None':
-                result = int(quantidade)+1
+            elif quantidade != 'None' and predio == 'None':
+                result = int(quantidade)+2
                 tree2 = et.parse('hp2.xml')
                 root2 = tree2.getroot()
-                for linha_arquivo in range(1,result):       
-                    root.find('coordX').text = str(coordx + 0.01)
-                    root.find('coordY').text = str(coordy + 0.01)
-                    root.find('localidade').text = str(worksheet[f'J{i}'].value)
+                for linha_arquivo in range(1,result):     
+                    root2.find('coordX').text = str(coordx + 0.01)
+                    root2.find('coordY').text = str(coordy + 0.01)
+                    root2.find('localidade').text = str(worksheet[f'J{i}'].value)
                             
                     num = random.randint(1,int(quantidade))
                     novo_numero = f'20200824091321{str(num)}4483{str(num)}'
-                    num_arg = linha_arquivo
-                    sleep(.2)         
+                    num_arg = str(linha_arquivo)
+                    sleep(.5)         
                     for country in root2.findall('enderecoEdificio'):
                         country.find('argumento1').text = num_arg
                         country.find('logradouro').text = logradouro
@@ -3884,32 +3894,81 @@ class Internet:
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
                         
-                          
-
                     #escrever xml
                     tree2.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-                                
-                    print(novo_numero)
                     
+                    caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+                    #deletar arquivo xml
+                    try: 
+                        os.remove(caminho_do_arquivo)      
+                    except FileNotFoundError: 
+                        print("Arquivo XML não encontrado!") 
+                    except PermissionError: 
+                        print("Sem permissão para excluir o arquivo XML!") 
+                    except Exception as e: 
+                        print("Erro ao tentar excluir o arquivo XML:", e)
+                                
             elif predio != 'None':
-                pass
+               
+                tree2 = et.parse('predio.xml')
+                root2 = tree2.getroot()
+                
+                pai = root.find('enderecoEdificio')
+
+                novo_elemento = et.Element('uc')
+                novo_elemento.text = 'ahahaha'
+                pai.insert(2,novo_elemento)
+
+                tree2.write('edificio1//edificio1.xml')
+
+                root2.find('coordX').text = str(coordx)
+                root2.find('coordY').text = str(coordy)
+                root2.find('localidade').text = str(worksheet[f'J{i}'].value)
+                            
+                num = random.randint(1,int(quantidade))
+                novo_numero = f'202008240913{str(num)}1{str(num)}4483{str(num)}'
+                sleep(.5)         
+                for country in root2.findall('enderecoEdificio'):
+                    country.find('logradouro').text = logradouro
+                    country.find('numero_fachada').text = numero
+                    country.find('cep').text = cep
+                    country.find('bairro').text = bairro
+                    country.find('id_roteiro').text = roteiro
+                    country.find('id_localidade').text = localidade
+                    country.find('cod_lograd').text = cod_logradouro
+
+                result = int(quantidade)+1
+                for lista in range(1,result):
+                    '''linha1 = '<uc>'
+                    linha2 = f'<id>2738591{int(678) - i}</id>'
+                    linha3 = f'<id_complemento3>{i}</id_complemento3>'
+                    linha4 = f'<argumento3>100{i}</argumento3>'
+                    linha5 = f'<id_complemento4>7</id_complemento4>'
+                    linha6 = f'<argumento4_logico>{i}0</argumento4_logico>'
+                    linha7 = f'<argumento4_real>{i}0</argumento4_real>'
+                    linha8 = '</uc>'''
+                    
+                #escrever xml
+                tree2.write('edificio1//edificio1.xml')
+                #tarnsformar em zip
+                shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml')
+
+                caminho_do_arquivo = os.path.abspath('edificio1//edificio1.xml') 
+                #deletar arquivo xml
+                try: 
+                    os.remove(caminho_do_arquivo)      
+                except FileNotFoundError: 
+                    print("Arquivo XML não encontrado!") 
+                except PermissionError: 
+                    print("Sem permissão para excluir o arquivo XML!") 
+                except Exception as e: 
+                    print("Erro ao tentar excluir o arquivo XML:", e)
                               
             else:
                 print('vou deixar passa')
                         
-            caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
-            #deletar arquivo xml
-            try: 
-                os.remove(caminho_do_arquivo)      
-            except FileNotFoundError: 
-                print("Arquivo XML não encontrado!") 
-            except PermissionError: 
-                print("Sem permissão para excluir o arquivo XML!") 
-            except Exception as e: 
-                print("Erro ao tentar excluir o arquivo XML:", e)
-
         sg.popup_no_border('Operação concluida',keep_on_top=True)
                     
     def cep_geopy(self):
