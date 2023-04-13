@@ -3861,14 +3861,15 @@ class Internet:
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
             elif quantidade != 'None':
-                for linha in range(0,int(quantidade)):
-                            
+                for linha in range(0,int(quantidade)+1):
+                    time.sleep(.3)        
                     root.find('coordX').text = str(coordx + 0.01)
                     root.find('coordY').text = str(coordy + 0.01)
+                    root.find('localidade').text = str(worksheet[f'J{i}'].value)
                             
                     num = random.randint(1,int(quantidade))
                     novo_numero = f'20200824091321{str(num)}4483{str(num)}'
-                            
+                    time.sleep(.2)         
                     for country in root.findall('enderecoEdificio'):
                         country.find('logradouro').text = logradouro
                         country.find('numero_fachada').text = numero
@@ -3877,7 +3878,7 @@ class Internet:
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
-                                    
+                    time.sleep(.3)                 
                     #escrever xml
                     tree.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
@@ -3901,7 +3902,6 @@ class Internet:
                 print("Sem permissão para excluir o arquivo XML!") 
             except Exception as e: 
                 print("Erro ao tentar excluir o arquivo XML:", e)
-            break
 
         sg.popup_no_border('Operação concluida',keep_on_top=True)
                     
