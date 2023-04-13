@@ -3806,8 +3806,7 @@ class Internet:
     def criar_hp_coord(self):
         for i in range(2,402):
             sleep(.1)
-            tree = et.parse('hp.xml')
-            root = tree.getroot()
+            
             wb = load_workbook('coordenada.xlsx')
             ws = wb.active
             workbook = load_workbook('roteiro.xlsx')
@@ -3834,7 +3833,9 @@ class Internet:
             localidade = str(worksheet[f'H{i}'].value)
             cod_logradouro = str(worksheet[f'N{i}'].value)
             logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
-            if quantidade == 'None':    
+            if quantidade == 'None':
+                tree = et.parse('hp.xml')
+                root = tree.getroot()    
                 if cep == 'None':
                     break
                 else:
@@ -3861,24 +3862,32 @@ class Internet:
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
             elif quantidade != 'None':
-                for linha in range(1,int(quantidade)+2):       
+                result = int(quantidade)+1
+                tree2 = et.parse('hp2.xml')
+                root2 = tree2.getroot()
+                for linha_arquivo in range(1,result):       
                     root.find('coordX').text = str(coordx + 0.01)
                     root.find('coordY').text = str(coordy + 0.01)
                     root.find('localidade').text = str(worksheet[f'J{i}'].value)
                             
                     num = random.randint(1,int(quantidade))
                     novo_numero = f'20200824091321{str(num)}4483{str(num)}'
+                    num_arg = linha_arquivo
                     sleep(.2)         
-                    for country in root.findall('enderecoEdificio'):
+                    for country in root2.findall('enderecoEdificio'):
+                        country.find('argumento1').text = num_arg
                         country.find('logradouro').text = logradouro
                         country.find('numero_fachada').text = numero
                         country.find('cep').text = cep
                         country.find('bairro').text = bairro
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
-                        country.find('cod_lograd').text = cod_logradouro                 
+                        country.find('cod_lograd').text = cod_logradouro
+                        
+                          
+
                     #escrever xml
-                    tree.write('moradia1//moradia1.xml')
+                    tree2.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                                 
