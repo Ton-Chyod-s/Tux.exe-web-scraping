@@ -3941,14 +3941,7 @@ class Internet:
 
                 result = int(quantidade)+1
                 for lista in range(1,result):
-                    '''linha1 = '<uc>'
-                    linha2 = f'<id>2738591{int(678) - i}</id>'
-                    linha3 = f'<id_complemento3>{i}</id_complemento3>'
-                    linha4 = f'<argumento3>100{i}</argumento3>'
-                    linha5 = f'<id_complemento4>7</id_complemento4>'
-                    linha6 = f'<argumento4_logico>{i}0</argumento4_logico>'
-                    linha7 = f'<argumento4_real>{i}0</argumento4_real>'
-                    linha8 = '</uc>'''
+                    pass
                     
                 #escrever xml
                 tree2.write('edificio1//edificio1.xml')
