@@ -3827,13 +3827,14 @@ class Internet:
                 cep = str(ws[f'F{i}'].value)
             else:
                 cep = str(ws[f'G{i}'].value)
-            
-            for i in range(2, 502):
-                bairro = str(worksheet[f'M{i}'].value)
-                roteiro = str(worksheet[f'C{i}'].value)
-                localidade = str(worksheet[f'H{i}'].value)
-                cod_logradouro = str(worksheet[f'N{i}'].value)
-                logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
+                
+                
+            bairro = str(worksheet[f'M{i}'].value)
+            roteiro = str(worksheet[f'C{i}'].value)
+            localidade = str(worksheet[f'H{i}'].value)
+            cod_logradouro = str(worksheet[f'N{i}'].value)
+            logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
+            if quantidade == 'None':    
                 if cep == 'None':
                     break
                 else:
@@ -3859,48 +3860,48 @@ class Internet:
                     #tarnsformar em zip
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
-                    if quantidade != 'None' and predio == 'None':
-                        for linha in range(0,(int(quantidade)-1)):
+            elif quantidade != 'None':
+                for linha in range(0,int(quantidade)):
                             
-                            root.find('coordX').text = str(coordx + 0.01)
-                            root.find('coordY').text = str(coordy + 0.01)
+                    root.find('coordX').text = str(coordx + 0.01)
+                    root.find('coordY').text = str(coordy + 0.01)
                             
-                            num = random.randint(1,int(quantidade))
-                            novo_numero = f'20200824091321{str(num)}4483{str(num)}'
+                    num = random.randint(1,int(quantidade))
+                    novo_numero = f'20200824091321{str(num)}4483{str(num)}'
                             
-                            for country in root.findall('enderecoEdificio'):
-                                country.find('logradouro').text = logradouro
-                                country.find('numero_fachada').text = numero
-                                country.find('cep').text = cep
-                                country.find('bairro').text = bairro
-                                country.find('id_roteiro').text = roteiro
-                                country.find('id_localidade').text = localidade
-                                country.find('cod_lograd').text = cod_logradouro
+                    for country in root.findall('enderecoEdificio'):
+                        country.find('logradouro').text = logradouro
+                        country.find('numero_fachada').text = numero
+                        country.find('cep').text = cep
+                        country.find('bairro').text = bairro
+                        country.find('id_roteiro').text = roteiro
+                        country.find('id_localidade').text = localidade
+                        country.find('cod_lograd').text = cod_logradouro
                                     
-                            #escrever xml
-                            tree.write('moradia1//moradia1.xml')
-                            #tarnsformar em zip
-                            shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                    #escrever xml
+                    tree.write('moradia1//moradia1.xml')
+                    #tarnsformar em zip
+                    shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                                 
-                            print(novo_numero)
+                    print(novo_numero)
                     
-                    elif predio != 'None':
-                        pass
+            elif predio != 'None':
+                pass
                               
-                    else:
-                        print('vou deixar passa')
+            else:
+                print('vou deixar passa')
                         
-                    caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
-                    #deletar arquivo xml
-                    try: 
-                        os.remove(caminho_do_arquivo)      
-                    except FileNotFoundError: 
-                        print("Arquivo XML não encontrado!") 
-                    except PermissionError: 
-                        print("Sem permissão para excluir o arquivo XML!") 
-                    except Exception as e: 
-                        print("Erro ao tentar excluir o arquivo XML:", e)
-                    break
+            caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
+            #deletar arquivo xml
+            try: 
+                os.remove(caminho_do_arquivo)      
+            except FileNotFoundError: 
+                print("Arquivo XML não encontrado!") 
+            except PermissionError: 
+                print("Sem permissão para excluir o arquivo XML!") 
+            except Exception as e: 
+                print("Erro ao tentar excluir o arquivo XML:", e)
+            break
 
         sg.popup_no_border('Operação concluida',keep_on_top=True)
                     
