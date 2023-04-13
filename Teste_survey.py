@@ -12,11 +12,12 @@ for elemento_filho in elementos_filhos:
                 for filho in i:
                     for prum in filho:
                         if prum.tag == 'ucs':
-                            for lista in range(result):
-                                novo_elemento_filho = ET.Element('uc')
-                                novo_elemento_filho.text = '\n'
-                                prum.insert(1,novo_elemento_filho)
-                            
+                            novo_elemento_filho = ET.Element('uc')
+                            novo_elemento_filho.text = '\n'
+                            prum.insert(1,novo_elemento_filho)
+                            for i in prum:
+                                print(i.tag)
+
 tree.write('edificio1//arquivo.xml')
 
 
