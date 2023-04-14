@@ -1,7 +1,9 @@
 import xml.etree.ElementTree as ET 
 # Carregando o arquivo XML 
 tree = ET.parse('arquivo.xml') 
-root = tree.getroot() 
+root = tree.getroot()
+import xml.etree.ElementTree as ET
+import xml.sax.saxutils as saxutils
 result = 3
 
 '''elementos_filhos = root.findall('caixasEntrada')
@@ -28,12 +30,14 @@ elementos_logico = root.findall(".//uc/argumento4_logico")
 elementos_real = root.findall(".//uc/argumento4_real")
 
 
-def adicionar(text):
+def adicionar(text):   
     pessoa_nome = ET.SubElement(elemento, text)
-    pessoa_nome.text = "\t" 
+    pessoa_nome.text = "\t"  
     
     
 for elemento in elementos:
+    
+    
     adicionar('id')
     adicionar('destinacao')
     adicionar('id_complemento3')
