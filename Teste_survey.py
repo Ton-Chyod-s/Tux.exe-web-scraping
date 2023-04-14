@@ -11,10 +11,12 @@ def criar_xml():
 
     elementos = root.findall(".//ucs")
 
-    for elemento in elementos:
-        pessoa_nome = ET.SubElement(elemento, 'uc')
-        pessoa_nome.text = "\t"
-
+    result = 3
+    for i in range(1,int(result)+1):
+        for elemento in elementos:
+            pessoa_nome = ET.Element('uc')
+            pessoa_nome.text = "\t"
+            elemento.append(pessoa_nome)
 
     elementos1 = root.findall(".//uc")
     
@@ -69,8 +71,6 @@ def modificar_xml():
                                                                 
     tree.write('edificio1//arquivo1.xml')
 
-result = 3
-for i in range(1,3):
-    criar_xml()
+criar_xml()
     
 modificar_xml()

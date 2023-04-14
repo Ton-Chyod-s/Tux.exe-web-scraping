@@ -98,7 +98,25 @@
             </caixaPiso>
           </caixasPiso>
           <ucs>
-          <uc>	<id>exemplo	</id><destinacao>exemplo	</destinacao><id_complemento3>exemplo	</id_complemento3><argumento3>exemplo	</argumento3><id_complemento4>exemplo	</id_complemento4><argumento4_logico>exemplo	</argumento4_logico><argumento4_real>exemplo	</argumento4_real></uc></ucs>
+          <uc>	
+          <id>exemplo	</id>
+          <destinacao>exemplo	</destinacao>
+          <id_complemento3>exemplo	</id_complemento3
+          <argumento3>exemplo	</argumento3>
+          <id_complemento4>exemplo	</id_complemento4>
+          <argumento4_logico>exemplo	</argumento4_logico>
+          <argumento4_real>exemplo	</argumento4_real>
+          </uc>
+          <uc>	
+          <id>exemplo	</id>
+          <destinacao>exemplo	</destinacao>
+          <id_complemento3>exemplo	</id_complemento3>
+          <argumento3>exemplo	</argumento3>
+          <id_complemento4>exemplo	</id_complemento4>
+          <argumento4_logico>exemplo	</argumento4_logico>
+          <argumento4_real>exemplo	</argumento4_real>
+          </uc>
+          </ucs>
         </prumada>
       </prumadas>
     </caixaEntrada>
