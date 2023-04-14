@@ -28,6 +28,7 @@ import requests
 from tqdm import tqdm
 import googlemaps
 from selenium import webdriver
+import zipfile 
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -3871,7 +3872,7 @@ class Internet:
                 #result = int(quantidade)
                 tree2 = et.parse('hp2.xml')
                 root2 = tree2.getroot()
-                for linha_arquivo in range(1,int(quantidade)):     
+                for linha_arquivo in range(1,int(quantidade)+1):     
                     root2.find('coordX').text = str(coordx + 0.01)
                     root2.find('coordY').text = str(coordy + 0.01)
                     root2.find('localidade').text = str(worksheet[f'J{i}'].value)
@@ -3892,9 +3893,12 @@ class Internet:
                     #escrever xml
                     tree2.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
-                    sleep(.5)
-                    shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-                    
+                    sleep(1)
+                    try:    
+                        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                    except:
+                        print('nem consegui')
+
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                     #deletar arquivo xml
                     try: 
@@ -3905,26 +3909,26 @@ class Internet:
                         print("Sem permissão para excluir o arquivo XML!") 
                     except Exception as e: 
                         print("Erro ao tentar excluir o arquivo XML:", e)
-                                
+
             else:
                 num = random.randint(1,int(quantidade))
                 novo_numero = f'202008240913{str(num)}1{str(num)}4483{str(num)}'
                 def criar_xml():
                     # Carregando o arquivo XML 
-                    tree = et.parse('arquivo.xml') 
+                    tree = et.parse(os.path.abspath('arquivo.xml')) 
                     root = tree.getroot()                                   
 
-                    def adicionar(text):   
+                    '''def adicionar(text):   
                         pessoa_nome = et.SubElement(elemento, text)
-                        pessoa_nome.text = "exemplo\t"  
+                        pessoa_nome.text = "2738591677"  
 
                     elementos = root.findall(".//ucs")
 
                     result = int(quantidade)+1
-                    for i in range(1,int(result)+1):
+                    for i in range(1,result):
                         for elemento in elementos:
                             pessoa_nome = et.Element('uc')
-                            pessoa_nome.text = "\t"
+                            pessoa_nome.text = ""
                             elemento.append(pessoa_nome)
 
                     elementos1 = root.findall(".//uc")
@@ -3936,7 +3940,7 @@ class Internet:
                         adicionar('argumento3')
                         adicionar('id_complemento4')
                         adicionar('argumento4_logico')
-                        adicionar('argumento4_real')
+                        adicionar('argumento4_real')'''
 
                     tree.write('edificio1//arquivo.xml')
 
@@ -3948,9 +3952,7 @@ class Internet:
                     root.find('coordX').text = str(coordx)
                     root.find('coordY').text = str(coordy)
                     root.find('localidade').text = str(worksheet[f'J{i}'].value)
-                                
-                    
-                    
+                              
                     sleep(.5)         
                     for country in root.findall('enderecoEdificio'):
                         country.find('logradouro').text = logradouro
@@ -3961,40 +3963,41 @@ class Internet:
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
                     
-                    elementos_destinacao = root.findall(".//uc/destinacao")
+                    '''elementos_destinacao = root.findall(".//uc/destinacao")
                     elementos_complemento3 = root.findall(".//uc/id_complemento3")
                     elementos_argumento = root.findall(".//uc/argumento3")
                     elementos_complemento4 = root.findall(".//uc/id_complemento4")
                     elementos_logico = root.findall(".//uc/argumento4_logico")
                     elementos_real = root.findall(".//uc/argumento4_real")
-                    
+
                     for elemento in elementos_destinacao:
                         # Faz algo com o elemento
-                        elemento.text = 'vai que e sua tafarel'
+                        elemento.text = 'RESIDENCIA'
 
                     for elemento in elementos_complemento3:
                         # Faz algo com o elemento
-                        elemento.text = 'ta indo'                                     
+                        elemento.text = '9'                                     
 
                     for elemento in elementos_argumento:
                         # Faz algo com o elemento
-                        elemento.text = 'ixi massa'
+                        elemento.text = '1003'
 
                     for elemento in elementos_complemento4:
                         # Faz algo com o elemento
-                        elemento.text = 'achei outro'
+                        elemento.text = '7'
 
                     for elemento in elementos_logico:
                         # Faz algo com o elemento
-                        elemento.text = '123' 
+                        elemento.text = '10' 
 
                     for elemento in elementos_real:
                         # Faz algo com o elemento
-                        elemento.text = '321'          
-                                                                                                        
+                        elemento.text = '10' '''          
+                                                                                                    
                     tree.write('edificio1//edificio1.xml')
                     
-                    caminho_do_arquivo = os.path.abspath('edificio1//arquivo.xml') 
+                    caminho_do_arquivo = os.path.abspath('edificio1//arquivo.xml')
+
                     #deletar arquivo xml
                     try:
                         os.remove(caminho_do_arquivo)      
@@ -4005,12 +4008,10 @@ class Internet:
                     except Exception as e: 
                         print("Erro ao tentar excluir o arquivo XML:", e)
                                         
-
                 criar_xml()
                     
                 modificar_xml()
                     
-                
                 #tarnsformar em zip
                 shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml')
 
@@ -4024,9 +4025,7 @@ class Internet:
                     print("Sem permissão para excluir o arquivo XML!") 
                 except Exception as e: 
                     print("Erro ao tentar excluir o arquivo XML:", e)
-                              
-            
-                        
+                                            
         sg.popup_no_border('Operação concluida',keep_on_top=True)
                     
     def cep_geopy(self):

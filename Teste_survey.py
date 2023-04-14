@@ -1,40 +1,29 @@
-import xml.etree.ElementTree as ET 
-import os
+import xml.etree.ElementTree as et 
+import shutil
+import random
 
-def criar_xml():
-    # Carregando o arquivo XML 
-    tree = ET.parse('arquivo.xml') 
-    root = tree.getroot()                                   
+tree = et.parse('apartamento.xml') 
+root = tree.getroot()
 
-    def adicionar(text):   
-        pessoa_nome = ET.SubElement(elemento, text)
-        pessoa_nome.text = "exemplo\t"  
+final = 9
+for i in range(1, (final + 1)):
+    tree.write(f'edificio1//apartamentos//apartamento{i}.xml')
+    xml_inserir = et.parse(f'edificio1//apartamentos//apartamento{i}.xml')
+    elemento_pai_inserir = xml_inserir.getroot()
+    xml_principal = et.parse(f'edificio1//edificio//edificio{i}.xml')
+    elemento_pai_princial = xml_principal.find('.//ucs')
+    elemento_pai_princial.append(elemento_pai_inserir)
+    fim = final - 1
+    xml_principal.write(f'edificio1//edificio//edificio{i+1}.xml')
 
-    elementos = root.findall(".//ucs")
+    caminho_origem = f'edificio1//edificio//edificio{fim}.xml'
+    caminho_destino = f'edificio1//edificio.xml'
 
-    result = 5
-    for i in range(1,int(result)+1):
-        for elemento in elementos:
-            pessoa_nome = ET.Element('uc')
-            pessoa_nome.text = "\t"
-            elemento.append(pessoa_nome)
-
-    elementos1 = root.findall(".//uc")
-    
-    for elemento in elementos1:
-        adicionar('id')
-        adicionar('destinacao')
-        adicionar('id_complemento3')
-        adicionar('argumento3')
-        adicionar('id_complemento4')
-        adicionar('argumento4_logico')
-        adicionar('argumento4_real')
-
-    tree.write('edificio1//arquivo.xml')
+shutil.move(caminho_origem,caminho_destino)
 
 def modificar_xml():
     # Carregando o arquivo XML 
-    tree = ET.parse('edificio1//arquivo.xml') 
+    tree = et.parse('edificio1//edificio.xml') 
     root = tree.getroot()
 
     elementos_destinacao = root.findall(".//uc/destinacao")
@@ -46,42 +35,38 @@ def modificar_xml():
     
     for elemento in elementos_destinacao:
         # Faz algo com o elemento
-        elemento.text = 'vai que e sua tafarel'
+        elemento.text = 'RESIDENCIA'
 
     for elemento in elementos_complemento3:
         # Faz algo com o elemento
-        elemento.text = 'ta indo'                                     
+        elemento.text = '9'                                     
 
     for elemento in elementos_argumento:
         # Faz algo com o elemento
-        elemento.text = 'ixi massa'
+        elemento.text = '1009'
 
     for elemento in elementos_complemento4:
         # Faz algo com o elemento
-        elemento.text = 'achei outro'
+        elemento.text = '7'
 
     for elemento in elementos_logico:
         # Faz algo com o elemento
-        elemento.text = '123' 
+        elemento.text = '10' 
 
     for elemento in elementos_real:
         # Faz algo com o elemento
-        elemento.text = '321'          
+        elemento.text = '10'        
                                                                                          
     tree.write('edificio1//edificio1.xml')
     
-    caminho_do_arquivo = os.path.abspath('edificio1//arquivo.xml') 
-    #deletar arquivo xml
-    try:
-        os.remove(caminho_do_arquivo)      
-    except FileNotFoundError: 
-        print("Arquivo XML não encontrado!") 
-    except PermissionError: 
-        print("Sem permissão para excluir o arquivo XML!") 
-    except Exception as e: 
-        print("Erro ao tentar excluir o arquivo XML:", e)
-                        
-
-criar_xml()
-    
 modificar_xml()
+minha_lista = []
+for linha in range (6):
+                    minha_lista.append(random.randint(1,9))
+                    num = int(''.join(map(str,minha_lista)))
+                    novo_numero = '20200824091321' + str(num)
+                    
+shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
+
+
+

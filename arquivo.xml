@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><edificio tipo="E" versao="7.9.1">
   <gravado>false</gravado>
   <idCEMobile>1</idCEMobile>
-  <coordX>-48.5100499</coordX>
-  <coordY>-27.7589372</coordY>
+  <coordX>-48.5096851</coordX>
+  <coordY>-27.7559302</coordY>
   <codigoZona>NEUTRA</codigoZona>
   <nomeZona>NEUTRA</nomeZona>
   <localidade>SAO JOSE</localidade>
-
   <enderecoEdificio>
+    <id>83810088</id>
     <logradouro>RUA EMERSON FERRARI, KOBRASOL, SAO JOSE, SAO JOSE - SC (2300188840)</logradouro>
     <numero_fachada>28</numero_fachada>
     <cep>88102060</cep>
@@ -16,21 +16,17 @@
     <id_localidade>1870729</id_localidade>
     <cod_lograd>2300188840</cod_lograd>
   </enderecoEdificio>
-
   <tecnico>
-    <id>1566098098</id>
-    <nome>KLAYTON DIAS</nome>
+    <id>2538974622</id>
+    <nome>FELIPE AUGUSTO SANTANA DA COSTA</nome>
   </tecnico>
-
   <empresa>
     <id>42541126</id>
     <nome>TELEMONT</nome>
   </empresa>
-
   <data>20230122110904</data>
-  <totalUCs>1</totalUCs>
-
-  <ocupacao>EDIFICACAOCOMPLETA</ocupacao>
+  <totalUCs>101</totalUCs>
+  <ocupacao>EDIFICACAOEMCONSTRUCAO</ocupacao>
   <redeInterna>S</redeInterna>
   <infoFotos>
     <fotoInteriorEdificio>foto preta_4.jpg</fotoInteriorEdificio>
@@ -45,7 +41,7 @@
         <y>1000</y>
         <z>100</z>
       </dimensoes>
-      <totalUCs>1</totalUCs>
+      <totalUCs>101</totalUCs>
       <piso>0</piso>
       <localizacao>Corredor</localizacao>
       <foto>foto preta.jpg</foto>
@@ -98,6 +94,7 @@
             </caixaPiso>
           </caixasPiso>
           <ucs>
+            
           </ucs>
         </prumada>
       </prumadas>
