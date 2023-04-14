@@ -98,8 +98,13 @@
             </caixaPiso>
           </caixasPiso>
           <ucs>
-          <uc>
-</uc></ucs>
+          <id>	</id>
+          <destinacao>	</destinacao>
+          <id_complemento3>	</id_complemento3>
+          <argumento3>	</argumento3>
+          <id_complemento4>	</id_complemento4>
+          <argumento4_logico>	</argumento4_logico>
+          <argumento4_real>	</argumento4_real></ucs>
         </prumada>
       </prumadas>
     </caixaEntrada>
