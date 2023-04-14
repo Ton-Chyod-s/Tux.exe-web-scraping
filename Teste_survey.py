@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET 
+import os
 
 def criar_xml():
     # Carregando o arquivo XML 
@@ -11,7 +12,7 @@ def criar_xml():
 
     elementos = root.findall(".//ucs")
 
-    result = 3
+    result = 5
     for i in range(1,int(result)+1):
         for elemento in elementos:
             pessoa_nome = ET.Element('uc')
@@ -35,7 +36,6 @@ def modificar_xml():
     # Carregando o arquivo XML 
     tree = ET.parse('edificio1//arquivo.xml') 
     root = tree.getroot()
-    result = 3 
 
     elementos_destinacao = root.findall(".//uc/destinacao")
     elementos_complemento3 = root.findall(".//uc/id_complemento3")
@@ -67,9 +67,20 @@ def modificar_xml():
     for elemento in elementos_real:
         # Faz algo com o elemento
         elemento.text = '321'          
-                                        
-                                                                
-    tree.write('edificio1//arquivo1.xml')
+                                                                                         
+    tree.write('edificio1//edificio1.xml')
+    
+    caminho_do_arquivo = os.path.abspath('edificio1//arquivo.xml') 
+    #deletar arquivo xml
+    try:
+        os.remove(caminho_do_arquivo)      
+    except FileNotFoundError: 
+        print("Arquivo XML não encontrado!") 
+    except PermissionError: 
+        print("Sem permissão para excluir o arquivo XML!") 
+    except Exception as e: 
+        print("Erro ao tentar excluir o arquivo XML:", e)
+                        
 
 criar_xml()
     
