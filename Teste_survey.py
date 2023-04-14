@@ -2,8 +2,6 @@ import xml.etree.ElementTree as ET
 # Carregando o arquivo XML 
 tree = ET.parse('arquivo.xml') 
 root = tree.getroot()
-import xml.etree.ElementTree as ET
-import xml.sax.saxutils as saxutils
 result = 3
 
 '''elementos_filhos = root.findall('caixasEntrada')
@@ -21,7 +19,7 @@ for elemento_filho in elementos_filhos:
                                         print(linha.text)'''
                                         
 
-elementos = root.findall(".//ucs")
+elementos = root.findall(".//uc")
 elementos_destinacao = root.findall(".//uc/destinacao")
 elementos_complemento3 = root.findall(".//uc/id_complemento3")
 elementos_argumento = root.findall(".//uc/argumento3")
@@ -36,8 +34,6 @@ def adicionar(text):
     
     
 for elemento in elementos:
-    
-    
     adicionar('id')
     adicionar('destinacao')
     adicionar('id_complemento3')

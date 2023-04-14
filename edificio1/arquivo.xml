@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><edificio tipo="E" versao="7.9.1">
+<edificio tipo="E" versao="7.9.1">
   <gravado>false</gravado>
   <idCEMobile>1</idCEMobile>
   <coordX>-48.5100499</coordX>
@@ -52,7 +52,7 @@
       <id_divisao_int>117</id_divisao_int>
       <entradasCabos>
         <entradaCabos>
-          <tipo>Subterrânea</tipo>
+          <tipo>Subterr&#226;nea</tipo>
           <comprimento>50</comprimento>
           <passagemFO>Menor que 1 cm</passagemFO>
         </entradaCabos>
@@ -99,7 +99,7 @@
           </caixasPiso>
           <ucs>
           <uc>
-          </uc>
+          <id>	</id><destinacao>	</destinacao><id_complemento3>	</id_complemento3><argumento3>	</argumento3><id_complemento4>	</id_complemento4><argumento4_logico>	</argumento4_logico><argumento4_real>	</argumento4_real></uc>
           </ucs>
         </prumada>
       </prumadas>
