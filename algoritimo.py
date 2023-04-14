@@ -3868,18 +3868,17 @@ class Internet:
                         print("Erro ao tentar excluir o arquivo XML:", e)
                     
             elif quantidade != 'None' and predio == 'None':
-                result = int(quantidade)+1
+                #result = int(quantidade)
                 tree2 = et.parse('hp2.xml')
                 root2 = tree2.getroot()
-                for linha_arquivo in range(1,result):     
+                for linha_arquivo in range(1,int(quantidade)):     
                     root2.find('coordX').text = str(coordx + 0.01)
                     root2.find('coordY').text = str(coordy + 0.01)
                     root2.find('localidade').text = str(worksheet[f'J{i}'].value)
                             
                     num = random.randint(1,int(quantidade))
                     novo_numero = f'20200824091321{str(num)}4483{str(num)}'
-                    num_arg = str(linha_arquivo)
-                    sleep(.5)         
+                    num_arg = str(linha_arquivo)        
                     for country in root2.findall('enderecoEdificio'):
                         country.find('argumento1').text = num_arg
                         country.find('logradouro').text = logradouro
@@ -3889,11 +3888,11 @@ class Internet:
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
-                        
+                    sleep(.5)    
                     #escrever xml
                     tree2.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
-                    time.sleep(1)
+                    sleep(.5)
                     shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
