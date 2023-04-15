@@ -3872,14 +3872,14 @@ class Internet:
                 result = int(quantidade)
                 tree2 = et.parse('hp2.xml')
                 root2 = tree2.getroot()
-                for linha_arquivo in range(1,5):     
-                    root2.find('coordX').text = str(coordx + 0.01)
-                    root2.find('coordY').text = str(coordy + 0.01)
-                    root2.find('localidade').text = str(worksheet[f'J{i}'].value)
-                            
+                for linha_arquivo in range(1,(result+2)):    
+                    root2.find('coordX').text = str(coordx) 
+                    root2.find('coordY').text = str(coordy)
+                    root2.find('localidade').text = str(worksheet[f'J{i}'].value)     
                     num = random.randint(1,int(quantidade))
                     novo_numero = f'20200824091321{str(num)}4483{str(num)}'
-                    num_arg = str(linha_arquivo)        
+                    num_arg = str(linha_arquivo)
+                          
                     for country in root2.findall('enderecoEdificio'):
                         country.find('argumento1').text = num_arg
                         country.find('logradouro').text = logradouro
@@ -3888,28 +3888,15 @@ class Internet:
                         country.find('bairro').text = bairro
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
-                        country.find('cod_lograd').text = cod_logradouro
-                    sleep(.5)    
+                        country.find('cod_lograd').text = cod_logradouro   
                     #escrever xml
                     tree2.write('moradia1//moradia1.xml')
                     #tarnsformar em zip
-                    sleep(1)
-                    try:    
-                        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
-                    except:
-                        print('nem consegui')
-
+                    shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                     #deletar arquivo xml
-                    try: 
-                        os.remove(caminho_do_arquivo)      
-                    except FileNotFoundError: 
-                        print("Arquivo XML não encontrado!") 
-                    except PermissionError: 
-                        print("Sem permissão para excluir o arquivo XML!") 
-                    except Exception as e: 
-                        print("Erro ao tentar excluir o arquivo XML:", e)
-
+                    os.remove(caminho_do_arquivo)      
+                    sleep(1)
             else:
                 num = random.randint(1,int(quantidade))
                 novo_numero = f'202008240913{str(num)}1{str(num)}4483{str(num)}'
