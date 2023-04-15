@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><edificio tipo="E" versao="7.9.1">
   <gravado>false</gravado>
   <idCEMobile>1</idCEMobile>
-  <coordX>-48.5096851</coordX>
-  <coordY>-27.7559302</coordY>
+  <coordX>-48.7486445</coordX>
+  <coordY>-26.8705643</coordY>
   <codigoZona>NEUTRA</codigoZona>
   <nomeZona>NEUTRA</nomeZona>
   <localidade>SAO JOSE</localidade>
@@ -94,7 +94,6 @@
             </caixaPiso>
           </caixasPiso>
           <ucs>
-            
           </ucs>
         </prumada>
       </prumadas>

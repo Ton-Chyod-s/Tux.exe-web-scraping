@@ -1,10 +1,27 @@
 import xml.etree.ElementTree as et 
 import shutil
 import random
+import os
 
 tree = et.parse('apartamento.xml') 
 root = tree.getroot()
 
+def pasta(caminho):
+    pasta = caminho
+    #verificar se a pasta existe se não existir ele ira criar
+    if not os.path.exists(pasta):
+        os.makedirs(pasta)
+
+pasta(os.path.abspath('edificio1//'))
+pasta(os.path.abspath('edificio1//edificio'))
+pasta(os.path.abspath('edificio1//apartamentos//'))
+pasta(os.path.abspath('moradia1//'))
+
+caminho_origem = os.path.abspath('arquivo.xml')
+caminho_destino = 'edificio1//edificio//edificio1.xml'
+
+shutil.copy(caminho_origem,caminho_destino)
+        
 final = 9
 for i in range(1, (final + 1)):
     tree.write(f'edificio1//apartamentos//apartamento{i}.xml')
@@ -66,7 +83,31 @@ for linha in range (6):
                     num = int(''.join(map(str,minha_lista)))
                     novo_numero = '20200824091321' + str(num)
                     
+for linha in range(0,(final+2)):                    
+    caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
+    caminho_do_arquivo_apartamentos = os.path.abspath(f'edificio1//apartamentos//apartamento{linha}.xml')
+    
+    #deletar arquivo xml
+    try:  
+        os.remove(caminho_do_arquivo_apartamentos)
+    except:
+        pass
+    try:
+        os.remove(caminho_do_arquivo_edificio)
+    except:
+        pass
+        
+caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio.xml')
+caminho_do_arquivo_edificio1 = os.path.abspath(f'edificio1//edificio1.xml')
+try:
+    os.remove(caminho_do_arquivo_edificio)
+except:
+    pass
+
 shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
 
-
+try:
+    os.remove(caminho_do_arquivo_edificio1)
+except:
+    pass
 
