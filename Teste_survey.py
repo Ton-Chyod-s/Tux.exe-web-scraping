@@ -43,36 +43,40 @@ def modificar_xml():
     tree = et.parse('edificio1//edificio.xml') 
     root = tree.getroot()
 
+    elementos_id = root.findall(".//uc/id")
     elementos_destinacao = root.findall(".//uc/destinacao")
     elementos_complemento3 = root.findall(".//uc/id_complemento3")
     elementos_argumento = root.findall(".//uc/argumento3")
     elementos_complemento4 = root.findall(".//uc/id_complemento4")
     elementos_logico = root.findall(".//uc/argumento4_logico")
     elementos_real = root.findall(".//uc/argumento4_real")
+    contador = 0
     
-    for elemento in elementos_destinacao:
-        # Faz algo com o elemento
-        elemento.text = 'RESIDENCIA'
-
-    for elemento in elementos_complemento3:
-        # Faz algo com o elemento
-        elemento.text = '9'                                     
-
-    for elemento in elementos_argumento:
-        # Faz algo com o elemento
-        elemento.text = '1009'
-
-    for elemento in elementos_complemento4:
-        # Faz algo com o elemento
-        elemento.text = '7'
-
-    for elemento in elementos_logico:
-        # Faz algo com o elemento
-        elemento.text = '10' 
-
-    for elemento in elementos_real:
-        # Faz algo com o elemento
-        elemento.text = '10'        
+    for i, elemento in enumerate(elementos_id):
+        elemento.text = f'27385916{79+i}'
+        
+    for i, elemento in enumerate(elementos_destinacao):
+        elemento.text = f'RESIDENCIA'
+        
+    for i, elemento in enumerate(elementos_complemento3):
+        elemento.text = str(i)
+        
+    for i, elemento in enumerate(elementos_argumento):
+        if (i+1) % 4 == 1:
+            contador += 1
+        elemento.text = f'{contador}0{i}'
+    
+    for i, elemento in enumerate(elementos_complemento4):
+        if (i+1) % 4 == 1:
+            contador += 1
+        elemento.text = str(contador)
+    
+    for i, elemento in enumerate(elementos_logico):
+        elemento.text = 'T'
+        
+    for i, elemento in enumerate(elementos_real):
+        elemento.text = 'T'
+          
                                                                                          
     tree.write('edificio1//edificio1.xml')
     
