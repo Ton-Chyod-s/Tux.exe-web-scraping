@@ -3869,10 +3869,10 @@ class Internet:
                         print("Erro ao tentar excluir o arquivo XML:", e)
                     
             elif quantidade != 'None' and predio == 'None':
-                #result = int(quantidade)
+                result = int(quantidade)
                 tree2 = et.parse('hp2.xml')
                 root2 = tree2.getroot()
-                for linha_arquivo in range(1,int(quantidade)+1):     
+                for linha_arquivo in range(1,5):     
                     root2.find('coordX').text = str(coordx + 0.01)
                     root2.find('coordY').text = str(coordy + 0.01)
                     root2.find('localidade').text = str(worksheet[f'J{i}'].value)
@@ -3913,36 +3913,6 @@ class Internet:
             else:
                 num = random.randint(1,int(quantidade))
                 novo_numero = f'202008240913{str(num)}1{str(num)}4483{str(num)}'
-                def criar_xml():
-                    # Carregando o arquivo XML 
-                    tree = et.parse(os.path.abspath('arquivo.xml')) 
-                    root = tree.getroot()                                   
-
-                    '''def adicionar(text):   
-                        pessoa_nome = et.SubElement(elemento, text)
-                        pessoa_nome.text = "2738591677"  
-
-                    elementos = root.findall(".//ucs")
-
-                    result = int(quantidade)+1
-                    for i in range(1,result):
-                        for elemento in elementos:
-                            pessoa_nome = et.Element('uc')
-                            pessoa_nome.text = ""
-                            elemento.append(pessoa_nome)
-
-                    elementos1 = root.findall(".//uc")
-                    
-                    for elemento in elementos1:
-                        adicionar('id')
-                        adicionar('destinacao')
-                        adicionar('id_complemento3')
-                        adicionar('argumento3')
-                        adicionar('id_complemento4')
-                        adicionar('argumento4_logico')
-                        adicionar('argumento4_real')'''
-
-                    tree.write('edificio1//arquivo.xml')
 
                 def modificar_xml():
                     # Carregando o arquivo XML 
@@ -3963,71 +3933,7 @@ class Internet:
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
                     
-                    '''elementos_destinacao = root.findall(".//uc/destinacao")
-                    elementos_complemento3 = root.findall(".//uc/id_complemento3")
-                    elementos_argumento = root.findall(".//uc/argumento3")
-                    elementos_complemento4 = root.findall(".//uc/id_complemento4")
-                    elementos_logico = root.findall(".//uc/argumento4_logico")
-                    elementos_real = root.findall(".//uc/argumento4_real")
-
-                    for elemento in elementos_destinacao:
-                        # Faz algo com o elemento
-                        elemento.text = 'RESIDENCIA'
-
-                    for elemento in elementos_complemento3:
-                        # Faz algo com o elemento
-                        elemento.text = '9'                                     
-
-                    for elemento in elementos_argumento:
-                        # Faz algo com o elemento
-                        elemento.text = '1003'
-
-                    for elemento in elementos_complemento4:
-                        # Faz algo com o elemento
-                        elemento.text = '7'
-
-                    for elemento in elementos_logico:
-                        # Faz algo com o elemento
-                        elemento.text = '10' 
-
-                    for elemento in elementos_real:
-                        # Faz algo com o elemento
-                        elemento.text = '10' '''          
-                                                                                                    
-                    tree.write('edificio1//edificio1.xml')
-                    
-                    caminho_do_arquivo = os.path.abspath('edificio1//arquivo.xml')
-
-                    #deletar arquivo xml
-                    try:
-                        os.remove(caminho_do_arquivo)      
-                    except FileNotFoundError: 
-                        print("Arquivo XML não encontrado!") 
-                    except PermissionError: 
-                        print("Sem permissão para excluir o arquivo XML!") 
-                    except Exception as e: 
-                        print("Erro ao tentar excluir o arquivo XML:", e)
-                                        
-                criar_xml()
-                    
-                modificar_xml()
-                    
-                #tarnsformar em zip
-                shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml')
-
-                caminho_do_arquivo = os.path.abspath('edificio1//edificio1.xml') 
-                #deletar arquivo xml
-                try: 
-                    os.remove(caminho_do_arquivo)      
-                except FileNotFoundError: 
-                    print("Arquivo XML não encontrado!") 
-                except PermissionError: 
-                    print("Sem permissão para excluir o arquivo XML!") 
-                except Exception as e: 
-                    print("Erro ao tentar excluir o arquivo XML:", e)
-                                            
-        sg.popup_no_border('Operação concluida',keep_on_top=True)
-                    
+                        
     def cep_geopy(self):
         wb = load_workbook('coordenada.xlsx')
         ws = wb.active  
