@@ -2,32 +2,16 @@ import xml.etree.ElementTree as et
 import shutil
 import random
 import os
+import PySimpleGUI as sg
 
-tree = et.parse('apartamento.xml') 
-root = tree.getroot()
-
-def pasta(caminho):
-    pasta = caminho
-    #verificar se a pasta existe se não existir ele ira criar
-    if not os.path.exists(pasta):
-        os.makedirs(pasta)
-
-pasta(os.path.abspath('edificio1//'))
-pasta(os.path.abspath('edificio1//edificio'))
-pasta(os.path.abspath('edificio1//apartamentos//'))
-pasta(os.path.abspath('moradia1//'))
-
-caminho_origem = os.path.abspath('arquivo.xml')
-caminho_destino = 'edificio1//edificio//edificio1.xml'
-
-shutil.copy(caminho_origem,caminho_destino)
-        
+tree_apartamento = et.parse('apartamento.xml') 
+root_apartamento = tree_apartamento.getroot()
 final = 9
 for i in range(1, (final + 1)):
-    tree.write(f'edificio1//apartamentos//apartamento{i}.xml')
+    tree_apartamento.write(f'edificio1//apartamentos//apartamento{i}.xml')
     xml_inserir = et.parse(f'edificio1//apartamentos//apartamento{i}.xml')
     elemento_pai_inserir = xml_inserir.getroot()
-    xml_principal = et.parse(f'edificio1//edificio//edificio{i}.xml')
+    xml_principal = et.parse(f'edificio1//edificio//edificio{i}.xml')  
     elemento_pai_princial = xml_principal.find('.//ucs')
     elemento_pai_princial.append(elemento_pai_inserir)
     fim = final - 1
