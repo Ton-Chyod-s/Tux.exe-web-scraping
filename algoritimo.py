@@ -3899,29 +3899,38 @@ class Internet:
                     #deletar arquivo xml
                     os.remove(caminho_do_arquivo)      
                     sleep(1)
+            
             else:
-                num = random.randint(1,int(quantidade))
-                novo_numero = f'202008240913{str(num)}1{str(num)}4483{str(num)}'
+                #abrindo arquivo xml para edição
+                tree = et.parse('apartamento.xml') 
+                root = tree.getroot()
+                #mudando primeiras informações
+                root.find('coordX').text = str(coordx)
+                root.find('coordY').text = str(coordy)
+                root.find('localidade').text = str(worksheet[f'J{i}'].value)            
+                sleep(.5)
+                #mudando informações de endereço         
+                for country in root.findall('enderecoEdificio'):
+                    country.find('logradouro').text = logradouro
+                    country.find('numero_fachada').text = numero
+                    country.find('cep').text = cep
+                    country.find('bairro').text = bairro
+                    country.find('id_roteiro').text = roteiro
+                    country.find('id_localidade').text = localidade
+                    country.find('cod_lograd').text = cod_logradouro
+                
+                def pasta(caminho):
+                    pasta = caminho
+                    #verificar se a pasta existe se não existir ele ira criar
+                    if not os.path.exists(pasta):
+                        os.makedirs(pasta)
 
-                def modificar_xml():
-                    # Carregando o arquivo XML 
-                    tree = et.parse('edificio1//arquivo.xml') 
-                    root = tree.getroot()
-                    
-                    root.find('coordX').text = str(coordx)
-                    root.find('coordY').text = str(coordy)
-                    root.find('localidade').text = str(worksheet[f'J{i}'].value)
-                              
-                    sleep(.5)         
-                    for country in root.findall('enderecoEdificio'):
-                        country.find('logradouro').text = logradouro
-                        country.find('numero_fachada').text = numero
-                        country.find('cep').text = cep
-                        country.find('bairro').text = bairro
-                        country.find('id_roteiro').text = roteiro
-                        country.find('id_localidade').text = localidade
-                        country.find('cod_lograd').text = cod_logradouro
-                    
+                pasta(os.path.abspath('edificio1//'))
+                pasta(os.path.abspath('edificio1//edificio'))
+                pasta(os.path.abspath('edificio1//apartamentos//'))
+                pasta(os.path.abspath('moradia1//'))
+
+                tree.write('edificio1//edificio//edificio1.xml')
                         
     def cep_geopy(self):
         wb = load_workbook('coordenada.xlsx')
