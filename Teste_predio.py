@@ -2,7 +2,11 @@ import xml.etree.ElementTree as et
 import shutil
 import random
 import os
-import PySimpleGUI as sg
+
+caminho_origem = f'arquivo.xml'
+caminho_destino = f'edificio1//edificio//edificio1.xml'
+
+shutil.copy(caminho_origem,caminho_destino)
 
 tree_apartamento = et.parse('apartamento.xml') 
 root_apartamento = tree_apartamento.getroot()
@@ -72,30 +76,22 @@ for linha in range (6):
                     novo_numero = '20200824091321' + str(num)
                     
 for linha in range(0,(final+2)):                    
-    caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
-    caminho_do_arquivo_apartamentos = os.path.abspath(f'edificio1//apartamentos//apartamento{linha}.xml')
-    
     #deletar arquivo xml
-    try:  
+    try:
+        caminho_do_arquivo_apartamentos = os.path.abspath(f'edificio1//apartamentos//apartamento{linha}.xml')  
         os.remove(caminho_do_arquivo_apartamentos)
     except:
         pass
     try:
+        caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
         os.remove(caminho_do_arquivo_edificio)
     except:
         pass
         
-caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio.xml')
-caminho_do_arquivo_edificio1 = os.path.abspath(f'edificio1//edificio1.xml')
 try:
+    caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio.xml')
     os.remove(caminho_do_arquivo_edificio)
 except:
     pass
 
-shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
-
-try:
-    os.remove(caminho_do_arquivo_edificio1)
-except:
-    pass
 
