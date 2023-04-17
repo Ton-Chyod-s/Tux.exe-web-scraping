@@ -205,8 +205,8 @@ for i in range(2,402):
             elementos_logico = root.findall(".//uc/argumento4_logico")
             elementos_real = root.findall(".//uc/argumento4_real")
             contador = 0
-            piso_real = 0
-            piso_logico = 1
+            piso_real = -1
+            piso_logico = 0
             #alterando esses elementos
             #id apartamento
             for i, elemento in enumerate(elementos_id):
@@ -221,7 +221,7 @@ for i in range(2,402):
             for i, elemento in enumerate(elementos_argumento):
                 if (i+1) % 4 == 1:
                     contador += 1
-                elemento.text = f'{contador}0{i}' 
+                elemento.text = f'{contador}0{i % 4}'
             #não pode modificar    
             for i, elemento in enumerate(elementos_complemento4):
                 elemento.text = '7'
@@ -239,37 +239,26 @@ for i in range(2,402):
             tree.write('edificio1//edificio1.xml')
             
         modificar_xml()
+        #gravar em zip arquivo
+        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
         minha_lista = []
         for linha in range (6):
             minha_lista.append(random.randint(1,9))
             num = int(''.join(map(str,minha_lista)))
             novo_numero = '20200824091321' + str(num)
         #caminho dos aquivo que serão deletados 
-        for linha in range(0,(final+2)):
-            caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
+        for linha in range(0,final):
+            caminho_do_arquivo_edificio0 = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
             caminho_do_arquivo_apartamentos = os.path.abspath(f'edificio1//apartamentos//apartamento{linha}.xml')
             caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio.xml')
             caminho_do_arquivo_edificio1 = os.path.abspath(f'edificio1//edificio1.xml')
-        #deletar arquivo xml
-        try:  
-            os.remove(caminho_do_arquivo_apartamentos)
-        except:
-            pass
-        try:
-            os.remove(caminho_do_arquivo_edificio)
-        except:
-            pass
-        try:
-            os.remove(caminho_do_arquivo_edificio)
-        except:
-            pass
-        #gravar em zip arquivo
-        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
-        try:
-            os.remove(caminho_do_arquivo_edificio1)
-        except:
-            pass
-        
-        print('achei um predio para fazer')
+            #deletar arquivo xml
+            try:
+                os.remove(caminho_do_arquivo_apartamentos)
+                os.remove(caminho_do_arquivo_edificio0)
+                os.remove(caminho_do_arquivo_edificio)
+                os.remove(caminho_do_arquivo_edificio1)      
+            except:
+                pass
         
 sg.popup('criação concluida',keep_on_top=True) 
