@@ -3823,7 +3823,7 @@ class Internet:
         pasta(os.path.abspath('moradia1//'))
                                     
         #laço de repetição com tempo determinado max 400 tentativa
-        for i in range(2,402):
+        for i in tqdm(range(2,402), desc ="Carregando..." ):
             selected_theme = 'Reddit'
             sg.theme(selected_theme)
             minha_lista = []    
