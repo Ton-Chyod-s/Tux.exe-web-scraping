@@ -239,10 +239,36 @@ for i in range(2,402):
             tree.write('edificio1//edificio1.xml')
             
         modificar_xml()
-        
-        
-        
-        
+        minha_lista = []
+        for linha in range (6):
+            minha_lista.append(random.randint(1,9))
+            num = int(''.join(map(str,minha_lista)))
+            novo_numero = '20200824091321' + str(num)
+        #caminho dos aquivo que serão deletados 
+        for linha in range(0,(final+2)):
+            caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio//edificio{linha}.xml')
+            caminho_do_arquivo_apartamentos = os.path.abspath(f'edificio1//apartamentos//apartamento{linha}.xml')
+            caminho_do_arquivo_edificio = os.path.abspath(f'edificio1//edificio.xml')
+            caminho_do_arquivo_edificio1 = os.path.abspath(f'edificio1//edificio1.xml')
+        #deletar arquivo xml
+        try:  
+            os.remove(caminho_do_arquivo_apartamentos)
+        except:
+            pass
+        try:
+            os.remove(caminho_do_arquivo_edificio)
+        except:
+            pass
+        try:
+            os.remove(caminho_do_arquivo_edificio)
+        except:
+            pass
+        #gravar em zip arquivo
+        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
+        try:
+            os.remove(caminho_do_arquivo_edificio1)
+        except:
+            pass
         
         print('achei um predio para fazer')
         
