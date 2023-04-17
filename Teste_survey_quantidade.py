@@ -113,7 +113,6 @@ for i in range(2,402):
                     nova_lista.append(random.randint(1,9))
                 num = int(''.join(map(str,nova_lista)))
                 novo_numero = f'20200824091322' + str(num)
-                
                 #encontrando e atribuindo novos valores ao xml
                 for country in root.findall('enderecoEdificio'):
                     country.find('argumento1').text = str(i)
@@ -138,7 +137,6 @@ for i in range(2,402):
                 caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                 #deletar arquivo xml
                 os.remove(caminho_do_arquivo) 
-                     
         except FileNotFoundError:
             sg.popup_no_wait("Certifique-se de que o arquivo esteja na pasta:\nhp2.xml\n",keep_on_top=True)
             sleep(2)
@@ -148,19 +146,21 @@ for i in range(2,402):
         except Exception as e: 
             sg.popup_no_wait("Erro ao tentar excluir o arquivo XML:\nmoradia1.xml,keep_on_top=True", e)
             sleep(2)
-            
+    
     #condição para fazer predio
     else:
         #logando os arquivos xml
         tree = et.parse('arquivo.xml')
         root = tree.getroot()
+        tree_apartamento = et.parse('apartamento.xml') 
+        root_apartamento = tree_apartamento.getroot()
+        
         #gerando um novo numero aleatório
         nova_lista=[]
         for linha in range (6):
             nova_lista.append(random.randint(1,9))
         num = int(''.join(map(str,nova_lista)))
         novo_numero = f'20200824091322' + str(num)
-        
         #encontrando e atribuindo novos valores ao xml
         for country in root.findall('enderecoEdificio'):
             country.find('logradouro').text = logradouro
@@ -176,7 +176,73 @@ for i in range(2,402):
         root.find('localidade').text = str(worksheet[f'J{i}'].value) 
         sleep(0.2)    
         #escrever xml
-        tree.write(f'edificio1//edificio1.xml')
+        tree.write(f'edificio1//edificio//edificio1.xml')
+        #edição da quantidade de hp no predio
+        final = int(quantidade)
+        for i in range(1, final):
+            tree_apartamento.write(f'edificio1//apartamentos//apartamento{i}.xml')
+            xml_inserir = et.parse(f'edificio1//apartamentos//apartamento{i}.xml')
+            elemento_pai_inserir = xml_inserir.getroot()
+            xml_principal = et.parse(f'edificio1//edificio//edificio{i}.xml')  
+            elemento_pai_princial = xml_principal.find('.//ucs')
+            elemento_pai_princial.append(elemento_pai_inserir)
+            xml_principal.write(f'edificio1//edificio//edificio{i+1}.xml')
+            caminho_origem = f'edificio1//edificio//edificio{final}.xml'
+            caminho_destino = f'edificio1//edificio.xml'
+        #movendo o ultimo arquivo xml editado com a quantidade de hp para pasta edificio1
+        shutil.move(caminho_origem,caminho_destino)
+        #modificar edificio1.xml
+        def modificar_xml():
+            # Carregando o arquivo XML 
+            tree = et.parse('edificio1//edificio.xml') 
+            root = tree.getroot()
+            #procurar elementos para alterar
+            elementos_id = root.findall(".//uc/id")
+            elementos_destinacao = root.findall(".//uc/destinacao")
+            elementos_complemento3 = root.findall(".//uc/id_complemento3")
+            elementos_argumento = root.findall(".//uc/argumento3")
+            elementos_complemento4 = root.findall(".//uc/id_complemento4")
+            elementos_logico = root.findall(".//uc/argumento4_logico")
+            elementos_real = root.findall(".//uc/argumento4_real")
+            contador = 0
+            piso_real = 0
+            piso_logico = 1
+            #alterando esses elementos
+            #id apartamento
+            for i, elemento in enumerate(elementos_id):
+                elemento.text = f'27385916{79+i}'
+            #utilização    
+            for i, elemento in enumerate(elementos_destinacao):
+                elemento.text = f'RESIDENCIA'
+            #não pode modificar    
+            for i, elemento in enumerate(elementos_complemento3):
+                elemento.text = '9'
+            #numero do apartamento    
+            for i, elemento in enumerate(elementos_argumento):
+                if (i+1) % 4 == 1:
+                    contador += 1
+                elemento.text = f'{contador}0{i}' 
+            #não pode modificar    
+            for i, elemento in enumerate(elementos_complemento4):
+                elemento.text = '7'
+            #piso que logico
+            for i, elemento in enumerate(elementos_logico):
+                if (i+1) % 4 == 1:
+                    piso_logico += 1
+                elemento.text = f'{piso_logico}'
+            #piso real    
+            for i, elemento in enumerate(elementos_real):
+                if (i+1) % 4 == 1:
+                    piso_real += 1
+                elemento.text = f'{piso_real}' 
+            #escrever xml                                                                   
+            tree.write('edificio1//edificio1.xml')
+            
+        modificar_xml()
+        
+        
+        
+        
         
         print('achei um predio para fazer')
         

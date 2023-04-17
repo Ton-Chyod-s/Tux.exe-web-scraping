@@ -3933,6 +3933,7 @@ class Internet:
                 pasta(os.path.abspath('moradia1//'))
                 #gravando o arquivo edificio1.xml na pasta edificio
                 tree.write('edificio1//edificio//edificio1.xml')
+                
                 #edição da quantidade de hp no predio
                 final = 9
                 for i in range(1, (final + 1)):
