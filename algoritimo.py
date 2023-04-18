@@ -3833,11 +3833,12 @@ class Internet:
             coordy = str(ws[f'B{i}'].value)
             #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
             coordenada = coordy.replace(",",".") + ', ' + coordx.replace(",",".")
-            #uma condição para que quando valor da variavel for vazio, quebre o laço
-            if coordenada == 'None, None':
-                break
             google_cep = str(ws[f'G{i}'].value)
             numero = str(ws[f'C{i}'].value)
+            num_novo = numero.lower()
+            #uma condição para que quando valor da variavel for vazio, quebre o laço
+            if coordenada == 'None, None' or num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd':
+                break
             quantidade = str(ws[f'D{i}'].value)
             predio = str(ws[f'E{i}'].value)
             #uma condição para que quando valor da variavel for vazio, quebre o laço
@@ -3901,7 +3902,7 @@ class Internet:
                     #transformando quantidade em um inteiro para iteirar no loop de repetição com tempo determinado
                     quantidade = int(quantidade)
                     for i in range(1,quantidade+1):
-                        sleep(0.1)
+                        sleep(0.1) 
                         #gerando um novo numero aleatório
                         nova_lista=[]
                         for linha in range (6):
@@ -3919,7 +3920,7 @@ class Internet:
                             country.find('id_localidade').text = localidade
                             country.find('cod_lograd').text = cod_logradouro
                         #encontrar e atribuir valores ao atributo do xml
-                        root.find('coordX').text = str(coordx) 
+                        root.find('coordX').text = str(coordx)
                         root.find('coordY').text = str(coordy)
                         root.find('localidade').text = str(worksheet[f'J{i}'].value) 
                         sleep(0.2)    
