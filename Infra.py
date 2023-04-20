@@ -28,7 +28,7 @@ class app:
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
                 [sg.Text('End/Num',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='end'),sg.Input(size=(10,1),key='num')],
                 [sg.Button('1-Endereço',size=(11,1)),sg.Button('2-Criar Hp',size=(11,1)),sg.Checkbox('Goo', enable_events=False, key='check')],
-                [sg.Button('3-Importar',size=(11,1)),sg.Button('4-Mud End',size=(11,1)),sg.Checkbox('End', enable_events=False, key='check completo')],
+                [sg.Button('3-Mud End',size=(11,1)),sg.Checkbox('End-comp', enable_events=False, key='check completo')],
                 ]
             
             window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -58,11 +58,8 @@ class app:
 
                     else:
                         navegador.cep_geopy()
-
-                if event =='3-Importar':
-                    pass
-
-                if event == '4-Mud End':
+                        
+                if event == '3-Mud End':
                     navegador.endereco_survey(values['end'],values['num'])
                     
             window.close()

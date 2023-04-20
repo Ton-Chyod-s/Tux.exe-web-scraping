@@ -510,7 +510,7 @@ class Internet:
                       
     def componentes(self,modelo=True):
             self.iframe('iframe-content-wrapper')
-            self.iframe('externalFrame')
+            self.iframe('externalIspIframe')
             self.iframe('dados')
             #componetes
             self.esperar_xpath('/html/body/table/tbody/tr/td/div/div/div/form/div/table/tbody/tr[*]/td/div/ul/li[4]/a/span')
@@ -576,7 +576,7 @@ class Internet:
 
     def componentes_2022(self,modelo=True):
             self.iframe('iframe-content-wrapper')
-            self.iframe('externalFrame')
+            self.iframe('externalIspIframe')
             self.iframe('dados')
             #componetes
             self.esperar_xpath('/html/body/table/tbody/tr/td/div/div/div/form/div/table/tbody/tr[*]/td/div/ul/li[4]/a/span')
@@ -3092,126 +3092,132 @@ class Internet:
         wdw = WebDriverWait(self.driver, 30)
         with open("credenciais.json", encoding='utf-8') as meu_json:
                 dado = json.load(meu_json)
-        try:      
-            if denovo:   
-                self.driver.get('https://forms.office.com/pages/responsepage.aspx?id=MuENFAeIYEyrkDA2RpBAQqODTOU3hFJOjWuPUZz-qlpUMUlYVDlKMjhEQkZTTk5IOTVERlhRTzczVi4u')
-                time.sleep(1)
-                #preencher email
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="i0116"]')))
-                self.driver.find_element(By.XPATH,'//*[@id="i0116"]').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="i0116"]').send_keys(dado['email'])
-                time.sleep(.5)
-                #clicar no avançar
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
-                self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
-                time.sleep(1)
-                #senha
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="i0118"]')))
-                self.driver.find_element(By.XPATH,'//*[@id="i0118"]').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="i0118"]').send_keys(dado['senha_email'])
-                #clicar entrar
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
-                self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
-                time.sleep(1)
-                #sim
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
-                self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
-                if primario:
-                    #1 cadastro netwin
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
-
-                    #3 etapa concluida
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[3]/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[3]/div/label/input').click()
-                    
-                    #enviar por email
-                    time.sleep(2)
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
+        email = dado['email']
+        for i in dado:
+            if email == 'klayton.dias@telemontrms.com.br':
+                sg.popup('tem que alterar la no none de utilizador \nemail: xxxxx@telemont.com.br\nsenha: xxxxx ', keep_on_top=True)
+                break
+            
+            try:      
+                if denovo:   
+                    self.driver.get('https://forms.office.com/pages/responsepage.aspx?id=MuENFAeIYEyrkDA2RpBAQqODTOU3hFJOjWuPUZz-qlpUMUlYVDlKMjhEQkZTTk5IOTVERlhRTzczVi4u')
                     time.sleep(1)
+                    #preencher email
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="i0116"]')))
+                    self.driver.find_element(By.XPATH,'//*[@id="i0116"]').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="i0116"]').send_keys(dado['email'])
+                    time.sleep(.5)
+                    #clicar no avançar
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
+                    self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
+                    time.sleep(1)
+                    #senha
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="i0118"]')))
+                    self.driver.find_element(By.XPATH,'//*[@id="i0118"]').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="i0118"]').send_keys(dado['senha_email'])
+                    #clicar entrar
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
+                    self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
+                    time.sleep(1)
+                    #sim
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="idSIButton9"]')))
+                    self.driver.find_element(By.XPATH,'//*[@id="idSIButton9"]').click()
+                    if primario:
+                        #1 cadastro netwin
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
+
+                        #3 etapa concluida
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[3]/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[3]/div/label/input').click()
+                        
+                        #enviar por email
+                        time.sleep(2)
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
+                        time.sleep(1)
+                    else:
+                        #1 cadastro netwin
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
+
+                        #3 etapa concluida
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input').click()
+                        
+                        #enviar por email
+                        time.sleep(2)
+                        wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
+                        self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
+                        time.sleep(1)
                 else:
-                    #1 cadastro netwin
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
+                    pass
+                if primario:
+                    #2 descrição
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').send_keys(descricao)
+                    time.sleep(.5)
 
-                    #3 etapa concluida
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input').click()
+                    #4 CELULA CONECTADA
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').send_keys(conectada)
+                    time.sleep(.5)
+
+                    #5 INFORME A QUANTIDADE DE CÉLULAS
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input').send_keys(quantidade)
+                    time.sleep(.5)
+
+                    #enviar 
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div').click()
+                else:
+                    #2 descrição
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').send_keys(descricao)
+                    time.sleep(.5)
+
+                    #4 CELULA CONECTADA
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').clear()
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').send_keys(conectada)
+                    time.sleep(.5)
+
+                    #enviar 
+                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div')))
+                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div').click()
+
+                time.sleep(2)
+                #enviar outra resposta
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[2]/div[2]/div[2]/a')))
+                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[2]/div[2]/div[2]/a').click()
+
+                #1 cadastro netwin
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
+                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
+
+                #3 etapa concluida
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input')))
+                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input').click()
                     
-                    #enviar por email
-                    time.sleep(2)
-                    wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
-                    self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
-                    time.sleep(1)
-            else:
-                pass
-            if primario:
-                #2 descrição
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').send_keys(descricao)
-                time.sleep(.5)
+                #enviar por email
+                time.sleep(2)
+                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
+                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
+                time.sleep(1)
 
-                #4 CELULA CONECTADA
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').send_keys(conectada)
-                time.sleep(.5)
-
-                #5 INFORME A QUANTIDADE DE CÉLULAS
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[5]/div/div[3]/div/div/input').send_keys(quantidade)
-                time.sleep(.5)
-
-                #enviar 
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div').click()
-            else:
-                #2 descrição
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[2]/div/div[3]/div/div/input').send_keys(descricao)
-                time.sleep(.5)
-
-                #4 CELULA CONECTADA
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').clear()
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div/input').send_keys(conectada)
-                time.sleep(.5)
-
-                #enviar 
-                wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div')))
-                self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[4]/div[1]/button/div').click()
-
-            time.sleep(2)
-            #enviar outra resposta
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[2]/div[2]/div[2]/a')))
-            self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[2]/div[2]/div[2]/a').click()
-
-            #1 cadastro netwin
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input')))
-            self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div/div/div[*]/div/div[2]/div/label/input').click()
-
-            #3 etapa concluida
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input')))
-            self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[*]/div[*]/div[*]/div[3]/div/div[*]/div/div[2]/div/label/input').click()
-                
-            #enviar por email
-            time.sleep(2)
-            wdw.until(element_to_be_clickable(('xpath', '//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input')))
-            self.driver.find_element(By.XPATH,'//*[@id="form-main-content"]/div/div[1]/div[2]/div[3]/div/div/label/input').click()
-            time.sleep(1)
-
-            lol = None
-            infra = f'INFORMAÇÕES DO CADASTRO DE INFRA\nCÉLULA:{lol}\nID SICOM:{lol}\nTOTAL DE HPS:{lol}\nOBS:{lol}'
-                     
-            mail = dado['email']
-            print(f'Formulario enviado\nCopia enviada para o email:\n{mail}')
-           
-        except:
-            sg.popup_error(f'Ixi deu um erro ae O_O',keep_on_top=True)
+                lol = None
+                infra = f'INFORMAÇÕES DO CADASTRO DE INFRA\nCÉLULA:{lol}\nID SICOM:{lol}\nTOTAL DE HPS:{lol}\nOBS:{lol}'
+                        
+                mail = dado['email']
+                print(f'Formulario enviado\nCopia enviada para o email:\n{mail}')
+            
+            except:
+                sg.popup_error(f'Ixi deu um erro ae O_O',keep_on_top=True)
 
     def conectividade_cdoi_avulsa(self,elemento=True):
         self.driver.implicitly_wait(.05)
