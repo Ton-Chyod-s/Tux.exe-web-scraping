@@ -3808,9 +3808,9 @@ class Internet:
     def criar_hp_coord(self):
         #logando os arquivos xlsx, com um laço de tentativa
         try:
-            wb = load_workbook('coordenada.xlsx')
+            wb = load_workbook('Arquivos xlsx//coordenada.xlsx')
             ws = wb.active
-            workbook = load_workbook('roteiro.xlsx')
+            workbook = load_workbook('Arquivos xlsx//roteiro.xlsx')
             worksheet = workbook.active
         except:
             sg.popup('Não tem os arquivo nescessario na pasta!\n','1-coordenada.xlsx\n','2-roteiro.xlsx',keep_on_top=True)
@@ -3841,11 +3841,11 @@ class Internet:
             google_cep = str(ws[f'G{i}'].value)
             numero = str(ws[f'C{i}'].value)
             num_novo = numero.lower()
-            #uma condição para que quando valor da variavel for vazio, quebre o laço
-            if coordenada == 'None, None' or num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd':
-                break
             quantidade = str(ws[f'D{i}'].value)
             predio = str(ws[f'E{i}'].value)
+            #uma condição para que quando valor da variavel for vazio, quebre o laço
+            if coordenada == 'None, None' or num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd' and quantidade != 'None' and predio != 'None':
+                break
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if google_cep == 'None':
                 cep = str(ws[f'F{i}'].value)
@@ -3861,7 +3861,7 @@ class Internet:
             #condição para fazer uma casa
             if quantidade == 'None':
                 try:
-                    tree = et.parse('hp.xml')
+                    tree = et.parse('Arquivos xml//hp.xml')
                     root = tree.getroot()    
                     #encontrando e atribuindo novos valores ao xml
                     for country in root.findall('enderecoEdificio'):
@@ -3902,7 +3902,7 @@ class Internet:
             elif quantidade != 'None' and predio == 'None':
                 try: 
                     #logando os arquivos xml
-                    tree = et.parse('hp2.xml')
+                    tree = et.parse('Arquivos xml//hp2.xml')
                     root = tree.getroot()
                     #transformando quantidade em um inteiro para iteirar no loop de repetição com tempo determinado
                     quantidade = int(quantidade)
@@ -3951,9 +3951,9 @@ class Internet:
             #condição para fazer predio
             else:
                 #logando os arquivos xml
-                tree = et.parse('arquivo.xml')
+                tree = et.parse('Arquivos xml//arquivo.xml')
                 root = tree.getroot()
-                tree_apartamento = et.parse('apartamento.xml') 
+                tree_apartamento = et.parse('Arquivos xml//apartamento.xml') 
                 root_apartamento = tree_apartamento.getroot()
                 
                 #gerando um novo numero aleatório

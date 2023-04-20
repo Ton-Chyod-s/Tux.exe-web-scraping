@@ -5,7 +5,7 @@ from algoritimo import *
 
 sg.popup_notify(f'Carregando...')
 
-versao = '2.1.5 - Unofficial'
+versao = '2.2 - Unofficial'
 navegador = Internet()
 
 class app:
