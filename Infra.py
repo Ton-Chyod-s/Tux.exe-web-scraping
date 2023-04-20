@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import socket
 from algoritimo import *
 
 
@@ -997,7 +998,7 @@ class app:
         window.close()
 
 if __name__ == '__main__':
-   ''' try:
+    try:
         ip_local = socket.gethostbyname(socket.gethostname())
         ip_publico = requests.get('https://api.ipify.org/').text
     except:
@@ -1105,5 +1106,4 @@ if __name__ == '__main__':
         except:
             pass
     except:
-        sg.popup_error('Reinicie o programa!', keep_on_top=True)'''
-app()
+        sg.popup_error('Reinicie o programa!', keep_on_top=True)

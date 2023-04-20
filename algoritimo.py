@@ -28,7 +28,6 @@ import requests
 from tqdm import tqdm
 import googlemaps
 from selenium import webdriver
-import zipfile 
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
