@@ -4153,8 +4153,58 @@ class Internet:
         gmaps = googlemaps.Client(key='AIzaSyCrvhqOWCsosiVtza5JoktlMCuJ_qFUSCA')
         reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
         print(reverse_geocode_result.adress)
-        
-        
+    
+    def nova_infra(self):
+        #variavel qe define o tema
+        selected_theme = 'Reddit'
+        sg.theme(selected_theme)
+        quantidade = 3
+
+        def on_click(x, y,button,pressed):
+            if button == mouse.Button.left and pressed:
+                # Retornar False para a execução do listener de eventos
+                return False
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Assim que o mouse clicar, o listener irá encerrar e parar o loop
+                if not listener.running:
+                    break
+            
+        #definição da posição do mouse              
+        x , y = pt.position()
+        z = x - 65
+        x = y - 65
+
+        #inicio da criação do poste
+        for linha in range(1,quantidade):
+            #iframe para criação do poste
+            self.iframe('iframe-content-wrapper')
+            #mãozinha
+            self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
+            #local
+            self.esperar_clicar_xpath('//*[@id="olControlAddInfranode"]')
+            #poste
+            self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[17]/a/div[2]')
+            sleep(.5)
+            self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[17]/ul/li/a/div[2]')
+            #movimento do mouse para crição do poste
+            sleep(.5)
+            pt.click(x , y)
+            sleep(.5)
+            pt.rightClick(z, x)
+            pt.move(530, 330)
+            
+            
+            #pop up para confirmação
+            sg.popup('Arguardando a confirmação:\nEndereço\nEstação abastecedora',keep_on_top=True, location=(1088, 593))
+            self.driver.switch_to.default_content()
+            print('ta indo')
+                
+                
+                
+                
+                
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)

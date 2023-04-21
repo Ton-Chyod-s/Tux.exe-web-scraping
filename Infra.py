@@ -123,7 +123,7 @@ class app:
                     navegador.atribuir_endereco()
 
                 if event == 'Test':
-                    navegador.mudar_cabo()
+                    navegador.nova_infra()
                     #sg.popup('To testando pow', keep_on_top=True)
                     
             window.close()
