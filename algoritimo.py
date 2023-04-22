@@ -952,6 +952,7 @@ class Internet:
                     self.esperar_xpath('//span[@id="select2-location_select_fieldId-container"]')
                     self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Existente - Conforme')
                     self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+                    
                 if tipo:
                     #tipo
                     self.esperar_xpath('//*[@id="select2-location_select_poleType-container"]/span')
@@ -3808,12 +3809,12 @@ class Internet:
     def criar_hp_coord(self):
         #logando os arquivos xlsx, com um laço de tentativa
         try:
-            wb = load_workbook('Arquivos xlsx//coordenada.xlsx')
+            wb = load_workbook('Arquivos xlsx//survey.xlsx')
             ws = wb.active
             workbook = load_workbook('Arquivos xlsx//roteiro.xlsx')
             worksheet = workbook.active
         except:
-            sg.popup('Não tem os arquivo nescessario na pasta!\n','1-coordenada.xlsx\n','2-roteiro.xlsx',keep_on_top=True)
+            sg.popup('Não tem os arquivo nescessario na pasta!\n','1-survey.xlsx\n','2-roteiro.xlsx',keep_on_top=True)
             
         def pasta(caminho):
             pasta = caminho
@@ -4154,11 +4155,12 @@ class Internet:
         reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
         print(reverse_geocode_result.adress)
     
-    def nova_infra(self):
+    def nova_infra(self,celula): #inicio
         #variavel qe define o tema
         selected_theme = 'Reddit'
         sg.theme(selected_theme)
-        quantidade = 3
+        wb = load_workbook('Arquivos xlsx//poste.xlsx')
+        ws = wb.active
 
         def on_click(x, y,button,pressed):
             if button == mouse.Button.left and pressed:
@@ -4173,11 +4175,23 @@ class Internet:
             
         #definição da posição do mouse              
         x , y = pt.position()
-        z = x - 65
-        x = y - 65
+        a = x - 65
+        b = y - 65
 
         #inicio da criação do poste
-        for linha in range(1,quantidade):
+        for linha in range(2,402):
+            #valores da planilha
+            capacidade = str(ws[f'A{linha}'].value)
+            tr = str(ws[f'B{linha}'].value)
+            coordenada = str(ws[f'D{linha}'].value)
+            #condição para parar de ler planilha
+            if coordenada == 'None':
+                break
+            coord = coordenada.split(",")
+            #coordenadas x e y
+            coordx = coord[0]
+            coordy = coord[1]
+                   
             #iframe para criação do poste
             self.iframe('iframe-content-wrapper')
             #mãozinha
@@ -4192,19 +4206,73 @@ class Internet:
             sleep(.5)
             pt.click(x , y)
             sleep(.5)
-            pt.rightClick(z, x)
-            pt.move(530, 330)
+            pt.rightClick(a, b)
+            sleep(1)            
+            # Esperando até seja visivel as Iframe da pagina
+            self.iframe('externalLocationIframe')
+            #Fora de padão 
+            time.sleep(.05)
+            self.esperar_clicar_ID('location_input_FORA_PADRAO') 
+            #Capacidade (Altura/Esforço)
+            self.esperar_xpath('//span[@id="select2-location_select_poleCapacity-container"]')
+            self.esperar_xpath_txt('//input[@class="select2-search__field"]', capacidade) # colocar aqui a capacidade do poste
+            self.esperar_xpath('//li[@class="select2-results__option select2-results__option--highlighted"]') 
+            #Identificação em campo
+            self.esperar_xpath('//span[@id="select2-location_select_fieldId-container"]')
+            self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Existente - Conforme')
+            self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+            #tipo
+            self.esperar_xpath('//*[@id="select2-location_select_poleType-container"]/span')
+            self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('CONCRETO/CIRCULAR')
+            self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
             
+            #historico
+            self.esperar_xpath('//*[@id="location_tab_logs"]')   
+            #Origem
+            self.esperar_xpath('//*[@id="select2-location_select_source-container"]')        
+            self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Geoplex')
+            self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+            #não possui
+            time.sleep(1)
+            self.esperar_clicar_xpath('//*[@id="location_input_hasNoId"]')
+            time.sleep(2)
+            #disponibilização   
+            self.esperar_xpath('//*[@id="select2-location_select_provision-container"]')        
+            self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Duplicação Manual')
+            self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+            
+            #caracteristica
+            self.esperar_xpath('//*[@id="location_tab_caracterizacao"]')  
+            #proprietario
+            self.esperar_xpath('//*[@id="select2-location_select_owner-container"]')
+            self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Alugado de terceiros')
+            self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+            #etiqueta de campo
+            time.sleep(.5)
+            self.esperar_xpath_txt('//*[@id="location_input_etiquetaEmCampo"]',f'{celula} | {capacidade}' ) #colocar aqui a capacidade do poste
+            
+            #localização
+            self.esperar_xpath('//*[@id="location_tab_localization"]')
+            sleep(1.5)
+            #coordenada longitude
+            self.esperar_xpath('//*[@id="location_input_longitude"]')
+            self.driver.find_element(By.XPATH,'//*[@id="location_input_longitude"]').clear()
+            self.driver.find_element(By.XPATH,'//*[@id="location_input_longitude"]').send_keys(coordx.replace(".",","))
+            #coordenada latitude
+            self.esperar_xpath('//*[@id="location_input_latitude"]')
+            self.driver.find_element(By.XPATH,'//*[@id="location_input_latitude"]').clear()
+            self.driver.find_element(By.XPATH,'//*[@id="location_input_latitude"]').send_keys(coordy.replace(".",","))
             
             #pop up para confirmação
-            sg.popup('Arguardando a confirmação:\nEndereço\nEstação abastecedora',keep_on_top=True, location=(1088, 593))
+            sg.popup('Arguardando a confirmação:\nEndereço',keep_on_top=True, location=(1088, 593))
+            pt.move(500, 300)
+            
+            #guardar
+            #esperar_xpath('//*[@id="forms_button_save"]')
+            
+            
             self.driver.switch_to.default_content()
-            print('ta indo')
-                
-                
-                
-                
-                
+             
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)

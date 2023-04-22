@@ -123,8 +123,7 @@ class app:
                     navegador.atribuir_endereco()
 
                 if event == 'Test':
-                    navegador.nova_infra()
-                    #sg.popup('To testando pow', keep_on_top=True)
+                    navegador.nova_infra(values['id_sicon'])
                     
             window.close()
 
