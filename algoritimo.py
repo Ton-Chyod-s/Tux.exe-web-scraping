@@ -4227,7 +4227,15 @@ class Internet:
             self.esperar_xpath('//*[@id="select2-location_select_poleType-container"]/span')
             self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('CONCRETO/CIRCULAR')
             self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
-            
+            if tr == 'sim':
+                self.esperar_xpath('//*[@id="select2-location_select_transformer-container"]/span')
+                self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Sim')
+                self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()   
+            else:  
+                self.esperar_xpath('//*[@id="select2-location_select_transformer-container"]/span')
+                self.driver.find_element(By.XPATH,'//input[@class="select2-search__field"]').send_keys('Não')
+                self.driver.find_element(By.XPATH,'//li[@class="select2-results__option select2-results__option--highlighted"]').click()
+                
             #historico
             self.esperar_xpath('//*[@id="location_tab_logs"]')   
             #Origem
