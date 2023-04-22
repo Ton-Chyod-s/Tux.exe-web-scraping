@@ -4207,6 +4207,8 @@ class Internet:
             pt.click(x , y)
             sleep(.5)
             pt.rightClick(a, b)
+            sleep(.1)
+            pt.click(x , y)
             sleep(1)            
             # Esperando até seja visivel as Iframe da pagina
             self.iframe('externalLocationIframe')
