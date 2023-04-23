@@ -4309,20 +4309,23 @@ class Internet:
                 x1, y1 = c1
                 x2, y2 = c2
                 
-                
-                
-                
-                
-                
-                
+                #iframe para criação do poste
+                self.iframe('iframe-content-wrapper')
+                #mãozinha
+                self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
+                #traçado
+                self.esperar_clicar_xpath('//*[@id="olControlAddRouteOi"]')
+                #areo
+                self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/a/div[2]')
+                #areo em apoio
+                self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/ul/li[2]/a/div')    
+                sleep(.5)
                 #clicar com mouse nas coordenadas pré definidas   
                 pt.click(x1,y1)
                 sleep(.5)
                 pt.click(x2,y2)
                 sleep(.3)
                 pt.rightClick((x2-25) , (y2-25))
-                #entrando no iframe da pagina
-                self.iframe('iframe-content-wrapper')
                 #proprietario
                 self.esperar_selecionar_ID('ownerId','1') #oi
                 if id_projeto:
@@ -4337,8 +4340,8 @@ class Internet:
                 self.esperar_selecionar_value('catProjectStateId','191')
                 #origem
                 self.esperar_selecionar_index('sourceId',1) #netwim
-                #guardar
-                self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')   
+                '''#guardar
+                self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')   '''
                 # Retorna para a janela principal (fora do iframe)
                 self.driver.switch_to.default_content() 
                 
@@ -4347,7 +4350,6 @@ class Internet:
                 
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
-            
             
 if __name__ == "__main__": 
     #navegador = Internet()
