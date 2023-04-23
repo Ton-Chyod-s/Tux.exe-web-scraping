@@ -4323,9 +4323,8 @@ class Internet:
                 #clicar com mouse nas coordenadas pré definidas   
                 pt.click(x1,y1)
                 sleep(.5)
-                pt.click(x2,y2)
+                pt.doubleClick(x2,y2)
                 sleep(.3)
-                pt.rightClick((x2-25) , (y2-25))
                 #proprietario
                 self.esperar_selecionar_ID('ownerId','1') #oi
                 if id_projeto:
