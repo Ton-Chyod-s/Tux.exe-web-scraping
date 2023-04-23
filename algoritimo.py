@@ -28,6 +28,7 @@ import requests
 from tqdm import tqdm
 import googlemaps
 from selenium import webdriver
+import keyboard
 sg.popup_notify(f'Carregando biblioteca...')
 
 #sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
@@ -4169,6 +4170,9 @@ class Internet:
         # Listener irá verificar quando o mouse clicará
         with mouse.Listener(on_click=on_click) as listener:
             while True:
+                # Verificar se a tecla Esc foi pressionada para encerrar o programa
+                if keyboard.is_pressed('Esc'):
+                    break
                 # Assim que o mouse clicar, o listener irá encerrar e parar o loop
                 if not listener.running:
                     break
@@ -4180,6 +4184,9 @@ class Internet:
 
         #inicio da criação do poste
         for linha in range(2,402):
+            # Verificar se a tecla Esc foi pressionada para encerrar o programa
+            if keyboard.is_pressed('Esc'):
+                break
             #valores da planilha
             capacidade = str(ws[f'A{linha}'].value)
             tr = str(ws[f'B{linha}'].value)
@@ -4273,14 +4280,17 @@ class Internet:
             
             #pop up para confirmação
             sg.popup('Arguardando a confirmação:\nEndereço',keep_on_top=True, location=(1088, 593))
-            pt.move(500, 300)
-            
+        
             #guardar
-            #esperar_xpath('//*[@id="forms_button_save"]')
-            
+            self.esperar_xpath('//*[@id="forms_button_save"]')
             
             self.driver.switch_to.default_content()
-             
+    
+    #revisar        
+    def clicar_mapa(self):
+        pass
+            
+            
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
