@@ -1,5 +1,7 @@
 from pynput import mouse
 import keyboard
+import pyautogui as pt
+from time import sleep
 
 # Inicializar uma lista vazia para salvar as coordenadas do mouse
 coordenadas = []
@@ -14,7 +16,32 @@ with mouse.Listener(on_click=on_click) as listener:
         # Verificar se a tecla Esc foi pressionada para encerrar o programa
         if keyboard.is_pressed('Esc'):
             break
-
-# Imprimir todas as coordenadas do mouse após o loop while infinito
-for c in coordenadas:
-    print(f"Coordenadas do mouse: ({c[0]}, {c[1]})")
+        
+while True:
+    if len(coordenadas) >= 2:
+        # acessar as duas primeiras coordenadas
+        c1, c2 = coordenadas[:2]
+        
+        # pré definindo as duas primeiras coordenadas
+        x1, y1 = c1
+        x2, y2 = c2
+        
+        #print(f"Coordenadas 1: ({x1}, {y1})")
+        #print(f"Coordenadas 2: ({x2}, {y2})")
+        
+        #clicar com mouse nas coordenadas pré definidas   
+        pt.click(x1,y1)
+        sleep(.5)
+        pt.click(x2,y2)
+        sleep(.3)
+        pt.rightClick((x2-25) , (y2-25))
+        
+        
+        
+        
+        
+        # remover as primeiras 4 coordenadas da lista
+        coordenadas = coordenadas[1:]
+        
+    if keyboard.is_pressed('Esc') or not coordenadas:
+        break

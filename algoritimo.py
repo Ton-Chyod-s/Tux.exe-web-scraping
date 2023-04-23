@@ -4285,10 +4285,68 @@ class Internet:
             self.esperar_xpath('//*[@id="forms_button_save"]')
             
             self.driver.switch_to.default_content()
-    
-    #revisar        
-    def clicar_mapa(self):
-        pass
+            
+    def clicar_mapa(self,id_Sicom,id_projeto=True):
+        # Inicializar uma lista vazia para salvar as coordenadas do mouse
+        coordenadas = []
+
+        def on_click(cx, cy, button, pressed):
+            if button == mouse.Button.left and pressed:
+                coordenadas.append((cx, cy))
+            
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Verificar se a tecla Esc foi pressionada para encerrar o programa
+                if keyboard.is_pressed('Esc'):
+                    break
+                
+        while True:
+            if len(coordenadas) >= 2:
+                # acessar as duas primeiras coordenadas
+                c1, c2 = coordenadas[:2]
+                # pré definindo as duas primeiras coordenadas
+                x1, y1 = c1
+                x2, y2 = c2
+                
+                
+                
+                
+                
+                
+                
+                #clicar com mouse nas coordenadas pré definidas   
+                pt.click(x1,y1)
+                sleep(.5)
+                pt.click(x2,y2)
+                sleep(.3)
+                pt.rightClick((x2-25) , (y2-25))
+                #entrando no iframe da pagina
+                self.iframe('iframe-content-wrapper')
+                #proprietario
+                self.esperar_selecionar_ID('ownerId','1') #oi
+                if id_projeto:
+                    #id sicon
+                    self.esperar_txt_ID('idSicom',id_Sicom)
+                    self.esperar_xpath('/html/body/div[*]/div[2]/form/div/div[2]/table[4]/tbody/tr[2]/td[1]/div[2]/div/ul/li')
+                else:
+                    #nome de projeto
+                    self.esperar_txt_ID('project',id_Sicom)
+                    self.esperar_xpath('//*[@id="project_div"]/ul/li[1]/a')
+                #implantação concluido
+                self.esperar_selecionar_value('catProjectStateId','191')
+                #origem
+                self.esperar_selecionar_index('sourceId',1) #netwim
+                #guardar
+                self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')   
+                # Retorna para a janela principal (fora do iframe)
+                self.driver.switch_to.default_content() 
+                
+                # remover as primeiras 4 coordenadas da lista
+                coordenadas = coordenadas[1:]
+                
+            if keyboard.is_pressed('Esc') or not coordenadas:
+                break
             
             
 if __name__ == "__main__": 
