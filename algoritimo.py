@@ -4322,7 +4322,7 @@ class Internet:
                 sleep(.5)
                 #clicar com mouse nas coordenadas pré definidas   
                 pt.click(x1,y1)
-                sleep(.5)
+                sleep(1.5)
                 pt.doubleClick(x2,y2)
                 sleep(.3)
                 #proprietario
