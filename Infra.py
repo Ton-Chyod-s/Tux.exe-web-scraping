@@ -5,23 +5,25 @@ from algoritimo import *
 
 sg.popup_notify(f'Carregando...')
 
-versao = '2.2 - Unofficial'
+versao = '3.01'
+num_prog = f'Tux {versao}'
 navegador = Internet()
+
 
 class app:
     def __init__(self):
         selected_theme = 'Reddit'
         sg.theme(selected_theme)
 
-        menu_def = ['&Arquivo', ['&Nome de utilizador']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16', '&Conectividade CDOI','&Abastecimento',
-        '&As-Built','&Completa','&Forms google','&Survey']]
+        menu_def = ['&Arquivo', ['&Nome de utilizador','&Survey','&Infra-map','&Infra-operação','&Abastecimento']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16',
+        '&As-Built','&Forms google']]
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
             [sg.Button('Web',size=(5,1)), sg.Text('INFRA',justification='c',size=(9,1)),sg.Button('Login',size=(6,1))],
             [sg.Combo(['Firefox','Chrome','Internet Explorer','Edge']),sg.Checkbox('V-tal',key='home')],
             ]
 
-        window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
+        window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
 
         def survey():
             self.layout_login = [
@@ -32,7 +34,7 @@ class app:
                 [sg.Button('3-Mud End',size=(11,1)),sg.Checkbox('End-comp', enable_events=False, key='check completo')],
                 ]
             
-            window = sg.Window('Netwim', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -64,6 +66,27 @@ class app:
                     navegador.endereco_survey(values['end'],values['num'])
                     
             window.close()
+            
+        def infra_2023():
+            self.layout_login = [
+                [sg.Button('Voltar',size=(5,1))],
+                [sg.Text('ID Sicon',size=(8,1)),sg.Stretch(),sg.Input(size=(11,1),key='id_sicon'),sg.Checkbox('Proj')],
+                [sg.Text('Estação',size=(8,1)),sg.Stretch(),sg.Input(size=(5,1),key='estacao'),sg.Input(size=(5,1),key='numero'),sg.Text('Num',size=(4,1))],
+                ]
+            
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+
+            while True:
+                event,values = window.read()
+                if event in (None, 'Sair'):
+                    break 
+
+                if event == 'Voltar':
+                    window.close()
+                    programa = app()
+                    programa 
+                        
+            window.close()
 
         def celula():
             self.layout_login = [
@@ -74,7 +97,7 @@ class app:
             [sg.Text('Cabo',size=(13,1),justification = 'l'),sg.Input(size=(7,1)),sg.Button('Ok',size=(5,1))]
             ]
 
-            window = sg.Window('Netwin', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,relative_location=(1825,736))
 
             while True:
                 event,values = window.read()
@@ -96,7 +119,7 @@ class app:
                 [sg.Button('Traçado',size=(7,1))]
                 ]
             
-            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -140,7 +163,7 @@ class app:
                 [sg.Output(size=(30,4),key='senha')],
             ]
             
-            window = sg.Window('Formulario', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -176,7 +199,7 @@ class app:
 
         def nome_utilizador():
             self.layout_login = [
-                [sg.Text('Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Netwin - {versao}',size=(20,1),justification=('c'))],
                 [sg.Text('TR:\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
@@ -185,7 +208,7 @@ class app:
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Nome do Utilizador', icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()
@@ -232,7 +255,7 @@ class app:
                         
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window(num_prog, icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:8 Òó')
 
@@ -288,7 +311,7 @@ class app:
                         [sg.Text('Número'),sg.Text(size=(1,1)),sg.Input(size=(5,1),key='numero'),sg.Checkbox('Ceos P', enable_events=False, key='ceos_p')]  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window(num_prog, icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -332,7 +355,7 @@ class app:
                         [sg.Text('Estação '),sg.Text(size=(0,1)),sg.Input(size=(8,1),key='estacao'),sg.Button('CDOI',size=(7,1))],  
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window(num_prog, icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_precon.read()
@@ -377,7 +400,7 @@ class app:
                         [sg.Button('Alivio',size=(9,1)),sg.Checkbox('TBD/Número', enable_events=False, key='TBD')],
                         ] 
                 
-                janela_cdoe_precon = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_precon = sg.Window(num_prog, icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 sg.popup_notify(f'Falta pouco vamos colocar essas CDOE 1:16 Òó')
 
@@ -438,7 +461,7 @@ class app:
                         [sg.Button('Sair',size=(5,1)),sg.Button('Spliter',size=(5,1)),sg.Text('Num-Est',justification='c'),sg.Input(key='num',size=(4,1))]
                         ] 
                 
-                janela_cdoe_comun = sg.Window('Netwin', icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
+                janela_cdoe_comun = sg.Window(num_prog, icon='favicon.ico', layout=layout_cdoe, keep_on_top=True, finalize = True) 
 
                 while True:
                     event,values = janela_cdoe_comun.read()
@@ -480,7 +503,7 @@ class app:
                             [sg.Button('Sair',size=(5,1)),sg.Button('Cabo',size=(11,1)),sg.Button('None',size=(11,1))]  
             ]
             
-            cabo_comun = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            cabo_comun = sg.Window(num_prog, icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_comun.read()
@@ -503,7 +526,7 @@ class app:
                             [sg.Text('Comprimento\t'),sg.Text(size=(0,1)),sg.Input(size=(15,1),key='Comprimento')],  
             ]
             
-            window = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             sg.popup_notify(f'Isso ae guerreiro\nSó mais um pouco vamos entregar 2 celulas hj')
 
@@ -532,7 +555,7 @@ class app:
                             [sg.Checkbox('S2-1', enable_events=False, key='S2-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window(num_prog, icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -581,7 +604,7 @@ class app:
                             [sg.Checkbox('S16-1', enable_events=False, key='S16-1'),sg.Checkbox('Tipo 1', enable_events=False, key='Tipo-1'), sg.Checkbox('Tipo 2', enable_events=False, key='Tipo-2')]   
             ]
             
-            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
+            cabo_precon = sg.Window(num_prog, icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = cabo_precon.read()
@@ -631,7 +654,7 @@ class app:
                             
             ]
             
-            as_built = sg.Window('Netwin', icon='favicon.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
+            as_built = sg.Window(num_prog, icon='favicon.ico', layout=as_built_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = as_built.read()
@@ -673,9 +696,9 @@ class app:
                             [sg.Button('Poste',size=(8,1)),sg.Checkbox('CC',key='cc'),sg.Checkbox('CdT',key='cdt'),sg.Checkbox('CPoste',key='CPoste')]  
             ]
             
-            poste = sg.Window('Netwin', icon='favicon.ico', layout=poste_layout, keep_on_top=True, finalize = True)
+            poste = sg.Window(num_prog, icon='favicon.ico', layout=poste_layout, keep_on_top=True, finalize = True)
             
-            sg.popup_notify(f'Não se esqueça de conferir:\nNumero de hp na celula com o informado\nColocar Id-Sicom na mancha do netwin')
+            sg.popup_notify(f'Não se esqueça de conferir:\nNumero de hp na celula com o informado\nColocar Id-Sicom na mancha do netwin - {versao}')
 
             while True:
                 event,values = poste.read()
@@ -738,7 +761,7 @@ class app:
             [sg.Button('Inicio',size=(13,1)),sg.Button('CDOI',size=(13,1))]
             ]
 
-            window = sg.Window('Netwin', icon='favicon.ico',layout=layout,finalize = True, keep_on_top=True)
+            window = sg.Window(num_prog, icon='favicon.ico',layout=layout,finalize = True, keep_on_top=True)
 
             sg.popup_notify(f'Não esqueça que nem pode abastecer sn lv O_O')
 
@@ -773,7 +796,7 @@ class app:
                             [sg.Checkbox('12',key='12'),sg.Checkbox('36',key='36'),sg.Checkbox('72',key='72'),sg.Checkbox('144',key='144')],           
                             ]
             
-            window = sg.Window('Netwin', icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
+            window = sg.Window(num_prog, icon='favicon.ico', layout=cabo_layout, keep_on_top=True, finalize = True)
             
             while True:
                 event,values = window.read()
@@ -814,72 +837,6 @@ class app:
                     else:
                         sg.popup_error('Marque alguma Flag\n','12, 36, 72, 144, 288',keep_on_top=True)
             window.close()
-
-        def conectividade_cdoi():
-            conectividade_layout = [
-                            [sg.Button('Voltar',size=(5,1)),sg.Text('CDOI') , sg.Stretch()],
-                            [sg.Button('Conectividade',size=(11,1)),sg.Stretch()],
-                            [sg.Checkbox('64 hp', enable_events=False, key='64'),sg.Checkbox('Splitada', enable_events=False, key='splitada')]   
-            ]
-            
-            cabo_precon = sg.Window('Netwin', icon='favicon.ico', layout=conectividade_layout, keep_on_top=True, finalize = True)
-            
-            while True:
-                event,values = cabo_precon.read()
-                if event == sg.WIN_CLOSED or event == 'Sair': # if user closes window or clicks cancel
-                    break
-                 
-                if event == 'Voltar':
-                    cabo_precon.close()
-                    programa = app()
-                    programa   
-                
-                if event == 'Conectividade':
-                    if values['64']:
-                        sg.popup_error('Use Completa para fazer a conectividade\n da cdoi e cdoe', keep_on_top=True)
-
-                    elif values['splitada']:
-                        sg.popup_error('Use Completa para fazer a conectividade\n da cdoi e cdoe', keep_on_top=True)
-
-                    else:
-                        sg.popup_error('Marque o flag 64/splitada', keep_on_top=True)
-
-            window.close()
-        
-       
-            import PySimpleGUI as sg
-
-            themes = sg.theme_list()
-            selected_theme = 'Reddit'
-            current_them = sg.theme()
-            sg.theme(selected_theme)
-
-            layout = [
-                    [sg.T('Tema',size=(15,1),justification='c')],
-                    [sg.Text('Select Theme:'), 
-                    sg.Combo(values=themes, default_value=selected_theme, size=(15, 1), enable_events=True, key='select_theme')],
-                    [sg.B('Voltar')]
-                ]
-
-            window = sg.Window('', layout=layout)
-
-            while True:
-                e, v= window.read()
-                if e is None:
-                    break
-                
-                elif e == 'Voltar':
-                    window.close()
-                    programa = app()
-                    programa   
-
-
-                elif e == 'select_theme':
-                    selected_theme = v['select_theme']
-                    window.close()
-                    sg.theme('selected_theme')
-                    layout = [[sg.T('Tema')],[sg.Text('Select Theme:'), sg.Combo(values=themes,default_value=selected_theme, size=(15, 1), enable_events=True, key='select_theme')], [sg.B('Voltar')]]
-                    window = sg.Window('',layout)
 
         while True:
             event,values = window.read()
@@ -981,12 +938,8 @@ class app:
             if event == 'Primario':
                 window.close()
                 cabo_primario()
-
-            if event == 'Conectividade CDOI':
-                window.close()
-                conectividade_cdoi()
                 
-            if event == 'Completa':
+            if event == 'Infra-operação':
                 window.close()
                 teste_metodos()
 
@@ -998,6 +951,10 @@ class app:
                 window.close()
                 survey()
 
+            if event == 'Infra-map':
+                window.close()
+                infra_2023()
+                
         window.close()
 
 if __name__ == '__main__':
@@ -1020,7 +977,7 @@ if __name__ == '__main__':
             
         except:
             layout_login = [
-                [sg.Text('Netwin',size=(20,1),justification=('c'))],
+                [sg.Text('Netwin - {versao}',size=(20,1),justification=('c'))],
                 [sg.Text('TR:*\t'),sg.Input(size=(15,1),key='nome')], 
                 [sg.Text('Senha:*\t'),sg.Input(size=(15,1),key='senha')],
                 [sg.Text('Email Institucional',size=(20,1),justification=('c'))],
@@ -1029,7 +986,7 @@ if __name__ == '__main__':
                 [sg.Button('Voltar',size=(6,1)),sg.Button('Ok',size=(6,1))]
                 ]
 
-            window = sg.Window('Netwin', icon='favicon.ico',layout=layout_login, keep_on_top=True, finalize = True)
+            window = sg.Window('Netwin - {versao}', icon='favicon.ico',layout=layout_login, keep_on_top=True, finalize = True)
 
             while True:
                 event,values = window.read()

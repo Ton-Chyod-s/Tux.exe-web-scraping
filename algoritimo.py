@@ -4349,7 +4349,11 @@ class Internet:
                 
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
-            
+    
+    def clicar_mapa_cdoe(self):
+        pass
+    
+             
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
