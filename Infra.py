@@ -70,8 +70,8 @@ class app:
         def infra_2023():
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
-                [sg.Text('ID Sicon',size=(8,1)),sg.Stretch(),sg.Input(size=(11,1),key='id_sicon'),sg.Checkbox('Proj')],
-                [sg.Text('Estação',size=(8,1)),sg.Stretch(),sg.Input(size=(5,1),key='estacao'),sg.Input(size=(5,1),key='numero'),sg.Text('Num',size=(4,1))],
+                [sg.Text('ID Sicon',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon'),sg.Checkbox('Proj')],
+                [sg.Text('Estação',size=(8,1)),sg.Stretch(),sg.Input(size=(5,1),key='estacao'),sg.Input(size=(3,1),key='numero'),sg.Text('Num',size=(4,1))],
                 ]
             
             window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
