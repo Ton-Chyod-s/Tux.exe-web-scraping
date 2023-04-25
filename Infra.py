@@ -71,7 +71,7 @@ class app:
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
                 [sg.Text('ID Sicon',size=(11,1)),sg.Input(size=(12,1),key='id_sicon'),sg.Checkbox('Proj',key='proj')],
-                [sg.Text('Estação',size=(11,1)),sg.Input(size=(5,1),key='estacao'),sg.Input(size=(5,1),key='numero'),sg.Text('Num',size=(3,1))],
+                [sg.Text('Estação',size=(11,1)),sg.Input(size=(5,1),key='estacao'),sg.Input(size=(5,1),key='numero'),sg.Text('Numero',size=(6,1))],
                 [sg.Button('Poste',size=(8,1)),sg.Button('Traçado',size=(8,1)),sg.Button('Cdo',size=(8,1))],
                 [sg.Button('Fim/Cb',size=(8,1)),sg.Checkbox('1:16',key='1:16'),sg.Checkbox('Alivio',key='alivio')],
                 ]
