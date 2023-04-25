@@ -4171,7 +4171,7 @@ class Internet:
         with mouse.Listener(on_click=on_click) as listener:
             while True:
                 # Verificar se a tecla Esc foi pressionada para encerrar o programa
-                if keyboard.is_pressed('Esc'):
+                if keyboard.is_pressed('Enter'):
                     break
                 # Assim que o mouse clicar, o listener irá encerrar e parar o loop
                 if not listener.running:
@@ -4289,7 +4289,6 @@ class Internet:
     def clicar_mapa(self,id_Sicom,id_projeto=True):
         # Inicializar uma lista vazia para salvar as coordenadas do mouse
         coordenadas = []
-
         def on_click(cx, cy, button, pressed):
             if button == mouse.Button.left and pressed:
                 coordenadas.append((cx, cy))
@@ -4300,7 +4299,7 @@ class Internet:
                 # Verificar se a tecla Esc foi pressionada para encerrar o programa
                 if keyboard.is_pressed('Esc'):
                     break
-                
+                     
         while True:
             if len(coordenadas) >= 2:
                 # acessar as duas primeiras coordenadas
@@ -4344,15 +4343,70 @@ class Internet:
                 # Retorna para a janela principal (fora do iframe)
                 self.driver.switch_to.default_content() 
                 
-                # remover as primeiras 4 coordenadas da lista
-                coordenadas = coordenadas[1:]
+                
                 
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
     
     def clicar_mapa_cdoe(self):
-        pass
+        # Inicializar uma lista vazia para salvar as coordenadas do mouse
+        coordenadas = []
+
+        def on_click(cx, cy, button, pressed):
+            if button == mouse.Button.left and pressed:
+                coordenadas.append((cx, cy))
+            
+        # Listener irá verificar quando o mouse clicará
+        with mouse.Listener(on_click=on_click) as listener:
+            while True:
+                # Verificar se a tecla Esc foi pressionada para encerrar o programa
+                if keyboard.is_pressed('Enter'):
+                    break
+        #definição da posição do mouse              
+        for coord in coordenadas:
+            x, y = coord
+            #iframe para criação do poste
+            self.iframe('iframe-content-wrapper')
+            #lupa
+            self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[18]')
+            sleep(.1)
+            #clicar no poste
+            pt.click(x, y)
+            sleep(1)
+            #adicionar
+            self.esperar_xpath('//div[@class="olControlIndoorMapAddButtonItemInactive"]') 
+            #equipamento
+            self.esperar_clicar_ID('olControlAddEquipment')
+            #fibra optica
+            self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/a/div[2]') # //a[@catsubtypeid="undefined"]
+            #CDO
+            self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="515"]
+            #CDOE
+            self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="518"]
     
+        #dentro do poste
+        #self.esperar_xpath('//*[@id="OpenLayers.Layer.Vector_204_svgRoot"]')
+        
+        
+        
+        
+        '''    
+        if lado:
+            #clicar para criação do equipamento
+            pt.click(x=1662, y=758) #esquerdo
+            pt.rightClick(x=1725, y=736) #direito
+            time.sleep(1)
+            self.driver.switch_to.default_content()'''
+        
+        
+        
+        '''
+        # Retorna para a janela principal (fora do iframe)
+        self.driver.switch_to.default_content() 
+        
+        if keyboard.is_pressed('Esc') or not coordenadas:
+            break'''
+
              
 if __name__ == "__main__": 
     #navegador = Internet()

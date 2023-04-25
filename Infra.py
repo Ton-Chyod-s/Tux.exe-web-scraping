@@ -86,8 +86,49 @@ class app:
                 if event == 'Voltar':
                     window.close()
                     programa = app()
-                    programa 
+                    programa
+                    
+                if event == 'Poste':
+                    navegador.nova_infra(values['numero'])
+                    
+                if event == 'Traçado':
+                    if values['proj']:
+                        navegador.clicar_mapa(values['id_sicon'],False)
+                    else:
+                        navegador.clicar_mapa(values['id_sicon'])
+                
+                if event == 'Cdo':
+                    if values['1:16']:
+                        if values['alivio']:
+                            print('vai fazer cdoe 1:16 de alivio meio de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                        else:
+                            print('vai fazer cdoe 1:16 meio de cabo')
+                            navegador.clicar_mapa_cdoe()
+                    else:
+                        if values['alivio']:
+                            print('vai fazer cdoe 1:8 de alivio meio de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                        else:
+                            print('vai fazer cdoe 1:8 meio de cabo')
+                            #navegador.clicar_mapa_cdoe()
                         
+                if event == 'Fim/Cb':
+                    if values['1:16']:
+                        if values['alivio']:
+                            print('vai fazer cdoe 1:16 de alivio fim de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                        else:
+                            print('vai fazer cdoe 1:16 fim de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                    else:
+                        if values['alivio']:
+                            print('vai fazer cdoe 1:8 de alivio fim de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                        else:
+                            print('vai fazer cdoe 1:8 fim de cabo')
+                            #navegador.clicar_mapa_cdoe()
+                           
             window.close()
 
         def celula():
@@ -117,8 +158,7 @@ class app:
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
                 [sg.Output(size=(45,4),key='senha')],
-                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('Poste',size=(7,1))],
-                [sg.Button('Traçado',size=(7,1))]
+                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1))],
                 ]
             
             window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -147,12 +187,6 @@ class app:
 
                 if event == 'Endereço':
                     navegador.atribuir_endereco()
-
-                if event == 'Poste':
-                    navegador.nova_infra(values['id_sicon'])
-                    
-                if event == 'Traçado':
-                    navegador.clicar_mapa(values['id_sicon'])
                     
             window.close()
 
