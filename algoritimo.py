@@ -4390,16 +4390,16 @@ class Internet:
             pt.click(1115,478)
             pt.rightClick(x=1725, y=736) #direito
             time.sleep(1)
-            self.driver.switch_to.default_content()
+            
         
         
         
-        '''
-        # Retorna para a janela principal (fora do iframe)
-        self.driver.switch_to.default_content() 
-        
-        if keyboard.is_pressed('Esc') or not coordenadas:
-            break'''
+    
+            # Retorna para a janela principal (fora do iframe)
+            self.driver.switch_to.default_content() 
+            
+            if keyboard.is_pressed('Esc') or not coordenadas:
+                break
 
              
 if __name__ == "__main__": 
