@@ -4373,6 +4373,7 @@ class Internet:
             sleep(.1)
             #clicar no poste
             pt.click(x, y)
+            
             sleep(1)
             #adicionar
             self.esperar_xpath('//div[@class="olControlIndoorMapAddButtonItemInactive"]') 
