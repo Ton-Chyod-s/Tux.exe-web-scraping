@@ -4365,6 +4365,7 @@ class Internet:
         #definição da posição do mouse              
         for coord in coordenadas:
             x, y = coord
+            
             #iframe para criação do poste
             self.iframe('iframe-content-wrapper')
             #lupa
@@ -4383,20 +4384,12 @@ class Internet:
             self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="515"]
             #CDOE
             self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="518"]
-    
-        #dentro do poste
-        #self.esperar_xpath('//*[@id="OpenLayers.Layer.Vector_204_svgRoot"]')
-        
-        
-        
-        
-        '''    
-        if lado:
-            #clicar para criação do equipamento
-            pt.click(x=1662, y=758) #esquerdo
+            
+            #dentro do poste
+            pt.click(1115,478)
             pt.rightClick(x=1725, y=736) #direito
             time.sleep(1)
-            self.driver.switch_to.default_content()'''
+            self.driver.switch_to.default_content()
         
         
         
