@@ -90,37 +90,61 @@ class app:
                     programa
                     
                 if event == 'Poste':
-                    navegador.nova_infra(values['numero'])
+                    navegador.clicar_mapa_poste(values['numero'])
                     
                 if event == 'Traçado':
                     if values['proj']:
-                        navegador.clicar_mapa(values['id_sicon'],False)
+                        navegador.clicar_mapa_traçado(values['id_sicon'],False)
                     else:
-                        navegador.clicar_mapa(values['id_sicon'])
+                        navegador.clicar_mapa_traçado(values['id_sicon'])
                 
                 if event == 'Cdo':
-                    if values['1:16']:
-                        if values['alivio']:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,True)
+                    if values['proj']:
+                        if values['1:16']:
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,False,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,False,False)
                         else:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,False)
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,False,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,False,False)
                     else:
-                        if values['alivio']:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,True)
+                        if values['1:16']:
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,False)
                         else:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,False)
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,False)
                                   
                 if event == 'Fim/Cb':
-                    if values['1:16']:
-                        if values['alivio']:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,True)
+                    if values['proj']:
+                        if values['1:16']:
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,False,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,False,False)
                         else:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,False)
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,False,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,False,False)
                     else:
-                        if values['alivio']:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,True)
+                        if values['1:16']:
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,False)
                         else:
-                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,False)
+                            if values['alivio']:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,True)
+                            else:
+                                navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,False)
                            
             window.close()
 

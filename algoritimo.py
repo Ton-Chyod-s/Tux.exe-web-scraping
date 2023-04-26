@@ -4156,7 +4156,7 @@ class Internet:
         reverse_geocode_result = gmaps.reverse_geocode((40.714224, -73.961452))
         print(reverse_geocode_result.adress)
     
-    def nova_infra(self,celula): #inicio
+    def clicar_mapa_poste(self,celula): #inicio
         #variavel qe define o tema
         selected_theme = 'Reddit'
         sg.theme(selected_theme)
@@ -4286,7 +4286,7 @@ class Internet:
             
             self.driver.switch_to.default_content()
             
-    def clicar_mapa(self,id_Sicom,id_projeto=True):
+    def clicar_mapa_traçado(self,id_Sicom,id_projeto=True):
         # Inicializar uma lista vazia para salvar as coordenadas do mouse
         coordenadas = []
         def on_click(cx, cy, button, pressed):
@@ -4396,7 +4396,7 @@ class Internet:
             #iframe para criação do CDOE
             self.iframe('externalIspIframe')
             self.iframe('dados')
-
+            #seleciona qual equipamento sera cadastrado
             if precon_1_8_final:
                 self.esperar_selecionar_ID('elem_num_sap','331995') #final
             elif precon_1_8_meio:
@@ -4444,10 +4444,6 @@ class Internet:
                 self.esperar_clicar_xpath('//*[@id="outOfPattern_check"]') #fora de padrão
                 time.sleep(.5)
                 self.esperar_xpath('//*[@id="onPatternTag"]')
-                '''
-                time.sleep(1)
-                etiqueta_padrao = self.driver.find_element(By.XPATH,'//*[@id="onPatternTag"]').text()
-                '''
                 time.sleep(.5)
                 self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+ numero +'-TBD')
                 self.esperar_xpath_txt('//*[@id="nomecNumber"]', '0')
@@ -4466,8 +4462,7 @@ class Internet:
             
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
-
-             
+      
 if __name__ == "__main__": 
     #navegador = Internet()
     #navegador.navegador_driver(False,True,False)
