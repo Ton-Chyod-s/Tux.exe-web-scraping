@@ -100,34 +100,26 @@ class app:
                 if event == 'Cdo':
                     if values['1:16']:
                         if values['alivio']:
-                            print('vai fazer cdoe 1:16 de alivio meio de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,True)
                         else:
-                            print('vai fazer cdoe 1:16 meio de cabo')
-                            navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,False,True,True,False)
                     else:
                         if values['alivio']:
-                            print('vai fazer cdoe 1:8 de alivio meio de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,True)
                         else:
-                            print('vai fazer cdoe 1:8 meio de cabo')
-                            #navegador.clicar_mapa_cdoe()
-                        
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,True,False,False,True,False)
+                                  
                 if event == 'Fim/Cb':
                     if values['1:16']:
                         if values['alivio']:
-                            print('vai fazer cdoe 1:16 de alivio fim de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,True)
                         else:
-                            print('vai fazer cdoe 1:16 fim de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],False,False,True,False,True,False)
                     else:
                         if values['alivio']:
-                            print('vai fazer cdoe 1:8 de alivio fim de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,True)
                         else:
-                            print('vai fazer cdoe 1:8 fim de cabo')
-                            #navegador.clicar_mapa_cdoe()
+                            navegador.clicar_mapa_cdoe(values['id_sicon'],values['estacao'],values['numero'],True,False,False,False,True,False)
                            
             window.close()
 
