@@ -4348,7 +4348,9 @@ class Internet:
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
     
-    def clicar_mapa_cdoe(self):
+    def clicar_mapa_cdoe(self,id_sicon,estação,numero,precon_1_8_final=False,precon_1_8_meio=False,precon_1_16_final=False,precon_1_16_meio=False,
+                         projeto=True,tbd=False):
+        
         # Inicializar uma lista vazia para salvar as coordenadas do mouse
         coordenadas = []
 
@@ -4388,13 +4390,77 @@ class Internet:
             
             #dentro do poste
             pt.click(1115,478)
-            pt.rightClick(x=1725, y=736) #direito
+            pt.rightClick(x=1215, y=518) #direito
             time.sleep(1)
             
-        
-        
-        
-    
+            #iframe para criação do CDOE
+            self.iframe('externalIspIframe')
+            self.iframe('dados')
+
+            if precon_1_8_final:
+                self.esperar_selecionar_ID('elem_num_sap','331995') #final
+            elif precon_1_8_meio:
+                self.esperar_selecionar_ID('elem_num_sap','331688') #intermediaria
+            elif precon_1_16_final:
+                self.esperar_selecionar_ID('elem_tipo.outroNomeEquip','CAIXA DISTR OPT SEL 17 SC EXT TAP 1:16') #final
+            elif precon_1_16_meio:
+                self.esperar_selecionar_ID('elem_tipo.outroNomeEquip','CAIXA DISTR OPT SEL 18 SC EXT TAP 30/70') #intermediaria
+                
+            #Rede
+            self.esperar_selecionar_ID('network','Óptica GPON')
+            
+            if projeto:
+                #Id-sicon
+                self.esperar_txt_ID('id_sicom_name',id_sicon)
+                self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            else:
+                #Nome projeto
+                self.esperar_txt_ID('projecto_name',id_sicon)
+                self.esperar_xpath('/html/body/div[*]/ul/li/strong')
+            
+            #Identif. campo
+            self.esperar_selecionar_ID('nameCampId','Existente - Conforme')
+            
+            #Estação abastecedora 1
+            self.esperar_selecionar_ID_txt('supplierStationName',estação)
+            self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            
+            #Topologia
+            self.esperar_selecionar_ID('topology','A/B')
+            sleep(.05)
+            
+            #Estações Abastecedoras 2
+            self.driver.find_element(By.LINK_TEXT,'Estações abastecedoras').click()
+            self.esperar_txt_ID('autocompleteSLocation',estação)
+            self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            self.esperar_clicar_ID('adicionar')
+            #Rastreabilidade
+            self.driver.find_element(By.LINK_TEXT,'Rastreabilidade').click()
+            self.esperar_selecionar_ID('sourceId','Netwin')
+            #caracteristica
+            self.esperar_clicar_xpath('/html/body/table/tbody/tr/td/div/div/div/form/div/table/tbody/tr[*]/td/div/ul/li[1]/a/span')
+            if tbd:
+                #tbd
+                self.esperar_clicar_xpath('//*[@id="outOfPattern_check"]') #fora de padrão
+                time.sleep(.5)
+                self.esperar_xpath('//*[@id="onPatternTag"]')
+                '''
+                time.sleep(1)
+                etiqueta_padrao = self.driver.find_element(By.XPATH,'//*[@id="onPatternTag"]').text()
+                '''
+                time.sleep(.5)
+                self.esperar_xpath_txt('//*[@id="tagOnField"]','CDOE-'+ numero +'-TBD')
+                self.esperar_xpath_txt('//*[@id="nomecNumber"]', '0')
+            else:
+                self.esperar_xpath_txt('//*[@id="nomecNumber"]', numero)
+
+            sg.popup('Aguardando confirmação das estações abastecedora',keep_on_top=True)
+            
+            #Confimar
+            self.esperar_clicar_ID('confAssoc')
+            #Sair
+            self.esperar_xpath('/html/body/div[*]/div/div/table/tbody/tr/td[3]/button')
+                
             # Retorna para a janela principal (fora do iframe)
             self.driver.switch_to.default_content() 
             
