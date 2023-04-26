@@ -3713,7 +3713,6 @@ class Internet:
         options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
 
-
         def esperar_xpath_txt(elemento,txt):
             wdw = WebDriverWait(driver, 60)
             wdw.until(element_to_be_clickable(('xpath', elemento)))    
@@ -3727,21 +3726,25 @@ class Internet:
             driver.find_element(By.XPATH,elemento).click()
         
         for i in tqdm(range(2,402), desc ="Carregando..." ):
-            wb = load_workbook('coordenada.xlsx')
+            wb = load_workbook('Arquivos xlsx//survey.xlsx')
             ws = wb.active
-            coordx = ws[f'A{i}'].value
-            coordy = ws[f'B{i}'].value
-            cell1 = ws.cell(row=1, column=7)
-            cell = ws.cell(row=i, column=7)
+            coord = ws[f'D{i}'].value
+            coordenada = coord.split(",")
+            #coordenadas x e y
+            coordx = coordenada[0]
+            coordy = coordenada[1]
+            
+            cell1 = ws.cell(row=1, column=6)
+            cell = ws.cell(row=i, column=6)
             cell1.value = 'CEP GOOGLE MAPS'
-            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
-            if coordenada == 'None, None':
+        
+            if coord == 'None':
                 break
             else:
                 try:
                     driver.get("https://www.google.com.br/maps")
                     time.sleep(.5)
-                    esperar_xpath_txt('//*[@id="searchboxinput"]',coordenada)
+                    esperar_xpath_txt('//*[@id="searchboxinput"]', coordy + ',' + coordx)
                     time.sleep(.3)
                     esperar_clicar_xpath('//*[@id="searchbox-searchbutton"]') #pesquisar
 
@@ -3776,7 +3779,7 @@ class Internet:
                     sg.popup_ok('Tente novamente', keep_on_top=True)
                     break
 
-                wb.save('coordenada.xlsx')
+                wb.save('Arquivos xlsx//survey.xlsx')
                 
     def cadastro_poste_kmz(self,coodx,coody):
         minha_lista = []
@@ -3836,23 +3839,27 @@ class Internet:
             minha_lista = []    
             sleep(.1)
             #encontrar e atribuir valores as variaveis dde uma planilha xlsx
-            coordx = str(ws[f'A{i}'].value)
-            coordy = str(ws[f'B{i}'].value)
+            coord = str(ws[f'D{i}'].value)
             #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
-            coordenada = coordy.replace(",",".") + ', ' + coordx.replace(",",".")
-            google_cep = str(ws[f'G{i}'].value)
-            numero = str(ws[f'C{i}'].value)
+            coordenada = coord.split(",")
+            #coordenadas x e y
+            coordx = coordenada[0]
+            coordy = coordenada[1]
+            
+            
+            google_cep = str(ws[f'F{i}'].value)
+            numero = str(ws[f'A{i}'].value)
             num_novo = numero.lower()
-            quantidade = str(ws[f'D{i}'].value)
-            predio = str(ws[f'E{i}'].value)
+            quantidade = str(ws[f'B{i}'].value)
+            predio = str(ws[f'C{i}'].value)
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if coordenada == 'None, None' or num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd' and quantidade != 'None' and predio != 'None':
                 break
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if google_cep == 'None':
-                cep = str(ws[f'F{i}'].value)
+                cep = str(ws[f'E{i}'].value)
             else:
-                cep = str(ws[f'G{i}'].value)
+                cep = str(ws[f'F{i}'].value)
             #encontrar e atribuir valores as variaveis dde uma planilha xlsx
             bairro = str(worksheet[f'M{i}'].value)
             roteiro = str(worksheet[f'C{i}'].value)
@@ -4067,37 +4074,45 @@ class Internet:
         sg.popup('criação concluida',keep_on_top=True)    
 
     def cep_geopy(self):
-        wb = load_workbook('coordenada.xlsx')
-        ws = wb.active  
-        for i in tqdm(range(2,402), desc ="Carregando..."):
-            coordx = ws[f'A{i}'].value
-            coordy = ws[f'B{i}'].value
-            cell1 = ws.cell(row=1, column=6)
-            cell2 = ws.cell(row=1, column=3)
-            cell3 = ws.cell(row=1, column=4)
-            cell4 = ws.cell(row=1, column=5)
-            cell5 = ws.cell(row=1, column=8)
-            cell6= ws.cell(row=1, column=9)
-            cell7= ws.cell(row=1, column=10)
-            cell8= ws.cell(row=1, column=11)
+        def buscar_cep(lat, lon): 
+            url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}" 
+            response = requests.get(url) 
+            if response.status_code == 200: 
+                data = response.json() 
+                if 'address' in data: 
+                    address = data['address'] 
+                    if 'postcode' in address: 
+                        return address['postcode'].replace("-", "")
 
-            cell = ws.cell(row=i, column=6)
-            coordenada = str(coordy).replace(",",".") + ', ' + str(coordx).replace(",",".")
-            if coordenada == 'None, None':
+        wb = load_workbook('Arquivos xlsx//survey.xlsx')
+        ws = wb.active 
+
+        '''cep_final = buscar_cep(-27.45179655,-48.37881658)
+        print(cep_final) '''
+
+        for i in tqdm(range(2,402), desc="Carregando..."):
+            coord = str(ws[f'D{i}'].value)
+            cell1 = ws.cell(row=1, column=5)
+            cell2 = ws.cell(row=1, column=1)
+            cell3 = ws.cell(row=1, column=2)
+            cell4 = ws.cell(row=1, column=3)
+            cell5 = ws.cell(row=1, column=7)
+            cell6 = ws.cell(row=1, column=8)
+            cell7 = ws.cell(row=1, column=9)
+            cell8 = ws.cell(row=1, column=10)
+
+            cell = ws.cell(row=i, column=5)
+            
+            coordenada = coord.split(",")
+
+            if coordenada[0] == 'None':
                 break
-            else:
-                try:
-                    def buscar_cep(lat, lon): 
-                        url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}" 
-                        response = requests.get(url) 
-                        if response.status_code == 200: 
-                            data = response.json() 
-                            if 'address' in data: 
-                                address = data['address'] 
-                                if 'postcode' in address: 
-                                    return address['postcode'] 
-                     
-                    cep_final = buscar_cep(coordy,coordx).replace("-","")
+            try:
+                #coordenadas x e y
+                coordy = str(coordenada[0])
+                coordx = str(coordenada[1])
+                cep_final = buscar_cep(coordx,coordy)
+                if cep_final is not None:
                     cell1.value = 'CEP GEOPY'
                     cell2.value = 'NUMERO'
                     cell3.value = 'QUANTIDADE'
@@ -4106,15 +4121,14 @@ class Internet:
                     cell6.value = 'BAIRRO'
                     cell7.value = 'CIDADE'
                     cell8.value = 'UF'
-                    
                     cell.value = cep_final
-                    wb.save('coordenada.xlsx')     
-                    
-                except:
+                else:
                     cell.value = 'CEP NÃO ENCONTRADO'
-
-                wb.save('coordenada.xlsx')
+            except requests.exceptions.RequestException as e:
+                cell.value = 'CEP NÃO ENCONTRADO'
+                print(f"Erro ao buscar o CEP: {e}")
                 
+        wb.save('Arquivos xlsx//survey.xlsx')
         print('Arquivo salvo')
 
     def endereco_cep(self):
