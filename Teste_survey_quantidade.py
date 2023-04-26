@@ -5,15 +5,16 @@ import xml.etree.ElementTree as et
 import random
 import shutil
 import os
+from tqdm import tqdm
 
 #logando os arquivos xlsx, com um laço de tentativa
 try:
-    wb = load_workbook('coordenada.xlsx')
+    wb = load_workbook('Arquivos xlsx//survey.xlsx')
     ws = wb.active
-    workbook = load_workbook('roteiro.xlsx')
+    workbook = load_workbook('Arquivos xlsx//roteiro.xlsx')
     worksheet = workbook.active
 except:
-    sg.popup('Não tem os arquivo nescessario na pasta!\n','1-coordenada.xlsx\n','2-roteiro.xlsx',keep_on_top=True)
+    sg.popup('Não tem os arquivo nescessario na pasta!\n','1-survey.xlsx\n','2-roteiro.xlsx',keep_on_top=True)
     
 def pasta(caminho):
     pasta = caminho
@@ -28,28 +29,34 @@ pasta(os.path.abspath('edificio1//apartamentos//'))
 pasta(os.path.abspath('moradia1//'))
                             
 #laço de repetição com tempo determinado max 400 tentativa
-for i in range(2,402):
+for i in tqdm(range(2,402), desc ="Carregando..." ):
     selected_theme = 'Reddit'
     sg.theme(selected_theme)
     minha_lista = []    
     sleep(.1)
     #encontrar e atribuir valores as variaveis dde uma planilha xlsx
-    coordx = str(ws[f'A{i}'].value)
-    coordy = str(ws[f'B{i}'].value)
-    #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
-    coordenada = coordy.replace(",",".") + ', ' + coordx.replace(",",".")
-    #uma condição para que quando valor da variavel for vazio, quebre o laço
-    if coordenada == 'None, None':
+    coord = str(ws[f'D{i}'].value)
+    if coord == 'None':
         break
-    google_cep = str(ws[f'G{i}'].value)
-    numero = str(ws[f'C{i}'].value)
-    quantidade = str(ws[f'D{i}'].value)
-    predio = str(ws[f'E{i}'].value)
+    #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
+    coordenada = coord.split(",")
+    #coordenadas x e y
+    coordx = coordenada[0]
+    coordy = coordenada[1]
+
+    google_cep = str(ws[f'F{i}'].value)
+    numero = str(ws[f'A{i}'].value)
+    num_novo = numero.lower()
+    quantidade = str(ws[f'B{i}'].value)
+    predio = str(ws[f'C{i}'].value)
+    #uma condição para que quando valor da variavel for vazio, quebre o laço
+    if num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd' and quantidade != 'None' and predio != 'None':
+        continue
     #uma condição para que quando valor da variavel for vazio, quebre o laço
     if google_cep == 'None':
-        cep = str(ws[f'F{i}'].value)
+        cep = str(ws[f'E{i}'].value)
     else:
-        cep = str(ws[f'G{i}'].value)
+        cep = str(ws[f'F{i}'].value)
     #encontrar e atribuir valores as variaveis dde uma planilha xlsx
     bairro = str(worksheet[f'M{i}'].value)
     roteiro = str(worksheet[f'C{i}'].value)
@@ -60,7 +67,7 @@ for i in range(2,402):
     #condição para fazer uma casa
     if quantidade == 'None':
         try:
-            tree = et.parse('hp.xml')
+            tree = et.parse('Arquivos xml//hp.xml')
             root = tree.getroot()    
             #encontrando e atribuindo novos valores ao xml
             for country in root.findall('enderecoEdificio'):
@@ -101,12 +108,12 @@ for i in range(2,402):
     elif quantidade != 'None' and predio == 'None':
         try: 
             #logando os arquivos xml
-            tree = et.parse('hp2.xml')
+            tree = et.parse('Arquivos xml//hp2.xml')
             root = tree.getroot()
             #transformando quantidade em um inteiro para iteirar no loop de repetição com tempo determinado
             quantidade = int(quantidade)
             for i in range(1,quantidade+1):
-                sleep(0.1)
+                sleep(0.1) 
                 #gerando um novo numero aleatório
                 nova_lista=[]
                 for linha in range (6):
@@ -124,7 +131,7 @@ for i in range(2,402):
                     country.find('id_localidade').text = localidade
                     country.find('cod_lograd').text = cod_logradouro
                 #encontrar e atribuir valores ao atributo do xml
-                root.find('coordX').text = str(coordx) 
+                root.find('coordX').text = str(coordx)
                 root.find('coordY').text = str(coordy)
                 root.find('localidade').text = str(worksheet[f'J{i}'].value) 
                 sleep(0.2)    
@@ -150,9 +157,9 @@ for i in range(2,402):
     #condição para fazer predio
     else:
         #logando os arquivos xml
-        tree = et.parse('arquivo.xml')
+        tree = et.parse('Arquivos xml//arquivo.xml')
         root = tree.getroot()
-        tree_apartamento = et.parse('apartamento.xml') 
+        tree_apartamento = et.parse('Arquivos xml//apartamento.xml') 
         root_apartamento = tree_apartamento.getroot()
         
         #gerando um novo numero aleatório
@@ -261,4 +268,4 @@ for i in range(2,402):
             except:
                 pass
         
-sg.popup('criação concluida',keep_on_top=True) 
+sg.popup('criação concluida',keep_on_top=True)

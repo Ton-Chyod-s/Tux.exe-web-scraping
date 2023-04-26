@@ -3840,21 +3840,22 @@ class Internet:
             sleep(.1)
             #encontrar e atribuir valores as variaveis dde uma planilha xlsx
             coord = str(ws[f'D{i}'].value)
+            if coord == 'None':
+                break
             #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
             coordenada = coord.split(",")
             #coordenadas x e y
             coordx = coordenada[0]
             coordy = coordenada[1]
-            
-            
+     
             google_cep = str(ws[f'F{i}'].value)
             numero = str(ws[f'A{i}'].value)
             num_novo = numero.lower()
             quantidade = str(ws[f'B{i}'].value)
             predio = str(ws[f'C{i}'].value)
             #uma condição para que quando valor da variavel for vazio, quebre o laço
-            if coordenada == 'None, None' or num_novo == 'lv' or num_novo == 'sn' or num_novo == 'bd' and quantidade != 'None' and predio != 'None':
-                break
+            if num_novo == 'lv' or num_novo == 'sn' or num_novo == 'tbd' or num_novo == 's/n':
+                continue
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if google_cep == 'None':
                 cep = str(ws[f'E{i}'].value)
