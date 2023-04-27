@@ -3915,8 +3915,8 @@ class Internet:
                     tree = et.parse('Arquivos xml//hp2.xml')
                     root = tree.getroot()
                     #transformando quantidade em um inteiro para iteirar no loop de repetição com tempo determinado
-                    quantidade = int(quantidade)
-                    for i in range(1,quantidade+1):
+                    quant = int(quantidade)
+                    for i in range(1,quant+1):
                         sleep(0.1) 
                         #gerando um novo numero aleatório
                         nova_lista=[]
