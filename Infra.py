@@ -31,8 +31,8 @@ class app:
                 [sg.Button('Voltar',size=(5,1))],
                 [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
                 [sg.Text('End/Num',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='end'),sg.Input(size=(10,1),key='num')],
-                [sg.Button('1-Endereço',size=(11,1)),sg.Button('2-Criar Hp',size=(11,1)),sg.Checkbox('Goo', enable_events=False, key='check')],
-                [sg.Button('3-Mud End',size=(11,1)),sg.Checkbox('End-comp', enable_events=False, key='check completo')],
+                [sg.Button('1-Modificar',size=(11,1)),sg.Button('2-Endereço',size=(11,1)),sg.Button('3-Criar Hp',size=(11,1))],
+                [sg.Button('4-Mud End',size=(11,1)),sg.Checkbox('End-comp', enable_events=False, key='check completo'),sg.Checkbox('Goo', enable_events=False, key='check')],
                 ]
             
             window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -50,10 +50,10 @@ class app:
                 if event == 'KML':
                     navegador.cadastro_poste_kmz(values['cood_x'],values['cood_y'])
                 
-                if event == '2-Criar Hp':
+                if event == '3-Criar Hp':
                     navegador.criar_hp_coord()
 
-                if event =='1-Endereço':
+                if event =='2-Endereço':
                     if values['check']:
                         navegador.procurar_cep()
 
@@ -63,8 +63,11 @@ class app:
                     else:
                         navegador.cep_geopy()
                         
-                if event == '3-Mud End':
+                if event == '4-Mud End':
                     navegador.endereco_survey(values['end'],values['num'])
+                    
+                if event == '1-Modificar':
+                    navegador.transformar_kmz()
                     
             window.close()
             
