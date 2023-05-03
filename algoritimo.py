@@ -4137,7 +4137,7 @@ class Internet:
         print('Arquivo salvo')
 
     def endereco_cep(self):
-        wb = load_workbook('coordenada.xlsx')
+        wb = load_workbook('Arquivos xlsx//survey.xlsx')
         ws = wb.active  
         for i in tqdm(range(2,402), desc ="Carregando..."):
             cell = ws.cell(row=i, column=8)
