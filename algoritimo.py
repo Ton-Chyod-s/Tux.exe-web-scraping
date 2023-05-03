@@ -4144,7 +4144,7 @@ class Internet:
             cell_1 = ws.cell(row=i, column=9)
             cell_2 = ws.cell(row=i, column=10)
             cell_3 = ws.cell(row=i, column=11)
-            cep = ws[f'G{i}'].value
+            cep = ws[f'D{i}'].value
             try:
                 
                 if len(cep) == 8:
@@ -4163,7 +4163,7 @@ class Internet:
                     cell_2.value = cidade
                     cell_3.value = uf
                     
-                    wb.save('coordenada.xlsx')
+                    wb.save('Arquivos xlsx//survey.xlsx')
                     print('Arquivo salvo')
                 else:
                     print("CEP Inválido")
