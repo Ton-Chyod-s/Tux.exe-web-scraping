@@ -4495,39 +4495,39 @@ class Internet:
         try:
             with zipfile.ZipFile(os.path.abspath('kmz//HPS.kmz'), 'r') as zip_ref:
                 zip_ref.extractall(os.path.abspath('kmz'))
+           
+            tree = etree.parse(os.path.abspath('kmz//doc.kml'))
+            doc = tree.getroot()
+
+            pontos = []
+            for pm in doc.xpath('//kml:Placemark', namespaces={'kml': 'http://www.opengis.net/kml/2.2'}):
+                titulo = pm.xpath('.//kml:name/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})[0].strip()
+                descricao = pm.xpath('.//kml:description/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})
+                if descricao:
+                    descricao = descricao[0].strip()
+                else:
+                    descricao = ""
+                coordenadas = pm.xpath('.//kml:coordinates/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})[0].strip()
+                pontos.append((titulo, descricao, '', coordenadas))
+
+            with open('pontos.csv', 'w', newline='', encoding='utf-8') as arquivo_csv:
+                writer = csv.writer(arquivo_csv, delimiter=';')
+                writer.writerow(['numero/capacidade', 'quantidade/tr', 'predio/none', 'coordenadas'])
+                for ponto in pontos:
+                    writer.writerow(ponto)
+
+            # ler o arquivo CSV
+            df = pd.read_csv('pontos.csv', sep=';')
+
+            #remover arquivo
+            os.remove('pontos.csv')
+            os.remove('kmz//doc.kml')
+
+            # gravar em um arquivo Excel
+            df.to_excel('Arquivos xlsx//survey.xlsx', index=False)
+
         except:
             sg.popup('esta sem arquivo kmz para fazer a conversão', keep_on_top=True)
-            
-        tree = etree.parse(os.path.abspath('kmz//doc.kml'))
-        doc = tree.getroot()
-
-        pontos = []
-        for pm in doc.xpath('//kml:Placemark', namespaces={'kml': 'http://www.opengis.net/kml/2.2'}):
-            titulo = pm.xpath('.//kml:name/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})[0].strip()
-            descricao = pm.xpath('.//kml:description/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})
-            if descricao:
-                descricao = descricao[0].strip()
-            else:
-                descricao = ""
-            coordenadas = pm.xpath('.//kml:coordinates/text()', namespaces={'kml': 'http://www.opengis.net/kml/2.2'})[0].strip()
-            pontos.append((titulo, descricao, '', coordenadas))
-
-        with open('pontos.csv', 'w', newline='', encoding='utf-8') as arquivo_csv:
-            writer = csv.writer(arquivo_csv, delimiter=';')
-            writer.writerow(['numero/capacidade', 'quantidade/tr', 'predio/none', 'coordenadas'])
-            for ponto in pontos:
-                writer.writerow(ponto)
-
-        # ler o arquivo CSV
-        df = pd.read_csv('pontos.csv', sep=';')
-
-        #remover arquivo
-        os.remove('pontos.csv')
-        os.remove('kmz//doc.kml')
-
-        # gravar em um arquivo Excel
-        df.to_excel('Arquivos xlsx//survey.xlsx', index=False)
-
             
 if __name__ == "__main__": 
     #navegador = Internet()
