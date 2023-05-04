@@ -4140,13 +4140,12 @@ class Internet:
         wb = load_workbook('Arquivos xlsx//survey.xlsx')
         ws = wb.active  
         for i in tqdm(range(2,402), desc ="Carregando..."):
-            cell = ws.cell(row=i, column=8)
-            cell_1 = ws.cell(row=i, column=9)
-            cell_2 = ws.cell(row=i, column=10)
-            cell_3 = ws.cell(row=i, column=11)
-            cep = ws[f'D{i}'].value
+            cell = ws.cell(row=i, column=7)
+            cell_1 = ws.cell(row=i, column=8)
+            cell_2 = ws.cell(row=i, column=9)
+            cell_3 = ws.cell(row=i, column=10)
+            cep = ws[f'F{i}'].value
             try:
-                
                 if len(cep) == 8:
                     link = f'https://viacep.com.br/ws/{cep}/json/'
 
@@ -4164,7 +4163,6 @@ class Internet:
                     cell_3.value = uf
                     
                     wb.save('Arquivos xlsx//survey.xlsx')
-                    print('Arquivo salvo')
                 else:
                     print("CEP Inválido")
             except:
