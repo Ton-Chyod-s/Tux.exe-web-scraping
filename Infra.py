@@ -6,7 +6,7 @@ import sys
 
 sg.popup_notify(f'Carregando...')
 
-versao = '3.01'
+versao = '3.03'
 num_prog = f'Tux {versao}'
 navegador = Internet()
 
@@ -29,8 +29,8 @@ class app:
         def survey():
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1))],
-                [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='cood_x'),sg.Input(size=(10,1),key='cood_y')],
-                [sg.Text('End/Num',size=(8,1)),sg.Stretch(),sg.Input(size=(10,1),key='end'),sg.Input(size=(10,1),key='num')],
+                [sg.Button('KML',size=(8,1)),sg.Stretch(),sg.Input(size=(12,1),key='cood_x'),sg.Input(size=(12,1),key='cood_y')],
+                [sg.Text('End/Num',size=(8,1)),sg.Stretch(),sg.Input(size=(12,1),key='end'),sg.Input(size=(12,1),key='num')],
                 [sg.Button('1-Modificar',size=(11,1)),sg.Button('2-Endereço',size=(11,1)),sg.Button('3-Criar Hp',size=(11,1))],
                 [sg.Button('4-Mud End',size=(11,1)),sg.Checkbox('End-comp', enable_events=False, key='check completo'),sg.Checkbox('Goo', enable_events=False, key='check')],
                 ]
