@@ -16,7 +16,7 @@ class app:
         selected_theme = 'Reddit'
         sg.theme(selected_theme)
 
-        menu_def = ['&Arquivo', ['&Nome de utilizador','&Survey','&Infra-map','&Infra-operação','&Abastecimento']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16',
+        menu_def = ['&Arquivo', ['&Nome do utilizador','&Survey','&Infra-map','&Infra-operação','&Abastecimento']],['&Equipamento',['&Cd_Comun','&Cd_Precom 1:8','&Cd_Precom 1:16','Hub/Ceos-p','Cdoi']],['&Cabo',['&Comun','&Precom','Primario']],['&Utilitario',['&Poste','&Conectividade 1:8','&Conectividade 1:16',
         '&As-Built','&Forms google']]
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
@@ -926,7 +926,7 @@ class app:
                 except:
                     sg.popup('Tente Novamente', keep_on_top=True)
 
-            if event == 'Nome de utilizador':
+            if event == 'Nome do utilizador':
                 window.close()
                 nome_utilizador()
 
