@@ -3,6 +3,7 @@ import PySimpleGUI as sg
 import os
 import winshell
 
+
 def extract_zipfile(zip_file_path, extract_dir):
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
@@ -24,9 +25,11 @@ while True:
         
         # Defina o caminho do arquivo ZIP
         zip_file_path = os.path.abspath('Tux-unofficial 3.03.zip')
-
+        #definindo o nome do usuario do pc
+        username = 'Public'
+        pasta = 'Documents'
         # Defina o caminho da pasta de extração
-        extract_dir = 'C://Users//Hix_x//Desktop//Tux-Unofficial'
+        extract_dir = os.path.join('C:\\', 'Users', username, pasta, 'Tux-Unofficial')
 
         # Crie a pasta de extração se ela não existir
         if not os.path.exists(extract_dir):
@@ -46,10 +49,10 @@ while True:
             shortcut.working_directory = extract_dir
         
         # Caminho da pasta que você deseja criar o atalho
-        folder_path = 'C:\\Users\\Hix_x\\Desktop\\Tux-Unofficial\\survey'
-        folder_path1 = 'C:\\Users\\Hix_x\\Desktop\\Tux-Unofficial\\kmz'
-        folder_path2 = 'C:\\Users\\Hix_x\\Desktop\\Tux-Unofficial\\Arquivos xlsx'
-        folder_path3 = 'C:\\Users\\Hix_x\\Desktop\\Tux-Unofficial\\Exemplos.jpg Arquivos'
+        folder_path = os.path.join('C:\\', 'Users', username, pasta, 'Tux-Unofficial','survey')
+        folder_path1 = os.path.join('C:\\', 'Users', username, pasta, 'Tux-Unofficial','kmz')
+        folder_path2 = os.path.join('C:\\', 'Users', username, pasta, 'Tux-Unofficial','Arquivos xlsx')
+        folder_path3 = os.path.join('C:\\', 'Users', username, pasta, 'Tux-Unofficial','Exemplos.jpg Arquivos')
         
         # Nome do arquivo .lnk que será criado
         shortcut_name = 'Survey.lnk'
