@@ -15,7 +15,7 @@ layout = [
     [sg.Button('Extrair Tux',size=(13,1))]
  ]
 
-window = sg.Window('lol', icon='favicon.ico',layout=layout, keep_on_top=True, finalize = True)
+window = sg.Window('Zip', icon='favicon.ico',layout=layout, keep_on_top=True, finalize = True)
 
 while True:
     event,values = window.read()
