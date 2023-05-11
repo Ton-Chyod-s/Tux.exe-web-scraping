@@ -1075,12 +1075,26 @@ if __name__ == '__main__':
                 
                     window.close()
             try:
-                url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/tux%20mind"
                 options = Options()
                 options.headless = True
                 driver = Firefox(options=options)
                 driver.implicitly_wait(.5)
                 wdw = WebDriverWait(driver, 30)
+                
+                url = "https://github.com/Ton-Chyod-s/Projetos/blob/main/tux%20mind"
+                url1 = "https://github.com/Ton-Chyod-s/Projetos/blob/main/verification%20tr's"
+                driver.get(url1)
+                for i in range(1,4):   
+                    xpath = f'//*[@id="LC{i}"]'
+                    try:
+                        tr_link = driver.find_element(By.XPATH,xpath).text
+                        if tr.lower() == tr_link:
+                            print(f'achei na linha {i}')
+                        else:
+                            print('não achei')
+                    except:
+                        break
+                    
                 driver.get(url)
                 time.sleep(1)  
                 on = driver.find_element(By.XPATH,'//*[@id="LC1"]').text
