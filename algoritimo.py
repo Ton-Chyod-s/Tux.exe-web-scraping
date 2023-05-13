@@ -20,7 +20,7 @@ class Internet:
     def navegador_driver(self,web_1=True,web_2=True,web_3=True,home=True):
         if web_1:
             service = EdgeService()
-            self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
+            #self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
         elif web_2:
             service = ChromeService()
             self.driver = Chrome(executable_path=ChromeDriverManager().install(), service=service)

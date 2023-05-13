@@ -9,7 +9,8 @@ def check_tr():
     options.add_argument('-headless')
     driver = Firefox(options=options)
     driver.implicitly_wait(.1)
-    wdw = WebDriverWait(driver, 30)
+    selected_theme = 'Reddit'
+    sg.theme(selected_theme)
     layout = [
         [sg.Text('Credenciais:', size=(9,1)), sg.Input(size=(8,1), key='tr'), sg.Button('Ok')],
     ]
