@@ -8,7 +8,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver import Firefox, Chrome, Ie, Edge
+from selenium import webdriver
+from selenium.webdriver import Edge, Chrome, Ie, Firefox
+from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.ie.service import Service as IEService
+#from webdriver_manager.microsoft import EdgeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.microsoft import IEDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 # Bibliotecas para trabalhar com arquivos e diretórios
 from openpyxl import load_workbook
 from lxml import etree

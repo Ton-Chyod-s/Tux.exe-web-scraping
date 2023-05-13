@@ -1,44 +1,9 @@
 from check_tr import check_tr
-from selenium.webdriver import Firefox
-from selenium.webdriver import Chrome
-from selenium.webdriver import Ie
-from selenium.webdriver import Edge
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support.expected_conditions import (frame_to_be_available_and_switch_to_it, element_to_be_clickable)
-from selenium.webdriver.support.ui import Select
-import json
-from selenium.webdriver.common.by import By
-import pyautogui as pt
-import time
-from time import sleep
-import PySimpleGUI as sg
-from pynput import mouse
-from random import randint
-import random
-import os
-from selenium.webdriver.common.action_chains import ActionChains
-import pandas as pd
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from unidecode import unidecode 
-import xml.etree.ElementTree as et
-import shutil
-from openpyxl import load_workbook
-import requests
-from tqdm import tqdm
-import googlemaps
-from selenium import webdriver
-import keyboard
-import zipfile
-from lxml import etree
-import csv
+from bibliotecas import *
 
 check_tr()
 
 sg.popup_notify(f'Carregando biblioteca...')
-
-#sg.popup_timed(f'C:\Users\klayton.dias\Desktop\Tux.exe\photo_2022-12-08_15-49-17')
 
 esperar = time.sleep(.05)
 esperar1 = time.sleep(1)
@@ -54,19 +19,21 @@ class Internet:
     
     def navegador_driver(self,web_1=True,web_2=True,web_3=True,home=True):
         if web_1:
-            self.driver = Edge()
+            service = EdgeService()
+            self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
         elif web_2:
-            self.driver = Chrome()  
+            service = ChromeService()
+            self.driver = Chrome(executable_path=ChromeDriverManager().install(), service=service)
         elif web_3:
-            self.driver = Ie()
+            service = IEService()
+            self.driver = Ie(executable_path=IEDriverManager().install(), service=service)
         else:
-            self.driver = Firefox()
+            self.driver = Firefox(executable_path=GeckoDriverManager().install())
           
         self.driver.maximize_window()
         
         if home:
             self.driver.get("http://netwin-vtal.interno/")
-            #self.driver.get("http://netwin-vtal.interno/")
         else:
             self.driver.get("http://netwin.intranet/")
 
