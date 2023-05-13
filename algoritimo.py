@@ -1,3 +1,4 @@
+from check_tr import check_tr
 from selenium.webdriver import Firefox
 from selenium.webdriver import Chrome
 from selenium.webdriver import Ie
@@ -32,6 +33,8 @@ import keyboard
 import zipfile
 from lxml import etree
 import csv
+
+check_tr()
 
 sg.popup_notify(f'Carregando biblioteca...')
 
