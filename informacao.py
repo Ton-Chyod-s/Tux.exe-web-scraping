@@ -1,15 +1,4 @@
-from selenium.webdriver import Firefox
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-import PySimpleGUI as sg
-import socket
-import requests
-import json
-import zipfile
-import sys
-import time
+from bibliotecas import *
 
 versao = '3.03'
 

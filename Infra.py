@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+from bibliotecas import *
 from algoritimo import *
 from informacao import *
 
