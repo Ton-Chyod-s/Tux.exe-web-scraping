@@ -16,43 +16,49 @@ esperar5 = time.sleep(3.5)
 class Internet:
     def __init__(self):
         pass
-    
-    def navegador_driver(self,web_1=True,web_2=True,web_3=True,home=True):
-        if web_1:
+    def navegador_driver(self,usar_edge=True,usar_chrome=True,usar_Iexplorer=True,usar_interno=True):
+        # Verifica qual browser será utilizado e inicia o serviço correspondente
+        if usar_edge: 
             service = EdgeService()
             #self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
-        elif web_2:
+        elif usar_chrome: 
             service = ChromeService()
             self.driver = Chrome(executable_path=ChromeDriverManager().install(), service=service)
-        elif web_3:
+        elif usar_Iexplorer: 
             service = IEService()
             self.driver = Ie(executable_path=IEDriverManager().install(), service=service)
-        else:
+        else: 
             self.driver = Firefox(executable_path=GeckoDriverManager().install())
-          
+        # Maximiza a janela do navegador  
         self.driver.maximize_window()
-        
-        if home:
+        # Abre a página inicial do sistema
+        if usar_interno: #interno
             self.driver.get("http://netwin-vtal.interno/")
-        else:
+        else: #externo
             self.driver.get("http://netwin.intranet/")
-
+        # Define um tempo de espera implícito para aguardar a página carregar completamente
         self.driver.implicitly_wait(20)
        
     def entrar_driver(self, login = True):
+        # Espera por até 60 segundos para a página carregar completamente
         wdw = WebDriverWait(self.driver, 60)
-
+        # Carrega as credenciais a partir do arquivo "credenciais.json"
         with open("credenciais.json", encoding='utf-8') as meu_json:
             dado = json.load(meu_json)
-            
-        def entrar(elemento,txt):
+        # Define uma função para preencher os campos de login e senha    
+        def preencher_campo(elemento,texto):
+            # Espera até que o elemento esteja clicável
             wdw.until(element_to_be_clickable(('id', elemento)))
-            self.driver.find_element(By.ID, elemento).clear()
-            self.driver.find_element(By.ID, elemento).send_keys(txt)
-            return
+            # Seleciona o campo de texto
+            campo = self.driver.find_element(By.ID, elemento)
+            # Limpa o campo de texto
+            campo.clear()
+            # Insere o texto no campo
+            campo.send_keys(texto)
             
-        entrar('inputLogin',dado['login'])
-        entrar('inputPassword',dado['senha'])
+        # Preenche o campo de login e o campo de senha    
+        preencher_campo('inputLogin',dado['login'])
+        preencher_campo('inputPassword',dado['senha'])
             
     def esperar_clicar_ID(self,elemento):
         wdw = WebDriverWait(self.driver, 60)
