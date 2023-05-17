@@ -1,13 +1,9 @@
-from selenium.webdriver import Firefox
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-import PySimpleGUI as sg
+from bibliotecas import *
 
 def check_tr():
     options = Options()
     options.add_argument('-headless')
-    driver = Firefox(options=options)
+    driver = Firefox(executable_path=GeckoDriverManager().install(),options=options)
     driver.implicitly_wait(.1)
     selected_theme = 'Reddit'
     sg.theme(selected_theme)
@@ -32,7 +28,7 @@ def check_tr():
                     try:
                         tr_link = driver.find_element(By.XPATH, xpath).text
                         if tr_link.lower() == values['tr'].lower():
-                            sg.Popup(f'TR {values["tr"]} encontrada!', title='Resultado',keep_on_top=True)
+                            #sg.Popup(f'TR {values["tr"]} encontrada!', title='Resultado',keep_on_top=True)
                             window.close()
                             break
                     except Exception as e:

@@ -18,7 +18,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import IEDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 # Bibliotecas para trabalhar com arquivos e diretórios
-from openpyxl import load_workbook
 from lxml import etree
 import shutil
 import zipfile

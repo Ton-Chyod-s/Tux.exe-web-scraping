@@ -18,7 +18,7 @@ class app:
         self.layout_login = [
             [sg.Menu(menu_def,pad=(10,10))],
             [sg.Button('Web',size=(5,1)), sg.Text('INFRA',justification='c',size=(9,1)),sg.Button('Login',size=(6,1))],
-            [sg.Combo(['Firefox','Chrome','Internet Explorer','Edge']),sg.Checkbox('V-tal',key='home')],
+            [sg.Combo(['Firefox','Chrome']),sg.Checkbox('V-tal',key='home')],
             ]
 
         window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True,size=(250,75))
@@ -1011,7 +1011,8 @@ class app:
         window.close()
 
 if __name__ == '__main__':
-    if city == 'Campo Grande' and on == 'on':
+    #if city == 'Campo Grande' and on == 'on':
+    if on == 'on':
         app()
     else:
         sg.popup_error(frase, keep_on_top=True)

@@ -72,8 +72,8 @@ else:
     try:
         # abre o navegador firefox em segundo plano
         options = Options()
-        options.add_argument('-headless')
-        driver = Firefox(options=options)
+        options.headless = True
+        driver = Firefox(executable_path=GeckoDriverManager().install(),options=options)
         driver.implicitly_wait(.5)
         wdw = WebDriverWait(driver, 30)
 
@@ -112,6 +112,3 @@ else:
 
     except Exception as e:
         print(e)
-
-    finally:
-        driver.quit()

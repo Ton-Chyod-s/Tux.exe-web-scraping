@@ -1,5 +1,6 @@
 from check_tr import check_tr
 from bibliotecas import *
+from openpyxl import load_workbook
 
 check_tr()
 
@@ -12,7 +13,6 @@ esperar3 = time.sleep(.01)
 esperar4 = time.sleep(3)
 esperar5 = time.sleep(3.5)
 
-
 class Internet:
     def __init__(self):
         pass
@@ -22,8 +22,7 @@ class Internet:
             service = EdgeService()
             #self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
         elif usar_chrome: 
-            service = ChromeService()
-            self.driver = Chrome(executable_path=ChromeDriverManager().install(), service=service)
+            self.driver = Chrome(executable_path=ChromeDriverManager().install())
         elif usar_Iexplorer: 
             service = IEService()
             self.driver = Ie(executable_path=IEDriverManager().install(), service=service)
@@ -4503,9 +4502,3 @@ class Internet:
         except:
             sg.popup('esta sem arquivo kmz para fazer a conversão', keep_on_top=True)
             
-if __name__ == "__main__": 
-    #navegador = Internet()
-    #navegador.navegador_driver(False,True,False)
-    #navegador.entrar_driver()
-    sg.theme('Reddit')
-    sg.popup_error(f'ta no arquivo algoritimo pow',keep_on_top=True)
