@@ -19,7 +19,7 @@ class Internet:
         # Verifica qual browser será utilizado e inicia o serviço correspondente
         if usar_edge: 
             service = EdgeService()
-            self.driver = Edge(executable_path=EdgeDriverManager().install())
+            #self.driver = Edge(executable_path=EdgeDriverManager().install())
         elif usar_chrome: 
             self.driver = Chrome(executable_path=ChromeDriverManager().install())
         elif usar_Iexplorer: 
