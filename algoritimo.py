@@ -1,6 +1,5 @@
 from check_tr import check_tr
 from bibliotecas import *
-from openpyxl import load_workbook
 
 check_tr()
 
