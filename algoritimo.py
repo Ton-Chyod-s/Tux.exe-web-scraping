@@ -20,12 +20,12 @@ class Internet:
         # Verifica qual browser será utilizado e inicia o serviço correspondente
         if usar_edge: 
             service = EdgeService()
-            #self.driver = Edge(executable_path=EdgeDriverManager().install(), service=service)
+            #self.driver = Edge(executable_path=EdgeDriverManager().install())
         elif usar_chrome: 
             self.driver = Chrome(executable_path=ChromeDriverManager().install())
         elif usar_Iexplorer: 
             service = IEService()
-            self.driver = Ie(executable_path=IEDriverManager().install(), service=service)
+            self.driver = Ie(executable_path=IEDriverManager().install())
         else: 
             self.driver = Firefox(executable_path=GeckoDriverManager().install())
         # Maximiza a janela do navegador  
@@ -58,56 +58,79 @@ class Internet:
         # Preenche o campo de login e o campo de senha    
         preencher_campo('inputLogin',dado['login'])
         preencher_campo('inputPassword',dado['senha'])
-            
+       
     def esperar_clicar_ID(self,elemento):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(EC.element_to_be_clickable(('id', elemento)))
-        self.driver.find_element(By.ID,elemento).click()
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(EC.element_to_be_clickable(('id', elemento)))
+            self.driver.find_element(By.ID,elemento).click()
+        except:
+            pass
 
     def esperar_clicar_xpath(self,elemento):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(EC.element_to_be_clickable((By.XPATH, elemento)))
-        self.driver.find_element(By.XPATH,elemento).click()
-        
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(EC.element_to_be_clickable((By.XPATH, elemento)))
+            self.driver.find_element(By.XPATH,elemento).click()
+        except:
+            pass
     def esperar_txt_ID(self,elemento, txt):
-        wdw = WebDriverWait(self.driver, 60)    
-        wdw.until(element_to_be_clickable(('id', elemento)))
-        self.driver.find_element(By.ID,elemento).clear()
-        self.driver.find_element(By.ID,elemento).send_keys(txt)
+        try:
+            wdw = WebDriverWait(self.driver, 60)    
+            wdw.until(element_to_be_clickable(('id', elemento)))
+            self.driver.find_element(By.ID,elemento).clear()
+            self.driver.find_element(By.ID,elemento).send_keys(txt)
+        except:
+            pass
 
     def esperar_link_txt(self,elemento):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(element_to_be_clickable(('link text', elemento))) 
-        self.driver.find_element(By.LINK_TEXT,elemento).click()
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(element_to_be_clickable(('link text', elemento))) 
+            self.driver.find_element(By.LINK_TEXT,elemento).click()
+        except:
+            pass
 
     def esperar_selecionar_ID(self,elemento, value):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until((element_to_be_clickable(('id', elemento))))
-        selecionar = Select(self.driver.find_element(By.ID,elemento))
-        esperar
-        selecionar.select_by_value(value)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until((element_to_be_clickable(('id', elemento))))
+            selecionar = Select(self.driver.find_element(By.ID,elemento))
+            esperar
+            selecionar.select_by_value(value)
+        except:
+            pass
 
     def esperar_selecionar_value(self,elemento, value):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until((element_to_be_clickable(('id', elemento))))
-        selecionar = Select(self.driver.find_element(By.ID,elemento))
-        esperar
-        selecionar.select_by_value(value)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until((element_to_be_clickable(('id', elemento))))
+            selecionar = Select(self.driver.find_element(By.ID,elemento))
+            esperar
+            selecionar.select_by_value(value)
+        except:
+            pass
 
     def esperar_selecionar_value_xpath(self,elemento, value):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until((element_to_be_clickable(('xpath', elemento))))
-        selecionar = Select(self.driver.find_element(By.ID,elemento))
-        esperar
-        selecionar.select_by_value(value)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until((element_to_be_clickable(('xpath', elemento))))
+            selecionar = Select(self.driver.find_element(By.ID,elemento))
+            esperar
+            selecionar.select_by_value(value)
+        except:
+            pass
     
     def esperar_selecionar_ID_txt(self,elemento,txt):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(element_to_be_clickable(('id', elemento)))
-        self.driver.find_element(By.ID,elemento).clear()
-        self.driver.find_element(By.ID,elemento).send_keys(txt)
-        esperar2
-        self.driver.find_element(By.ID,elemento).send_keys(Keys.ENTER)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(element_to_be_clickable(('id', elemento)))
+            self.driver.find_element(By.ID,elemento).clear()
+            self.driver.find_element(By.ID,elemento).send_keys(txt)
+            esperar2
+            self.driver.find_element(By.ID,elemento).send_keys(Keys.ENTER)
+        except:
+            pass
         
     def iframe(self,elemento):
         try:
@@ -119,23 +142,32 @@ class Internet:
             exit()
 
     def esperar_xpath_txt(self,elemento,txt):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(element_to_be_clickable(('xpath', elemento)))    
-        time.sleep(.15)
-        self.driver.find_element(By.XPATH,elemento).clear()
-        self.driver.find_element(By.XPATH,elemento).send_keys(txt)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(element_to_be_clickable(('xpath', elemento)))    
+            time.sleep(.15)
+            self.driver.find_element(By.XPATH,elemento).clear()
+            self.driver.find_element(By.XPATH,elemento).send_keys(txt)
+        except:
+            pass
     
     def esperar_selecionar_index(self,elemento,num):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(element_to_be_clickable(('id', elemento)))
-        selecionar = Select(self.driver.find_element(By.ID,elemento))
-        selecionar.select_by_index(num)
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(element_to_be_clickable(('id', elemento)))
+            selecionar = Select(self.driver.find_element(By.ID,elemento))
+            selecionar.select_by_index(num)
+        except:
+            pass
 
     def esperar_xpath(self,elemento):
-        wdw = WebDriverWait(self.driver, 60)
-        wdw.until(element_to_be_clickable(('xpath', elemento)))    
-        esperar
-        self.driver.find_element(By.XPATH,elemento).click()
+        try:
+            wdw = WebDriverWait(self.driver, 60)
+            wdw.until(element_to_be_clickable(('xpath', elemento)))    
+            esperar
+            self.driver.find_element(By.XPATH,elemento).click()
+        except:
+            pass
 
     def procurar_estação(self,elemento,procurar=True):
         if procurar:
@@ -3690,7 +3722,7 @@ class Internet:
     def procurar_cep(self):
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
-        driver = webdriver.Chrome(options=options)
+        driver = Chrome(executable_path=ChromeDriverManager().install(),options=options)
 
         def esperar_xpath_txt(elemento,txt):
             wdw = WebDriverWait(driver, 60)
@@ -3708,7 +3740,10 @@ class Internet:
             wb = load_workbook('Arquivos xlsx//survey.xlsx')
             ws = wb.active
             coord = ws[f'D{i}'].value
-            coordenada = coord.split(",")
+            try:
+                coordenada = coord.split(",")
+            except:
+                break
             #coordenadas x e y
             coordx = coordenada[0]
             coordy = coordenada[1]
@@ -4193,6 +4228,7 @@ class Internet:
                    
             #iframe para criação do poste
             self.iframe('iframe-content-wrapper')
+            sleep(1.3)
             #mãozinha
             self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
             #local
@@ -4279,67 +4315,55 @@ class Internet:
             self.driver.switch_to.default_content()
             
     def clicar_mapa_traçado(self,id_Sicom,id_projeto=True):
-        # Inicializar uma lista vazia para salvar as coordenadas do mouse
-        coordenadas = []
-        def on_click(cx, cy, button, pressed):
-            if button == mouse.Button.left and pressed:
-                coordenadas.append((cx, cy))
-            
-        # Listener irá verificar quando o mouse clicará
-        with mouse.Listener(on_click=on_click) as listener:
-            while True:
-                # Verificar se a tecla Esc foi pressionada para encerrar o programa
-                if keyboard.is_pressed('Esc'):
-                    break
-                     
         while True:
-            if len(coordenadas) >= 2:
-                # acessar as duas primeiras coordenadas
-                c1, c2 = coordenadas[:2]
-                # pré definindo as duas primeiras coordenadas
-                x1, y1 = c1
-                x2, y2 = c2
+            # Inicializar uma lista vazia para salvar as coordenadas do mouse
+            coordenadas = []
+            def on_click(cx, cy, button, pressed):
+                if button == mouse.Button.left and pressed:
+                    coordenadas.append((cx, cy))
                 
-                #iframe para criação do poste
-                self.iframe('iframe-content-wrapper')
-                #mãozinha
-                self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
-                #traçado
-                self.esperar_clicar_xpath('//*[@id="olControlAddRouteOi"]')
-                #areo
-                self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/a/div[2]')
-                #areo em apoio
-                self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/ul/li[2]/a/div')    
-                sleep(.5)
-                #clicar com mouse nas coordenadas pré definidas   
-                pt.click(x1,y1)
-                sleep(1.5)
-                pt.doubleClick(x2,y2)
-                sleep(.3)
-                #proprietario
-                self.esperar_selecionar_ID('ownerId','1') #oi
-                if id_projeto:
-                    #id sicon
-                    self.esperar_txt_ID('idSicom',id_Sicom)
-                    self.esperar_xpath('/html/body/div[*]/div[2]/form/div/div[2]/table[4]/tbody/tr[2]/td[1]/div[2]/div/ul/li')
-                else:
-                    #nome de projeto
-                    self.esperar_txt_ID('project',id_Sicom)
-                    self.esperar_xpath('//*[@id="project_div"]/ul/li[1]/a')
-                #implantação concluido
-                self.esperar_selecionar_value('catProjectStateId','191')
-                #origem
-                self.esperar_selecionar_index('sourceId',1) #netwim
-                '''#guardar
-                self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')   '''
-                # Retorna para a janela principal (fora do iframe)
-                self.driver.switch_to.default_content() 
-                
-                
-                
-            if keyboard.is_pressed('Esc') or not coordenadas:
+            #iframe para criação do poste
+            self.iframe('iframe-content-wrapper')
+            #mãozinha
+            self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[22]')
+            #traçado
+            self.esperar_clicar_xpath('//*[@id="olControlAddRouteOi"]')
+            #areo
+            self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/a/div[2]')
+            #areo em apoio
+            self.esperar_clicar_xpath('//*[@id="ulCatalogMenu"]/li[1]/ul/li[2]/a/div')    
+            sleep(.5)
+
+            # Listener irá verificar quando o mouse clicará
+            with mouse.Listener(on_click=on_click) as listener:
+                while True:
+                    # Verificar se a tecla Esc foi pressionada para encerrar o programa
+                    if keyboard.is_pressed('Enter'):
+                        break
+                    
+            if keyboard.is_pressed('Esc'):
                 break
-    
+            #proprietario
+            self.esperar_selecionar_ID('ownerId','1') #oi
+            if id_projeto:
+                #id sicon
+                self.esperar_txt_ID('idSicom',id_Sicom)
+                self.esperar_xpath('/html/body/div[*]/div[2]/form/div/div[2]/table[4]/tbody/tr[2]/td[1]/div[2]/div/ul/li')
+            else:
+                #nome de projeto
+                self.esperar_txt_ID('project',id_Sicom)
+                self.esperar_xpath('//*[@id="project_div"]/ul/li[1]/a')
+            #implantação concluido
+            self.esperar_selecionar_value('catProjectStateId','191')
+            #origem
+            self.esperar_selecionar_index('sourceId',1) #netwim
+            #guardar
+            self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')
+            # Retorna para a janela principal (fora do iframe)
+            self.driver.switch_to.default_content()
+
+            
+                
     def clicar_mapa_cdoe(self,id_sicon,estação,numero,precon_1_8_final=False,precon_1_8_meio=False,precon_1_16_final=False,precon_1_16_meio=False,
                          projeto=True,tbd=False):
         
