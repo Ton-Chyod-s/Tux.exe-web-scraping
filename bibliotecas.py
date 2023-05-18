@@ -1,3 +1,4 @@
+from openpyxl import load_workbook
 # Bibliotecas para trabalhar com Selenium
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -32,6 +33,7 @@ import requests
 import socket
 import googlemaps
 # Outras bibliotecas
+import openpyxl
 from pynput import mouse
 from random import randint
 from unidecode import unidecode 
