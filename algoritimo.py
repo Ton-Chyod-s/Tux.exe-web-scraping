@@ -3874,12 +3874,17 @@ class Internet:
                 cep = str(ws[f'E{i}'].value)
             else:
                 cep = str(ws[f'F{i}'].value)
-            #encontrar e atribuir valores as variaveis dde uma planilha xlsx
-            bairro = str(worksheet[f'M{i}'].value)
-            roteiro = str(worksheet[f'C{i}'].value)
-            localidade = str(worksheet[f'H{i}'].value)
-            cod_logradouro = str(worksheet[f'N{i}'].value)
-            logradouro = str(worksheet[f'Q{i}'].value) + ' ' + str(worksheet[f'O{i}'].value) + ', ' + str(worksheet[f'M{i}'].value) + ', ' + str(worksheet[f'G{i}'].value)+ ', ' + str(worksheet[f'J{i}'].value)+ ', ' + str(worksheet[f'G{i}'].value)+ ' - ' + str(worksheet[f'E{i}'].value)+ ' ' + f'({cod_logradouro})'
+                
+            #encontrar e atribuir valores as variaveis de uma planilha xlsx    
+            column_cep = worksheet['V']
+            for cell in column_cep:
+                if cell.value == cep:
+                    row_number = cell.row  # Número da linha onde o valor foi encontrado 
+                    bairro = str(worksheet[f'M{row_number}'].value)
+                    roteiro = str(worksheet[f'C{row_number}'].value)
+                    localidade = str(worksheet[f'H{row_number}'].value)
+                    cod_logradouro = str(worksheet[f'N{row_number}'].value)
+                    logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value)+ ', ' + str(worksheet[f'J{row_number}'].value)+ ', ' + str(worksheet[f'G{row_number}'].value)+ ' - ' + str(worksheet[f'E{row_number}'].value)+ ' ' + f'({cod_logradouro})'
             
             #condição para fazer uma casa
             if quantidade == 'None':
