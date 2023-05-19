@@ -3878,7 +3878,8 @@ class Internet:
             #encontrar e atribuir valores as variaveis de uma planilha xlsx    
             column_cep = worksheet['V']
             for cell in column_cep:
-                if cell.value == cep:
+                cep_planilha = f'{cell.value}'
+                if cep_planilha == cep:
                     row_number = cell.row  # Número da linha onde o valor foi encontrado 
                     bairro = str(worksheet[f'M{row_number}'].value)
                     roteiro = str(worksheet[f'C{row_number}'].value)
