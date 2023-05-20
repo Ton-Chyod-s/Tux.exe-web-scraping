@@ -3848,8 +3848,7 @@ class Internet:
         #laço de repetição com tempo determinado max 400 tentativa
         for i in tqdm(range(2,402), desc ="Carregando..." ):
             selected_theme = 'Reddit'
-            sg.theme(selected_theme)
-            minha_lista = []    
+            sg.theme(selected_theme)  
             sleep(.1)
             #encontrar e atribuir valores as variaveis dde uma planilha xlsx
             coord = str(ws[f'D{i}'].value)
@@ -3875,18 +3874,20 @@ class Internet:
             else:
                 cep = str(ws[f'F{i}'].value)
                 
-            #encontrar e atribuir valores as variaveis de uma planilha xlsx    
-            column_cep = worksheet['V']
-            for cell in column_cep:
-                cep_planilha = f'{cell.value}'
-                if cep_planilha == cep:
-                    row_number = cell.row  # Número da linha onde o valor foi encontrado 
-                    bairro = str(worksheet[f'M{row_number}'].value)
-                    roteiro = str(worksheet[f'C{row_number}'].value)
-                    localidade = str(worksheet[f'H{row_number}'].value)
-                    cod_logradouro = str(worksheet[f'N{row_number}'].value)
-                    logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value)+ ', ' + str(worksheet[f'J{row_number}'].value)+ ', ' + str(worksheet[f'G{row_number}'].value)+ ' - ' + str(worksheet[f'E{row_number}'].value)+ ' ' + f'({cod_logradouro})'
-            
+            #encontrar e atribuir valores as variaveis de uma planilha xlsx
+            for lin_i in range(1):
+                column_cep = worksheet['V']
+                for cell in column_cep:
+                    cep_planilha = str(cell.value)
+                    if cep_planilha == cep:
+                        row_number = cell.row  # Número da linha onde o valor foi encontrado
+                        bairro = str(worksheet[f'M{row_number}'].value)
+                        roteiro = str(worksheet[f'C{row_number}'].value)
+                        localidade = str(worksheet[f'H{row_number}'].value)
+                        cod_logradouro = str(worksheet[f'N{row_number}'].value)
+                        logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ', ' + str(worksheet[f'J{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ' - ' + str(worksheet[f'E{row_number}'].value) + ' ' + f'({cod_logradouro})'
+                        break
+
             #condição para fazer uma casa
             if quantidade == 'None':
                 try:
@@ -3901,11 +3902,67 @@ class Internet:
                         country.find('id_roteiro').text = roteiro
                         country.find('id_localidade').text = localidade
                         country.find('cod_lograd').text = cod_logradouro
-                    #gerando um novo numero aleatório
-                    for linha in range (6):
-                        minha_lista.append(random.randint(1,9))
-                    num = int(''.join(map(str,minha_lista)))
-                    novo_numero = '20200824091321' + str(num)
+
+                    #trecho que perimite criar uma lista de numeros e uma sequecia para o winrar
+                    def criar_arquivo(caminho, nome_arquivo):
+                        arquivo = os.path.join(caminho, nome_arquivo)
+
+                        # Verificar se o arquivo já existe
+                        if os.path.exists(arquivo):
+                            return
+
+                        # Criar o arquivo
+                        with open(arquivo, 'w') as f:
+                            f.write('')  # Escrever conteúdo inicial se necessário
+
+                    caminho = os.path.abspath('Arquivos xml')
+                    nome_arquivo = 'numeros_gerados.txt'
+                    criar_arquivo(caminho, nome_arquivo)
+
+                    # Nome do arquivo para armazenar os números gerados
+                    nome_arquivo = os.path.join(caminho, 'numeros_gerados.txt')
+
+                    # Função para verificar se um número já foi gerado anteriormente
+                    def numero_existe(numero, numeros_existentes):
+                        return numero in numeros_existentes
+
+                    numeros_existentes = set()
+
+                    # Abrir o arquivo em modo de leitura para obter os números já gerados
+                    with open(nome_arquivo, 'r') as f:
+                        numeros_existentes = set(f.read().split())
+
+                    nova_lista = []
+
+                    # Gerar números até ter 6 números diferentes
+                    while len(nova_lista) < 6:
+                        novo_numero = random.randint(0, 9)
+                        nova_lista.append(str(novo_numero))
+
+                    # Gerar número com 20 dígitos
+                    num = ''.join(nova_lista)
+                    if len(num) == 5:
+                        num += str(random.randint(0, 9))
+
+                    novo_num = '20200824091322' + num
+
+                    # Verificar se o número já existe na lista atual ou no arquivo
+                    while num in numeros_existentes:
+                        nova_lista = []
+                        while len(nova_lista) < 6:
+                            novo_numero = random.randint(0, 9)
+                            nova_lista.append(str(novo_numero))
+
+                        num = ''.join(nova_lista)
+                        if len(num) == 5:
+                            num += str(random.randint(0, 9))
+
+                        novo_num = '20200824091322' + num
+
+                    # Atualizar o arquivo com o número gerado
+                    with open(nome_arquivo, 'a') as f:
+                        f.write(num + '\n')
+
                     #modificar corrdenada no arquivo xml
                     root.find('coordX').text = str(coordx)
                     root.find('coordY').text = str(coordy)
@@ -3913,7 +3970,7 @@ class Internet:
                     #escrever xml
                     tree.write('moradia1//moradia1.xml')
                     #transformar arquivo zip na pasta moradia1
-                    shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                    shutil.make_archive(f'survey//KLAYTON_{novo_num}','zip','./','moradia1//moradia1.xml',)
                     caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                     #deletar arquivo xml
                     os.remove(caminho_do_arquivo)      
@@ -3937,12 +3994,65 @@ class Internet:
                     quant = int(quantidade)
                     for i in range(1,quant+1):
                         sleep(0.1) 
-                        #gerando um novo numero aleatório
-                        nova_lista=[]
-                        for linha in range (6):
-                            nova_lista.append(random.randint(1,9))
-                        num = int(''.join(map(str,nova_lista)))
-                        novo_numero = f'20200824091322' + str(num)
+                        def criar_arquivo(caminho, nome_arquivo):
+                            arquivo = os.path.join(caminho, nome_arquivo)
+
+                            # Verificar se o arquivo já existe
+                            if os.path.exists(arquivo):
+                                return
+
+                            # Criar o arquivo
+                            with open(arquivo, 'w') as f:
+                                f.write('')  # Escrever conteúdo inicial se necessário
+
+                        caminho = os.path.abspath('Arquivos xml')
+                        nome_arquivo = 'numeros_gerados.txt'
+                        criar_arquivo(caminho, nome_arquivo)
+
+                        # Nome do arquivo para armazenar os números gerados
+                        nome_arquivo = os.path.join(caminho, 'numeros_gerados.txt')
+
+                        # Função para verificar se um número já foi gerado anteriormente
+                        def numero_existe(numero, numeros_existentes):
+                            return numero in numeros_existentes
+
+                        numeros_existentes = set()
+
+                        # Abrir o arquivo em modo de leitura para obter os números já gerados
+                        with open(nome_arquivo, 'r') as f:
+                            numeros_existentes = set(f.read().split())
+
+                        nova_lista = []
+
+                        # Gerar números até ter 6 números diferentes
+                        while len(nova_lista) < 6:
+                            novo_numero = random.randint(0, 9)
+                            nova_lista.append(str(novo_numero))
+
+                        # Gerar número com 20 dígitos
+                        num = ''.join(nova_lista)
+                        if len(num) == 5:
+                            num += str(random.randint(0, 9))
+
+                        novo_num = '20200824091322' + num
+
+                        # Verificar se o número já existe na lista atual ou no arquivo
+                        while num in numeros_existentes:
+                            nova_lista = []
+                            while len(nova_lista) < 6:
+                                novo_numero = random.randint(0, 9)
+                                nova_lista.append(str(novo_numero))
+
+                            num = ''.join(nova_lista)
+                            if len(num) == 5:
+                                num += str(random.randint(0, 9))
+
+                            novo_num = '20200824091322' + num
+
+                        # Atualizar o arquivo com o número gerado
+                        with open(nome_arquivo, 'a') as f:
+                            f.write(num + '\n')
+
                         #encontrando e atribuindo novos valores ao xml
                         for country in root.findall('enderecoEdificio'):
                             country.find('argumento1').text = str(i)
@@ -3962,7 +4072,7 @@ class Internet:
                         tree.write(f'moradia1//moradia1.xml')
                         sleep(.5)
                         #transformar arquivo zip na pasta moradia1
-                        shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','moradia1//moradia1.xml',)
+                        shutil.make_archive(f'survey//KLAYTON_{novo_num}','zip','./','moradia1//moradia1.xml',)
                         #remover o arquivo moradia1.xml
                         caminho_do_arquivo = os.path.abspath('moradia1//moradia1.xml') 
                         #deletar arquivo xml
@@ -3985,12 +4095,65 @@ class Internet:
                 tree_apartamento = et.parse('Arquivos xml//apartamento.xml') 
                 root_apartamento = tree_apartamento.getroot()
                 
-                #gerando um novo numero aleatório
-                nova_lista=[]
-                for linha in range (6):
-                    nova_lista.append(random.randint(1,9))
-                num = int(''.join(map(str,nova_lista)))
-                novo_numero = f'20200824091322' + str(num)
+                def criar_arquivo(caminho, nome_arquivo):
+                    arquivo = os.path.join(caminho, nome_arquivo)
+
+                    # Verificar se o arquivo já existe
+                    if os.path.exists(arquivo):
+                        return
+
+                    # Criar o arquivo
+                    with open(arquivo, 'w') as f:
+                        f.write('')  # Escrever conteúdo inicial se necessário
+
+                caminho = os.path.abspath('Arquivos xml')
+                nome_arquivo = 'numeros_gerados.txt'
+                criar_arquivo(caminho, nome_arquivo)
+
+                # Nome do arquivo para armazenar os números gerados
+                nome_arquivo = os.path.join(caminho, 'numeros_gerados.txt')
+
+                # Função para verificar se um número já foi gerado anteriormente
+                def numero_existe(numero, numeros_existentes):
+                    return numero in numeros_existentes
+
+                numeros_existentes = set()
+
+                # Abrir o arquivo em modo de leitura para obter os números já gerados
+                with open(nome_arquivo, 'r') as f:
+                    numeros_existentes = set(f.read().split())
+
+                nova_lista = []
+
+                # Gerar números até ter 6 números diferentes
+                while len(nova_lista) < 6:
+                    novo_numero = random.randint(0, 9)
+                    nova_lista.append(str(novo_numero))
+
+                # Gerar número com 20 dígitos
+                num = ''.join(nova_lista)
+                if len(num) == 5:
+                    num += str(random.randint(0, 9))
+
+                novo_num = '20200824091322' + num
+
+                # Verificar se o número já existe na lista atual ou no arquivo
+                while num in numeros_existentes:
+                    nova_lista = []
+                    while len(nova_lista) < 6:
+                        novo_numero = random.randint(0, 9)
+                        nova_lista.append(str(novo_numero))
+
+                    num = ''.join(nova_lista)
+                    if len(num) == 5:
+                        num += str(random.randint(0, 9))
+
+                    novo_num = '20200824091322' + num
+
+                # Atualizar o arquivo com o número gerado
+                with open(nome_arquivo, 'a') as f:
+                    f.write(num + '\n')
+
                 #encontrando e atribuindo novos valores ao xml
                 for country in root.findall('enderecoEdificio'):
                     country.find('logradouro').text = logradouro
@@ -4070,7 +4233,7 @@ class Internet:
                     
                 modificar_xml()
                 #gravar em zip arquivo
-                shutil.make_archive(f'survey//KLAYTON_{novo_numero}','zip','./','edificio1//edificio1.xml',)
+                shutil.make_archive(f'survey//KLAYTON_{novo_num}','zip','./','edificio1//edificio1.xml',)
                 minha_lista = []
                 for linha in range (6):
                     minha_lista.append(random.randint(1,9))
@@ -4366,9 +4529,7 @@ class Internet:
             self.esperar_clicar_xpath('/html/body/div[*]/div[3]/div/button[1]')
             # Retorna para a janela principal (fora do iframe)
             self.driver.switch_to.default_content()
-
-            
-                
+           
     def clicar_mapa_cdoe(self,id_sicon,estação,numero,precon_1_8_final=False,precon_1_8_meio=False,precon_1_16_final=False,precon_1_16_meio=False,
                          projeto=True,tbd=False):
         
