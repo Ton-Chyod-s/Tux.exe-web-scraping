@@ -811,7 +811,7 @@ class app:
             layout = [
             [sg.Button('Voltar',size=(6,1)),sg.Text('Abastecimento',size=(20,1),justification = 'c')],
             [sg.Multiline("",key="casa",size=(32,5))],
-            [sg.Button('Inicio',size=(13,1)),sg.Button('CDOI',size=(13,1))]
+            [sg.Button('Inicio',size=(13,1)),sg.Checkbox('mud est',key='check')]
             ]
 
             window = sg.Window(num_prog, icon='favicon.ico',layout=layout,finalize = True, keep_on_top=True)
@@ -835,8 +835,10 @@ class app:
                     #navegador.endereco()
                     pass
                 if event == 'Inicio':
-                    navegador.abastecimento(values['casa'])
-
+                    if values['check']:
+                        navegador.abastecimento(values['casa'])
+                    else:
+                        navegador.abastecimento(values['casa'],False)
             
 
             window.close()

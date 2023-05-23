@@ -1233,15 +1233,21 @@ class Internet:
         for i in dataframe:
             pass
 
-    def abastecimento(self,hp):
+    def abastecimento(self,hp,iframe=True):
         try:
-            self.driver.implicitly_wait(0)
+            self.driver.implicitly_wait(5)
             wdw = WebDriverWait(self.driver, .1)
-            # Esperando até seja visivel as Iframe da pagina
-            wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
-            wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+            if iframe:
+                # Esperando até seja visivel as Iframe da pagina
+                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalFrame')))
+            else:
+                # Esperando até seja visivel as Iframe da pagina
+                wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
+                wdw.until(frame_to_be_available_and_switch_to_it(('id','externalConnectivityIframe'))) 
+
             #ir para aba de abastecimento
-            self.esperar_clicar_ID('influenceAreaButton')
+            wdw.until(EC.element_to_be_clickable((By.ID, 'influenceAreaButton'))).click()
             
             def procurar_hp(survey):
                 lista  = survey.split(',')
@@ -1283,7 +1289,8 @@ class Internet:
             self.driver.switch_to.default_content()
             
         except:
-             sg.po
+            # Retorna para a janela principal (fora do iframe)
+            self.driver.switch_to.default_content()
          
     def encontrar_projetado(self):
         self.iframe('iframe-content-wrapper')
@@ -3470,7 +3477,7 @@ class Internet:
             wdw.until(frame_to_be_available_and_switch_to_it(('id','iframe-content-wrapper')))
             wdw.until(frame_to_be_available_and_switch_to_it(('id','elementSearchFrame')))
         else:
-            pass   
+            pass  
         
         def sair():
             # Retorna para a janela principal (fora do iframe)
@@ -3875,19 +3882,26 @@ class Internet:
                 cep = str(ws[f'F{i}'].value)
                 
             #encontrar e atribuir valores as variaveis de uma planilha xlsx
-            for lin_i in range(1):
-                column_cep = worksheet['V']
-                for cell in column_cep:
-                    cep_planilha = str(cell.value)
-                    if cep_planilha == cep:
-                        row_number = cell.row  # Número da linha onde o valor foi encontrado
-                        bairro = str(worksheet[f'M{row_number}'].value)
-                        roteiro = str(worksheet[f'C{row_number}'].value)
-                        localidade = str(worksheet[f'H{row_number}'].value)
-                        cod_logradouro = str(worksheet[f'N{row_number}'].value)
-                        logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ', ' + str(worksheet[f'J{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ' - ' + str(worksheet[f'E{row_number}'].value) + ' ' + f'({cod_logradouro})'
-                        break
-
+            column_cep = worksheet['V']
+            for cell in column_cep:
+                cep_planilha = str(cell.value)
+                if cep_planilha == cep:
+                    row_number = cell.row  # Número da linha onde o valor foi encontrado
+                    bairro = str(worksheet[f'M{row_number}'].value)
+                    roteiro = str(worksheet[f'C{row_number}'].value)
+                    localidade = str(worksheet[f'H{row_number}'].value)
+                    cod_logradouro = str(worksheet[f'N{row_number}'].value)
+                    logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ', ' + str(worksheet[f'J{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ' - ' + str(worksheet[f'E{row_number}'].value) + ' ' + f'({cod_logradouro})'
+                    break
+                
+            if cep_planilha != cep:
+                    row_number = cell.row  # Número da linha onde o valor foi encontrado
+                    bairro = str(worksheet[f'M{row_number}'].value)
+                    roteiro = str(worksheet[f'C{row_number}'].value)
+                    localidade = str(worksheet[f'H{row_number}'].value)
+                    cod_logradouro = str(worksheet[f'N{row_number}'].value)
+                    logradouro = str(worksheet[f'Q{row_number}'].value) + ' ' + str(worksheet[f'O{row_number}'].value) + ', ' + str(worksheet[f'M{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ', ' + str(worksheet[f'J{row_number}'].value) + ', ' + str(worksheet[f'G{row_number}'].value) + ' - ' + str(worksheet[f'E{row_number}'].value) + ' ' + f'({cod_logradouro})'
+                    
             #condição para fazer uma casa
             if quantidade == 'None':
                 try:
