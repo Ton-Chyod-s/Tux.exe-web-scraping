@@ -4659,7 +4659,7 @@ class Internet:
             if keyboard.is_pressed('Esc') or not coordenadas:
                 break
 
-    def transformar_kmz(delf):
+    def transformar_kmz(self):
         def pasta(caminho):
             pasta = caminho
             #verificar se a pasta existe se não existir ele ira criar
@@ -4705,4 +4705,90 @@ class Internet:
 
         except:
             sg.popup('esta sem arquivo kmz para fazer a conversão', keep_on_top=True)
-            
+
+    def ajuste_survey(self,vezes):
+        wb = load_workbook('CONTROLE AJUSTE SURVEY.xlsx')
+        ws = wb.active
+
+        for i in range(2,602):
+            survey = str(ws[f'L{i}'].value)
+            if survey == 'None':
+                break
+            try:
+                for lin in range(2):
+                    self.iframe('iframe-content-wrapper')
+                    self.esperar_selecionar_index("area", lin)
+                    sleep(.2)
+                    self.esperar_txt_ID('codigo',survey)
+                    sleep(.2)
+                    self.esperar_clicar_xpath('//*[@id="submit"]')
+                    sleep(.5)
+
+                    if 'Pesquisa sem resultados' in self.driver.find_element(By.XPATH,'//*[@id="gview_pesquisaGrid"]/div[3]/div[2]/span').text:
+                        abastecido = 'NÃO LOCALIZADO'
+                        ws[f'O{i}'].value = abastecido
+                        wb.save("CONTROLE AJUSTE SURVEY.xlsx")
+                    else:
+                        '''abastecido = 'ABASTECIDO PELA'
+                        ws[f'O{i}'].value = abastecido
+                        wb.save("CONTROLE AJUSTE SURVEY.xlsx")
+                        break'''
+                        #modificar atributos
+                        self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
+                        #resultado
+                        self.esperar_clicar_xpath('//*[@id="67768462"]/td[3]')
+                        
+                        # Localize o elemento cujo ID contém a parte específica
+                        element = self.driver.find_element_by_xpath("//*[contains(@id, 'OpenLayers.Geometry.Point_')]")
+
+                        # Obtenha as coordenadas do elemento
+                        element_location = element.location
+                        element_size = element.size
+
+                        # Calcule as coordenadas exatas onde você deseja clicar
+                        x = element_location['x'] + element_size['width'] / 2
+                        y = element_location['y'] + element_size['height'] / 2
+
+                        # Crie uma instância da classe ActionChains para realizar a ação de clique
+                        action = ActionChains(self.driver)
+
+                        # Mova o cursor para as coordenadas exatas
+                        action.move_by_offset(x, y).perform()
+
+                        # Realize o clique
+                        action.click().perform()
+
+
+
+                    # Retorna para a janela principal (fora do iframe)
+                    self.driver.switch_to.default_content()
+                    
+            except Exception as e:
+                # Retorna para a janela principal (fora do iframe)
+                self.driver.switch_to.default_content()
+                print(f"Erro ao salvar o arquivo: {str(e)}")
+                print(survey, i) 
+
+        
+    def deligar_pc(self):
+        # Obter a hora atual
+        hora_atual = datetime.datetime.now().time()
+
+        # Definir o horário para desligar o computador (exemplo: 23:00)
+        hora_desligamento = datetime.time(23, 0)
+
+        # Verificar se a hora atual é igual ou posterior ao horário de desligamento
+        if hora_atual >= hora_desligamento:
+            # Calcular a quantidade de segundos até o próximo dia no horário de desligamento
+            delta_tempo = datetime.datetime.combine(datetime.date.today() + datetime.timedelta(days=1), hora_desligamento) - datetime.datetime.now()
+
+            # Converter o tempo restante em segundos
+            segundos_restantes = delta_tempo.total_seconds()
+
+            # Aguardar até o horário de desligamento
+            print(f"Aguardando até o horário de desligamento: {hora_desligamento}")
+            os.system(f"timeout /t {int(segundos_restantes)} /nobreak > NUL")
+
+        # Desligar o computador
+        print("Desligando o computador...")
+        os.system("shutdown /s /t 0")            

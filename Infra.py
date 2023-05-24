@@ -174,8 +174,8 @@ class app:
         def teste_metodos():
             self.layout_login = [
                 [sg.Button('Voltar',size=(5,1)),sg.Button('Operações',size=(9,1)),sg.Checkbox('Proj/Id Sicon',key='projeto'),sg.Stretch(),sg.Input(size=(10,1),key='id_sicon')], 
-                [sg.Output(size=(45,4),key='senha')],
-                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1))],
+                #[sg.Output(size=(45,4),key='senha')],
+                [sg.Button('spliter',size=(7,1)),sg.Button('Conectividade',size=(13,1)),sg.Button('Endereço',size=(8,1)),sg.Button('test',size=(5,1))],
                 ]
             
             window = sg.Window(num_prog, icon='favicon.ico',layout=self.layout_login, keep_on_top=True, finalize = True)
@@ -204,6 +204,9 @@ class app:
 
                 if event == 'Endereço':
                     navegador.atribuir_endereco()
+                
+                if event == 'test':
+                    navegador.ajuste_survey(values['projeto'])
                     
             window.close()
 
