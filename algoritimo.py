@@ -73,6 +73,7 @@ class Internet:
             self.driver.find_element(By.XPATH,elemento).click()
         except:
             pass
+    
     def esperar_txt_ID(self,elemento, txt):
         try:
             wdw = WebDriverWait(self.driver, 60)    
@@ -481,43 +482,7 @@ class Internet:
                 
             #Retorna para a janela principal (fora do iframe)
             self.driver.switch_to.default_content()
-
-#revisar
-    def criar_equipamento(self,lado=True):
-
-        self.iframe('iframe-content-wrapper')
-        #adicionar
-        self.esperar_xpath('//div[@class="olControlIndoorMapAddButtonItemInactive"]') 
-        #equipamento
-        self.esperar_clicar_ID('olControlAddEquipment')
-        #fibra optica
-        self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/a/div[2]') # //a[@catsubtypeid="undefined"]
-        #CDO
-        self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="515"]
-        #CDOE
-        self.esperar_xpath('/html/body/div[3]/div[1]/div[2]/div[2]/div/div/fieldset/ul/li[1]/ul/li[1]/ul/li[1]/a/div[2]') # //a[@catsubtypeid="518"]
-    
-        #dentro do poste
-        self.esperar_xpath('//*[@id="OpenLayers.Layer.Vector_204_svgRoot"]')
-        
-        
-        
-        
-        '''    
-        if lado:
-            #clicar para criação do equipamento
-            pt.click(x=1662, y=758) #esquerdo
-            pt.rightClick(x=1725, y=736) #direito
-            time.sleep(1)
-            self.driver.switch_to.default_content()
-        else:
-            #clicar para criação do equipamento
-            pt.click(x=1780, y=767) #esquerdo
-            pt.rightClick(x=1725, y=736) #direito
-            time.sleep(1)
-            self.driver.switch_to.default_content()
-        '''
-                      
+           
     def componentes(self,modelo=True):
             self.iframe('iframe-content-wrapper')
             self.iframe('externalIspIframe')
@@ -4715,7 +4680,7 @@ class Internet:
             if survey == 'None':
                 break
             try:
-                for lin in range(2):
+                for lin in range(7,8):
                     self.iframe('iframe-content-wrapper')
                     self.esperar_selecionar_index("area", lin)
                     sleep(.2)
@@ -4733,33 +4698,24 @@ class Internet:
                         ws[f'O{i}'].value = abastecido
                         wb.save("CONTROLE AJUSTE SURVEY.xlsx")
                         break'''
+                        
                         #modificar atributos
                         self.esperar_clicar_xpath('//*[@id="paneldiv"]/div[23]')
-                        #resultado
-                        self.esperar_clicar_xpath('//*[@id="67768462"]/td[3]')
-                        
+                        #local
+                        self.esperar_clicar_xpath('//*[@id="olControlModifyInfranode"]')
+
+                        # Localize o elemento com base na tag <td> e na posição na tabela
+                        element_res = self.driver.find_element("xpath", "//tr[contains(@role, 'row')][2]/td[3]")
+                        # Realize o clique no elemento
+                        element_res.click()
                         # Localize o elemento cujo ID contém a parte específica
-                        element = self.driver.find_element_by_xpath("//*[contains(@id, 'OpenLayers.Geometry.Point_')]")
-
-                        # Obtenha as coordenadas do elemento
-                        element_location = element.location
-                        element_size = element.size
-
-                        # Calcule as coordenadas exatas onde você deseja clicar
-                        x = element_location['x'] + element_size['width'] / 2
-                        y = element_location['y'] + element_size['height'] / 2
-
-                        # Crie uma instância da classe ActionChains para realizar a ação de clique
-                        action = ActionChains(self.driver)
-
-                        # Mova o cursor para as coordenadas exatas
-                        action.move_by_offset(x, y).perform()
-
-                        # Realize o clique
-                        action.click().perform()
-
-
-
+                        element = self.driver.find_element(By.XPATH,"//*[contains(@id, 'OpenLayers.Geometry.Point_')]")
+                        
+                        if element.is_displayed():  
+                            element.click()
+                        else:
+                            print("O elemento não está visível")
+                                                
                     # Retorna para a janela principal (fora do iframe)
                     self.driver.switch_to.default_content()
                     
@@ -4769,7 +4725,6 @@ class Internet:
                 print(f"Erro ao salvar o arquivo: {str(e)}")
                 print(survey, i) 
 
-        
     def deligar_pc(self):
         # Obter a hora atual
         hora_atual = datetime.datetime.now().time()
