@@ -3823,7 +3823,7 @@ class Internet:
             sg.theme(selected_theme)  
             sleep(.1)
             #encontrar e atribuir valores as variaveis dde uma planilha xlsx
-            coord = str(ws[f'D{i}'].value)
+            coord = str(ws[f'E{i}'].value)
             if coord == 'None':
                 break
             #uma variavel recebendo coordenadas, trocando ',' por '.' e concatenando com uma virgula no meio
@@ -3832,19 +3832,20 @@ class Internet:
             coordx = coordenada[0]
             coordy = coordenada[1]
      
-            google_cep = str(ws[f'F{i}'].value)
+            google_cep = str(ws[f'G{i}'].value)
             numero = str(ws[f'A{i}'].value)
             num_novo = numero.lower()
             quantidade = str(ws[f'B{i}'].value)
             predio = str(ws[f'C{i}'].value)
+            bloco = str(ws[f'D{i}'].value)
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if num_novo == 'lv' or num_novo == 'sn' or num_novo == 'tbd' or num_novo == 's/n':
                 continue
             #uma condição para que quando valor da variavel for vazio, quebre o laço
             if google_cep == 'None':
-                cep = str(ws[f'E{i}'].value)
-            else:
                 cep = str(ws[f'F{i}'].value)
+            else:
+                cep = str(ws[f'G{i}'].value)
                 
             #encontrar e atribuir valores as variaveis de uma planilha xlsx
             column_cep = worksheet['V']
@@ -4069,8 +4070,13 @@ class Internet:
             #condição para fazer predio
             else:
                 #logando os arquivos xml
-                tree = et.parse('Arquivos xml//arquivo.xml')
-                root = tree.getroot()
+                if bloco != 'None':
+                    tree = et.parse('Arquivos xml//arquivo2.xml')
+                    root = tree.getroot()
+                else:
+                    tree = et.parse('Arquivos xml//arquivo.xml')
+                    root = tree.getroot()
+
                 tree_apartamento = et.parse('Arquivos xml//apartamento.xml') 
                 root_apartamento = tree_apartamento.getroot()
                 
@@ -4142,6 +4148,11 @@ class Internet:
                     country.find('id_roteiro').text = roteiro
                     country.find('id_localidade').text = localidade
                     country.find('cod_lograd').text = cod_logradouro
+                    if bloco == 'None':
+                        pass
+                    else:
+                        country.find('argumento1').text = bloco
+
                 #encontrar e atribuir valores ao atributo do xml
                 root.find('coordX').text = str(coordx) 
                 root.find('coordY').text = str(coordy)
@@ -4583,9 +4594,44 @@ class Internet:
             self.esperar_selecionar_ID('nameCampId','Existente - Conforme')
             
             #Estação abastecedora 1
-            self.esperar_selecionar_ID_txt('supplierStationName',estação)
-            self.esperar_xpath('//li[@class="ac_even ac_over"]')
+            def estacao_predial(elemento):
+                wdw = WebDriverWait(self.driver, 60)
+                wdw.until(element_to_be_clickable(('xpath', elemento)))
+                self.driver.find_element(By.XPATH,elemento).text
+            #e
+            self.esperar_clicar_xpath('//*[@id="suppStationFilterButton"]')
             
+            uf = estacao_predial('//*[@id="uf"]')
+            municipio = estacao_predial('//*[@id="municipio"]')
+            localidade = estacao_predial('//*[@id="localidade"]')
+
+            try:
+                # Aguardar até que o elemento com o id "estacao" esteja clicável
+                wdw = WebDriverWait(self.driver, 10)
+                estacao_element = wdw.until(EC.element_to_be_clickable((By.ID, 'estacao')))
+                
+                # Criar objeto Select para o menu suspenso
+                select = Select(estacao_element)
+                
+                # Verificar se a opção "cpmo" está disponível
+                option_cpmo = None
+                for option in select.options:
+                    if option.text == "cpmo":
+                        option_cpmo = option
+                        break
+                
+                # Selecionar a opção "cpmo" se estiver disponível
+                if option_cpmo:
+                    select.select_by_visible_text("cpmo")
+                else:
+                    print("A opção 'cpmo' não está disponível no menu suspenso.")
+                    
+            except NoSuchElementException as e:
+                print("Elemento com o id 'estacao' não encontrado:", e)
+
+            #escolher
+            self.esperar_clicar_xpath('//*[@id="imgListaRelEquipamento"]/span')
+
             #Topologia
             self.esperar_selecionar_ID('topology','A/B')
             sleep(.05)

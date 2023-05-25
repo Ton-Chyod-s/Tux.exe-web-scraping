@@ -14,6 +14,7 @@ from selenium.webdriver import Edge, Chrome, Ie, Firefox
 from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.ie.service import Service as IEService
+from selenium.common.exceptions import NoSuchElementException
 #from webdriver_manager.microsoft import EdgeDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import IEDriverManager
@@ -47,3 +48,4 @@ import keyboard
 import sys
 import json
 import datetime
+
